@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.neoheulge.admin.service.AdminDAO">
+	 <select id="memberAll" parameterType="map" resultType="MemberDTO">
+        SELECT * FROM (
+            SELECT a.*, ROWNUM rnum
+            FROM (
+                SELECT * FROM nemember
+                ORDER BY signup_date DESC
+            ) a
+           <![CDATA[ WHERE ROWNUM <= #{offset} + #{size}]]>
+        )
+       <![CDATA[ WHERE rnum > #{offset}]]>
+    </select>
+    
+    <!-- 검색된 회원 조회 쿼리 -->
+    <select id="searchMember" parameterType="map" resultType="MemberDTO">
+        SELECT * FROM (
+            SELECT a.*, ROWNUM rnum
+            FROM (
+                SELECT * FROM nemember
+                <where>
+                    <choose>
+                        <when test="searchType == 'id'">
+                            memberid LIKE '%' || #{searchKeyword} || '%'
+                        </when>
+                        <when test="searchType == 'nickname'">
+                            nickname LIKE '%' || #{searchKeyword} || '%'
+                        </when>
+                        <otherwise>
+                            1=1
+                        </otherwise>
+                    </choose>
+                </where>
+                ORDER BY signup_date DESC
+            ) a
+           <![CDATA[ WHERE ROWNUM <= #{offset} + #{size}]]>
+        )
+       <![CDATA[ WHERE rnum > #{offset}]]>
+    </select>
+    
+    <!-- 총 데이터 개수 조회 쿼리 -->
+    <select id="getTotalCount" parameterType="map" resultType="int">
+        SELECT COUNT(*) FROM nemember
+        <where>
+            <choose>
+                <when test="searchType == 'id'">
+                    memberid LIKE '%' || #{searchKeyword} || '%'
+                </when>
+                <when test="searchType == 'nickname'">
+                    nickname LIKE '%' || #{searchKeyword} || '%'
+                </when>
+                <otherwise>
+                    1=1
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+</mapper>

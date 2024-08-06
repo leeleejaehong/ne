@@ -3,4 +3,14 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
+	<insert id="signupPro" parameterType="MemberDTO">
+	insert into nemember 
+	(memberid,grade,password,name,profile,nickname,email,phone,signup_date)
+	values (#{memberID},#{grade},#{password},#{name},#{profile},#{nickname},
+	#{email},#{phone},sysdate)
+
+	</insert>
+	<select id="findById" parameterType="String" resultType="CustomMemberDetails">
+	select * from nemember where memberID = #{memberID}
+	</select>
 </mapper>

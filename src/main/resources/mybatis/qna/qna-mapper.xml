@@ -3,4 +3,60 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="qna">
+<select id="qnaList" resultType="QnaDTO">
+		select * from neq_a order by re_step asc
+	</select>
+
+	<insert id="qnaWrite" parameterType="QnaDTO">
+		insert into neq_a values(neq_a_seq.nextval,
+		#{author},#{subject},#{content}, sysdate, 0,
+		#{re_step},#{re_level})
+	</insert>
+
+	<update id="qnaNewStep" parameterType="QnaDTO">
+		UPDATE neq_a
+		SET re_step = re_step + 1
+	</update>
+
+	<update id="qnaReStep" parameterType="QnaDTO">
+		update neq_a
+		set re_step = re_step + 1
+		where re_step > #{re_step}
+	</update>
+
+	<select id="getQna" parameterType="int" resultType="QnaDTO">
+		select *
+		from neq_a where id = #{id}
+	</select>
+
+
+	<update id="qnaViews" parameterType="int">
+		update neq_a set
+		views = views + 1 where id = #{id}
+	</update>
+	
+	<delete id="QnaDelete" parameterType="int">
+	delete from neq_a where id = #{id}
+	</delete>
+	
+	<update id="QnaUpdate" parameterType="QnaDTO">
+		update neq_a set
+		subject=#{subject},content=#{content} where id=#{id}
+	</update>
+	
+	<select id="searchQnaList" parameterType="map" resultType="QnaDTO">
+    select *
+    from neq_a
+    where 
+    <if test="searchType == 'subject'">
+        subject LIKE '%' || #{search} || '%'
+    </if>
+    <if test="searchType == 'author'">
+        author LIKE '%' || #{search} || '%'
+    </if>
+    <if test="searchType == 'all'">
+        (subject LIKE '%' || #{search} || '%' OR author LIKE '%' || #{search} || '%')
+    </if>
+	</select>
+
 </mapper>

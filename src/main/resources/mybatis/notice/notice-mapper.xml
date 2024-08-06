@@ -1,6 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="notice">
+    <select id="noticeList" resultType="NoticeDTO">
+        select * from nenotice order by id desc
+    </select>
+
+    <insert id="noticeInsert" parameterType="NoticeDTO">
+        insert into nenotice values(nenotice_seq.nextval,
+        #{author},#{title},#{content}, sysdate, 0,
+        #{re_step},#{re_level})
+    </insert>
+
+
+    <select id="getNotice" parameterType="int" resultType="NoticeDTO">
+        select *
+        from nenotice where id = #{id}
+    </select>
+
+
+    <update id="noticeViews" parameterType="int">
+        update nenotice set
+        views = views + 1 where id = #{id}
+    </update>
+
+    <delete id="noticeDelete" parameterType="int">
+        delete from nenotice where id = #{id}
+    </delete>
+
+    <update id="noticeEdit" parameterType="NoticeDTO">
+        update nenotice set
+        title=#{title},content=#{content} where id=#{id}
+    </update>
+
+
+    <select id="searchnoticeList" parameterType="map" resultType="NoticeDTO">
+        select *
+        from nenoticenity
+        where
+        <if test="searchType == 'title'">
+            title LIKE '%' || #{search} || '%'
+        </if>
+        <if test="searchType == 'author'">
+            author LIKE '%' || #{search} || '%'
+        </if>
+        <if test="searchType == 'all'">
+            (title LIKE '%' || #{search} || '%' OR author LIKE '%' || #{search} || '%')
+        </if>
+    </select>
+
+
 </mapper>

@@ -2,5 +2,64 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
 <mapper namespace="commu">
+	<select id="commuList" resultType="CommuDTO">
+		select * from necommunity order by re_step asc
+	</select>
+
+	<insert id="commuWrite" parameterType="CommuDTO">
+		insert into necommunity values(necommunity_seq.nextval,
+		#{author},#{subject},#{content}, sysdate, 0,
+		#{re_step},#{re_level})
+	</insert>
+
+	<update id="commuNewStep" parameterType="CommuDTO">
+		UPDATE necommunity
+		SET re_step = re_step + 1
+	</update>
+
+	<update id="commuReStep" parameterType="CommuDTO">
+		update necommunity
+		set re_step = re_step + 1
+		where re_step > #{re_step}
+	</update>
+
+	<select id="getCommu" parameterType="int" resultType="CommuDTO">
+		select *
+		from necommunity where id = #{id}
+	</select>
+
+
+	<update id="commuViews" parameterType="int">
+		update necommunity set
+		views = views + 1 where id = #{id}
+	</update>
+	
+	<delete id="commuDelete" parameterType="int">
+	delete from necommunity where id = #{id}
+	</delete>
+	
+	<update id="commuUpdate" parameterType="CommuDTO">
+		update necommunity set
+		subject=#{subject},content=#{content} where id=#{id}
+	</update>
+	
+	
+	<select id="searchCommuList" parameterType="map" resultType="CommuDTO">
+    select *
+    from necommunity
+    where 
+    <if test="searchType == 'subject'">
+        subject LIKE '%' || #{search} || '%'
+    </if>
+    <if test="searchType == 'author'">
+        author LIKE '%' || #{search} || '%'
+    </if>
+    <if test="searchType == 'all'">
+        (subject LIKE '%' || #{search} || '%' OR author LIKE '%' || #{search} || '%')
+    </if>
+	</select>
+
+
 </mapper>

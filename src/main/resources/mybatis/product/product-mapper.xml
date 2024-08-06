@@ -1,6 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="product">
+
+	<!-- 상품 등록 -->
+	<insert id="insertProduct">
+	    INSERT INTO neSavProd (
+	        product_code, product_name, base_rate, goldenball_rate,
+	        subscription_method, subscription_period, accumulated_amount,
+	        termination_conditions, early_fee, product_status,
+	        minimum_deposit, maximum_deposit, start_date, end_date,  
+	        product_description
+	    ) VALUES (
+	        #{productCode}, #{productName}, #{baseRate}, #{goldenballRate},
+	        #{subscriptionMethod}, #{subscriptionPeriod}, 0,
+	        #{terminationConditions}, #{earlyFee}, #{productStatus},
+	        #{minimumDeposit}, #{maximumDeposit}, #{startDate}, NULL,  <!-- end_date를 NULL로 설정(트리거) -->
+	        #{productDescription}
+	    )
+	</insert>
+
+
+    <!-- 모든 상품 정보 가져오기 -->
+    <select id="selectAllProducts" resultType="NeSavProdDTO">
+        SELECT * FROM neSavProd
+    </select>
+
+    <!-- 특정 상품 코드에 따른 상품 정보 가져오기 -->
+    <select id="selectProductByCode" parameterType="NeSavProdDTO" >
+        SELECT * FROM neSavProd
+        WHERE product_code = #{productCode}
+    </select>
+
+
+    <!-- 전 회차 상금 가져오기 -->
+    <select id="selectPreviousRoundPrize" parameterType="NeSavProdDTO" >
+        SELECT product_code, product_name, start_date, end_date
+        FROM neSavProd
+        WHERE subscription_period = #{subscriptionPeriod}
+        AND (start_date = #{startDate} OR end_date = #{endDate})
+    </select>
+
+
+	<!-- 지난 날짜에 따른 이자 포함 총 금액 -->
+	<select id="getTotalAmountWithInterest" parameterType="Map" resultType="Map">
+	    SELECT
+	        nps.subscription_amount,
+	        nps.auto_amount,
+	        (nps.subscription_amount + nps.auto_amount) +
+	        ((nps.subscription_amount + nps.auto_amount) *
+	        (CASE
+	            WHEN #{interestRateType} = 'base_rate' THEN np.base_rate
+	            WHEN #{interestRateType} = 'goldenball_rate' THEN np.goldenball_rate
+	        END / 100) *
+	        (MONTHS_BETWEEN(SYSDATE, nps.subscription_date)) / 12) 
+	        AS total_amount_with_interest
+	    FROM neSavProd np
+	    JOIN nepreSavProd nps ON np.product_code = nps.product_code
+	    WHERE nps.subscription_id = #{subscriptionId}
+	</select>
+
+
+
+	<!-- 해지 시 수수료를 누적금액에 투입 -->
+	<!-- interestRateType 필수 -->
+	<update id="updateAccumulatedAmountOnTermination" parameterType="Map">
+	    UPDATE nepreSavProd
+	    SET accumulated_amount = (
+	        (SELECT
+	            (nps.subscription_amount + nps.auto_amount) +
+	            ((nps.subscription_amount + nps.auto_amount) *
+	            (CASE
+	                WHEN #{interestRateType} = 'base_rate' THEN np.base_rate
+	                WHEN #{interestRateType} = 'goldenball_rate' THEN np.goldenball_rate
+	            END / 100) *
+	            (MONTHS_BETWEEN(SYSDATE, nps.subscription_date)) / 12) 
+	            AS total_amount_with_interest
+	         FROM neSavProd np
+	         JOIN nepreSavProd nps ON np.product_code = nps.product_code
+	         WHERE nps.subscription_id = #{subscriptionId}
+	        ) * (np.early_fee / 100)
+	    )
+	    WHERE subscription_id = #{subscriptionId}
+	</update>
+
+
+
+
+	<!-- 상품 안에 모든정보 수정가능 -->
+	<update id="updateProduct" parameterType="NeSavProdDTO">
+	    UPDATE neSavProd
+	    SET product_name = #{productName},
+	        base_rate = #{baseRate},
+	        goldenball_rate = #{goldenballRate},
+	        subscription_method = #{subscriptionMethod},
+	        subscription_period = #{subscriptionPeriod},
+	        accumulated_amount = #{accumulatedAmount},
+	        termination_conditions = #{terminationConditions},
+	        early_fee = #{earlyFee},
+	        product_status = #{productStatus},
+	        minimum_deposit = #{minimumDeposit},
+	        maximum_deposit = #{maximumDeposit},
+	        start_date = #{startDate, jdbcType=DATE},
+	        product_description = #{productDescription}
+	    WHERE product_code = #{productCode}
+	</update>
+
+
+	<!-- 원하는 상품의 금리 수정 -->
+	<update id="updateProductRates" parameterType="Map">
+	    UPDATE neSavProd
+	    <set>
+	        <if test="base_rate != null">
+	            base_rate = #{base_rate},
+	        </if>
+	        <if test="goldenball_rate != null">
+	            goldenball_rate = #{goldenball_rate},
+	        </if>
+	    </set>
+	    WHERE product_code = #{productCode}
+	</update>
+
+		
+		
+	<!-- 상품의 상태를 가입 기간에 따라 업데이트 -->
+	<update id="updateProductStatus" parameterType="Map">
+	    UPDATE neSavProd
+	    <choose>
+	        <when test="status == '비활성'">
+	            SET product_status = '비활성'
+	            WHERE EXISTS (
+	                SELECT 1
+	                FROM nepreSavProd
+	                WHERE nepreSavProd.product_code = neSavProd.product_code
+	                AND nepreSavProd.termination_date &lt; SYSDATE
+	            )
+	        </when>
+	        <when test="status == '활성'">
+	            SET product_status = '활성'
+	            WHERE EXISTS (
+	                SELECT 1
+	                FROM nepreSavProd
+	                WHERE nepreSavProd.product_code = neSavProd.product_code
+	            )
+	        </when>
+	    </choose>
+	</update>
+
+	
+	<!-- 상품 코드를 통한 상품 삭제 -->
+	<delete id="deleteProductByCode" parameterType="String">
+	  	DELETE FROM neSavProd
+	   	WHERE product_code = #{productCode}
+	</delete>
+	
+	
 </mapper>

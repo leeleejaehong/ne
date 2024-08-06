@@ -1,0 +1,91 @@
+2024-08-02T11:25:07.702+09:00  INFO 8524 --- [neoheulge] [restartedMain] c.e.neoheulge.NeoheulgeApplication       : Starting NeoheulgeApplication using Java 21.0.3 with PID 8524 (E:\jh\springBoot\neoheulge\target\classes started by user in E:\jh\springBoot\neoheulge)
+2024-08-02T11:25:07.703+09:00  INFO 8524 --- [neoheulge] [restartedMain] c.e.neoheulge.NeoheulgeApplication       : No active profile set, falling back to 1 default profile: "default"
+2024-08-02T11:25:07.860+09:00  INFO 8524 --- [neoheulge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-02T11:25:07.861+09:00  INFO 8524 --- [neoheulge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-02T11:25:07.864+09:00  INFO 8524 --- [neoheulge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 JPA repository interfaces.
+2024-08-02T11:25:07.867+09:00  INFO 8524 --- [neoheulge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-02T11:25:07.867+09:00  INFO 8524 --- [neoheulge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-02T11:25:07.869+09:00  INFO 8524 --- [neoheulge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+2024-08-02T11:25:07.907+09:00  WARN 8524 --- [neoheulge] [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.example.neoheulge]' package. Please check your configuration.
+2024-08-02T11:25:07.965+09:00  INFO 8524 --- [neoheulge] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 7080 (http)
+2024-08-02T11:25:07.966+09:00  INFO 8524 --- [neoheulge] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-08-02T11:25:07.967+09:00  INFO 8524 --- [neoheulge] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-08-02T11:25:08.065+09:00  INFO 8524 --- [neoheulge] [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2024-08-02T11:25:08.068+09:00  INFO 8524 --- [neoheulge] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-08-02T11:25:08.068+09:00  INFO 8524 --- [neoheulge] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 363 ms
+2024-08-02T11:25:08.107+09:00  INFO 8524 --- [neoheulge] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2024-08-02T11:25:08.123+09:00  INFO 8524 --- [neoheulge] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection oracle.jdbc.driver.T4CConnection@6ef8f9a4
+2024-08-02T11:25:08.124+09:00  INFO 8524 --- [neoheulge] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2024-08-02T11:25:08.125+09:00  INFO 8524 --- [neoheulge] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-02T11:25:08.127+09:00  INFO 8524 --- [neoheulge] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-08-02T11:25:08.134+09:00  INFO 8524 --- [neoheulge] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-02T11:25:08.137+09:00  WARN 8524 --- [neoheulge] [restartedMain] org.hibernate.dialect.Dialect            : HHH000511: The 11.2.0 version for [org.hibernate.dialect.OracleDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 19.0.0. Check the community dialects project for available legacy versions.
+2024-08-02T11:25:08.151+09:00  INFO 8524 --- [neoheulge] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-02T11:25:08.152+09:00  INFO 8524 --- [neoheulge] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-02T11:25:08.199+09:00  WARN 8524 --- [neoheulge] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-02T11:25:08.207+09:00  WARN 8524 --- [neoheulge] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: fcbf5105-6b57-4b2a-a4b9-fc61015afc74
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-08-02T11:25:08.208+09:00  INFO 8524 --- [neoheulge] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-08-02T11:25:08.216+09:00  INFO 8524 --- [neoheulge] [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-08-02T11:25:08.369+09:00  INFO 8524 --- [neoheulge] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-08-02T11:25:08.382+09:00  INFO 8524 --- [neoheulge] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 7080 (http) with context path '/'
+2024-08-02T11:25:08.386+09:00  INFO 8524 --- [neoheulge] [restartedMain] c.e.neoheulge.NeoheulgeApplication       : Started NeoheulgeApplication in 0.725 seconds (process running for 474.807)
+2024-08-02T11:25:08.388+09:00  INFO 8524 --- [neoheulge] [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2024-08-02T11:25:10.223+09:00  INFO 8524 --- [neoheulge] [http-nio-7080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-02T11:25:10.223+09:00  INFO 8524 --- [neoheulge] [http-nio-7080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-08-02T11:25:10.224+09:00  INFO 8524 --- [neoheulge] [http-nio-7080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2024-08-02T11:25:18.963+09:00  INFO 8524 --- [neoheulge] [RMI TCP Connection(19)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2024-08-02T11:25:18.970+09:00  INFO 8524 --- [neoheulge] [RMI TCP Connection(19)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-02T11:25:18.971+09:00  INFO 8524 --- [neoheulge] [RMI TCP Connection(19)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2024-08-02T11:25:18.975+09:00  INFO 8524 --- [neoheulge] [RMI TCP Connection(19)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
+2024-08-02T11:25:29.137+09:00  INFO 21676 --- [neoheulge] [restartedMain] c.e.neoheulge.NeoheulgeApplication       : Starting NeoheulgeApplication using Java 21.0.3 with PID 21676 (E:\jh\springBoot\neoheulge\target\classes started by user in E:\jh\springBoot\neoheulge)
+2024-08-02T11:25:29.139+09:00  INFO 21676 --- [neoheulge] [restartedMain] c.e.neoheulge.NeoheulgeApplication       : No active profile set, falling back to 1 default profile: "default"
+2024-08-02T11:25:29.180+09:00  INFO 21676 --- [neoheulge] [restartedMain] o.s.b.devtools.restart.ChangeableUrls    : The Class-Path manifest attribute in C:\Users\user\.m2\repository\com\oracle\database\jdbc\ojdbc11\21.9.0.0\ojdbc11-21.9.0.0.jar referenced one or more files that do not exist: file:/C:/Users/user/.m2/repository/com/oracle/database/jdbc/ojdbc11/21.9.0.0/oraclepki.jar
+2024-08-02T11:25:29.181+09:00  INFO 21676 --- [neoheulge] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2024-08-02T11:25:29.181+09:00  INFO 21676 --- [neoheulge] [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2024-08-02T11:25:29.794+09:00  INFO 21676 --- [neoheulge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-02T11:25:29.795+09:00  INFO 21676 --- [neoheulge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-02T11:25:29.807+09:00  INFO 21676 --- [neoheulge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 7 ms. Found 0 JPA repository interfaces.
+2024-08-02T11:25:29.823+09:00  INFO 21676 --- [neoheulge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2024-08-02T11:25:29.824+09:00  INFO 21676 --- [neoheulge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2024-08-02T11:25:29.835+09:00  INFO 21676 --- [neoheulge] [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+2024-08-02T11:25:29.970+09:00  WARN 21676 --- [neoheulge] [restartedMain] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.example.neoheulge]' package. Please check your configuration.
+2024-08-02T11:25:30.474+09:00  INFO 21676 --- [neoheulge] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 7080 (http)
+2024-08-02T11:25:30.486+09:00  INFO 21676 --- [neoheulge] [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-08-02T11:25:30.486+09:00  INFO 21676 --- [neoheulge] [restartedMain] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
+2024-08-02T11:25:30.700+09:00  INFO 21676 --- [neoheulge] [restartedMain] org.apache.jasper.servlet.TldScanner     : At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2024-08-02T11:25:30.707+09:00  INFO 21676 --- [neoheulge] [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-08-02T11:25:30.708+09:00  INFO 21676 --- [neoheulge] [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1526 ms
+2024-08-02T11:25:30.872+09:00  INFO 21676 --- [neoheulge] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-08-02T11:25:31.082+09:00  INFO 21676 --- [neoheulge] [restartedMain] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection oracle.jdbc.driver.T4CConnection@3c7fed7e
+2024-08-02T11:25:31.084+09:00  INFO 21676 --- [neoheulge] [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-08-02T11:25:31.119+09:00  INFO 21676 --- [neoheulge] [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-02T11:25:31.166+09:00  INFO 21676 --- [neoheulge] [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2024-08-02T11:25:31.198+09:00  INFO 21676 --- [neoheulge] [restartedMain] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-08-02T11:25:31.473+09:00  INFO 21676 --- [neoheulge] [restartedMain] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-02T11:25:31.597+09:00  WARN 21676 --- [neoheulge] [restartedMain] org.hibernate.dialect.Dialect            : HHH000511: The 11.2.0 version for [org.hibernate.dialect.OracleDialect] is no longer supported, hence certain features may not work properly. The minimum supported version is 19.0.0. Check the community dialects project for available legacy versions.
+2024-08-02T11:25:31.916+09:00  INFO 21676 --- [neoheulge] [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-02T11:25:31.920+09:00  INFO 21676 --- [neoheulge] [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-02T11:25:32.082+09:00  WARN 21676 --- [neoheulge] [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-02T11:25:32.113+09:00  WARN 21676 --- [neoheulge] [restartedMain] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 8ac42a53-8d35-45a0-b840-14f8fe5882d7
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2024-08-02T11:25:32.126+09:00  INFO 21676 --- [neoheulge] [restartedMain] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2024-08-02T11:25:32.189+09:00  INFO 21676 --- [neoheulge] [restartedMain] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2024-08-02T11:25:32.893+09:00  INFO 21676 --- [neoheulge] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2024-08-02T11:25:32.933+09:00  INFO 21676 --- [neoheulge] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 7080 (http) with context path '/'
+2024-08-02T11:25:32.941+09:00  INFO 21676 --- [neoheulge] [restartedMain] c.e.neoheulge.NeoheulgeApplication       : Started NeoheulgeApplication in 4.137 seconds (process running for 4.863)
+2024-08-02T11:25:35.619+09:00  INFO 21676 --- [neoheulge] [http-nio-7080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-08-02T11:25:35.619+09:00  INFO 21676 --- [neoheulge] [http-nio-7080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-08-02T11:25:35.621+09:00  INFO 21676 --- [neoheulge] [http-nio-7080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2024-08-02T11:30:16.080+09:00  INFO 21676 --- [neoheulge] [File Watcher] rtingClassPathChangeChangedEventListener : Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2024-08-02T11:30:16.100+09:00  INFO 21676 --- [neoheulge] [Thread-7] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2024-08-02T11:30:16.104+09:00  INFO 21676 --- [neoheulge] [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2024-08-02T11:30:16.109+09:00  INFO 21676 --- [neoheulge] [Thread-7] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

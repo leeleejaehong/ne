@@ -119,59 +119,6 @@ footer {
     text-align: center;
 }
 
-/* 상품 스타일 */
-.product-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center; /* 가운데 정렬 */
-}
-
-.product-item {
-    flex: 1;
-    max-width: 300px;
-    text-align: center;
-}
-
-.circle {
-    position: relative;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    border: 5px solid #ddd;
-    margin: 0 auto;
-    overflow: hidden;
-    background-color: #f9f9f9; /* 배경 색상 */
-}
-
-.circle-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* 이미지가 원형을 가득 채우도록 설정 */
-     transition: height 0.5s ease; /* 높이 변화에 애니메이션 적용 */
-}
-
-.amount {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* 중앙 정렬 */
-    color: #333;
-    font-weight: bold;
-    font-size: 1.2em;
-    text-align: center;
-}
-
-
-
-.product-name {
-    margin-top: 10px;
-    font-size: 1.2em;
-    font-weight: bold;
-}
 
 /* 슬라이드쇼 스타일 */
  .slideshow-container {
@@ -326,4 +273,51 @@ footer {
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
     background: #f9f9f9;
+}
+
+        /* 추가된 스타일 */
+.box-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 150px; /* 여기서 간격을 조정하세요. 현재는 30px로 설정되어 있습니다. */
+}
+
+.box-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border: 5px solid #ddd;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.box-fill {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/money.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: translateY(100%);
+    transition: transform 0.5s ease;
+}
+
+.box-label {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #333;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+    z-index: 1;
 }

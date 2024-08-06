@@ -3,7 +3,9 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+##Mac OS metadata file
+.DS_Store
+!src/.DS_Store/
 ### STS ###
 .apt_generated
 .classpath
@@ -12,6 +14,21 @@ target/
 .settings
 .springBeans
 .sts4-cache
+
+### Maven ###
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+# https://github.com/takari/maven-wrapper#usage-without-binary-jar
+.mvn/wrapper/maven-wrapper.jar
+
+
+
 
 ### IntelliJ IDEA ###
 .idea
