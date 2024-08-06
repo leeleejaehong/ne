@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public class Scheduler {
 	@Autowired
 	private SqlSession sqlSession;
+
 	
 //	@Scheduled(cron = "0 0/1 * * * ?") 매분마다 실행
 //	@Scheduled(cron = "0 0 2 * * ?")		//매일 새벽 2시마다 실행
