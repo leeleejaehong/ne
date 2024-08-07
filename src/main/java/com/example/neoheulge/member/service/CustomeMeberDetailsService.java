@@ -21,16 +21,11 @@ public class CustomeMeberDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		CustomMemberDetails user = memberDAO.findById(username);
-		System.out.println("!!!확인");
-		if(username==null) {
+
+		if(user==null) {
 			throw new UsernameNotFoundException(username);
 		}
 		
-		System.out.println("CustomUserDetailsService 들어왔다!!!!!!!!!!!!!!!!");
-		System.out.println(user.getUsername());
-		System.out.println(user.getName());
-		System.out.println(user.getPassword());
-		List<GrantedAuthority> authorities = new ArrayList<>();
-		return new User(user.getUsername(), user.getPassword(), authorities);
+		return new User(user.getUsername(), user.getPassword(), user.getAuthorities());
 	}
 }

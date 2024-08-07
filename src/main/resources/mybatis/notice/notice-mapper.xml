@@ -10,7 +10,7 @@
 
     <insert id="noticeInsert" parameterType="NoticeDTO">
         insert into nenotice values(nenotice_seq.nextval,
-        #{author},#{title},#{content}, sysdate, 0,
+        #{author},#{subject},#{content}, sysdate, 0,
         #{re_step},#{re_level})
     </insert>
 
@@ -31,8 +31,7 @@
     </delete>
 
     <update id="noticeEdit" parameterType="NoticeDTO">
-        update nenotice set
-        title=#{title},content=#{content} where id=#{id}
+        UPDATE nenotice SET subject = #{subject}, content = #{content} WHERE id = #{id}
     </update>
 
 
@@ -40,16 +39,19 @@
         select *
         from nenoticenity
         where
-        <if test="searchType == 'title'">
-            title LIKE '%' || #{search} || '%'
+        <if test="searchType == 'subject'">
+            subject LIKE '%' || #{search} || '%'
         </if>
         <if test="searchType == 'author'">
             author LIKE '%' || #{search} || '%'
         </if>
         <if test="searchType == 'all'">
-            (title LIKE '%' || #{search} || '%' OR author LIKE '%' || #{search} || '%')
+            (subject LIKE '%' || #{search} || '%' OR author LIKE '%' || #{search} || '%')
         </if>
     </select>
 
+    <select id="lastNotice" resultType="NoticeDTO">
+        SELECT * FROM nenotice WHERE id = ( SELECT MAX(id) FROM nenotice )
+    </select>
 
 </mapper>

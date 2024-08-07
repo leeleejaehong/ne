@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <jsp:include page="../header.jsp"/>
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
@@ -68,7 +68,7 @@
                         resultHtml += '전화번호: ' + member.phone + '<br>';
                         resultHtml += '닉네임: ' + member.nickname + '<br>';
                         resultHtml += '이메일: ' + member.email + '<br>';
-                        resultHtml += '<button type ="button"  onclick="doUpdate(\'' + member.memberID + '\')">수정</button>';
+                        resultHtml += '<button type ="button"  onclick="doUpdate(\'' + member.memberID + '\')">회원수정</button>';
                         resultHtml += '<hr>';
                         resultHtml += '</div>';
                     });
@@ -126,6 +126,13 @@
         paginationHtml += '<button onclick="doSearch(' + totalPages + ')"' + (currentPage >= totalPages ? ' disabled' : '') + '>마지막</button>';
 
         $('#pagination').html(paginationHtml);
+    }
+    
+    function doUpdate(memberID) {
+       
+        var updateUrl = '/admin/updateMemberForm.do?memberID=' + encodeURIComponent(memberID);
+
+        window.location.href = updateUrl;
     }
 </script>
 <jsp:include page="../footer.jsp"/>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" type="text/css" href="/css/commu/commuWrite.css">
-    
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%> 
 <!-- writeForm.jsp -->
 <!DOCTYPE html>
 <jsp:include page="../header.jsp"/>
@@ -38,7 +38,7 @@
             </tr>
             <tr>
                 <th>아이디</th>
-                <td><input type="text" name="author" class="box"></td>
+                <td><input type="text" name="author" class="box" value="<sec:authentication property='principal.username'/>" readonly ></td>
             </tr>
             <tr>
                 <th>내 용</th>

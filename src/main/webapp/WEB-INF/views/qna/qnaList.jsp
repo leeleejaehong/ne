@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <jsp:include page="../header.jsp"/>
 <link rel="stylesheet" type="text/css" href="/css/qna/qnaStyle.css">
@@ -18,6 +19,12 @@
                 window.location.href =currentURL;
             }
         }
+        
+        function checkLogin() {
+            alert("로그인이 필요합니다.");
+            window.location.href = "/index.do";
+        
+    }
     </script>
 <div class="qna">
         <h2>고객지원</h2>
@@ -35,7 +42,12 @@
             <table align="right">
                 <tr>
                   <td>
+                  <sec:authorize access="isAuthenticated()">
                    <a href="/qna/qnaWrite.do" class="write-btn">글쓰기</a>
+                  </sec:authorize>
+                  <sec:authorize access="isAnonymous()">
+                    <a href="javascript:void(0);" class="write-btn" onclick="checkLogin()">글쓰기</a>
+                   </sec:authorize>
                   </td>
                 </tr>
             </table>
@@ -59,13 +71,24 @@
                     <tr class="qna-row">
                         <td align="center">${dto.id}</td>
                         <td align="left">
-                            <a href="/qna/qnaContent.do?id=${dto.id}" class="qna-link">${dto.subject}</a>
-                        </td>
-                        <td align="center">${dto.author}</td>
-                        <td align="center">${dto.createtime}</td>
-                        <td align="right">${dto.views}</td>
-                    </tr>
-                </c:forEach>
+                            <!-- 're_level'에 따라 공백 추가 --> <c:choose>
+								<c:when test="${dto.re_level > 0}">
+									<c:forEach var="i" begin="1" end="${dto.re_level}">
+										<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+										<!-- 4 공백 -->
+									</c:forEach>
+									<span>ㄴ[답변]: </span>
+								</c:when>
+								<c:otherwise>
+									<span>[질문] : </span>
+								</c:otherwise>
+							</c:choose> <a href="/qna/qnaContent.do?id=${dto.id}" class="qna-link">${dto.subject}</a>
+						</td>
+						<td align="center">${dto.author}</td>
+						<td align="center">${dto.createtime}</td>
+						<td align="right">${dto.views}</td>
+					</tr>
+				</c:forEach>
                 </tbody>
             </table>
 

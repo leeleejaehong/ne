@@ -8,9 +8,8 @@
 	(memberid,grade,password,name,profile,nickname,email,phone,signup_date)
 	values (#{memberID},#{grade},#{password},#{name},#{profile},#{nickname},
 	#{email},#{phone},sysdate)
-
 	</insert>
 	<select id="findById" parameterType="String" resultType="CustomMemberDetails">
-	select * from nemember where memberID = #{memberID}
+	select memberid, grade as authority, password, name from nemember where memberID = #{memberID}
 	</select>
 </mapper>

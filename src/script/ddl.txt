@@ -1,0 +1,122 @@
+CREATE TABLE nemember (
+    grade            	VARCHAR2(20),              		-- 역할 (예: 관리자/회원)
+    memberID       VARCHAR2(20) PRIMARY KEY,  		-- 회원을 식별하는 고유 식별자
+    password        	VARCHAR2(255),             		-- 회원의 비밀번호
+    name            	VARCHAR2(100) NOT NULL,    		-- 회원의 이름
+    profile 		VARCHAR2(255),             		-- 프로필 사진
+    nickname        VARCHAR2(100),             		-- 회원의 닉네임
+    email           	VARCHAR2(100),             		-- 회원의 이메일 주소
+    phone           	VARCHAR2(20),              		-- 회원의 연락처
+    signup_date     DATE DEFAULT SYSDATE       		-- 회원 가입 날짜 (기본값: 현재 날짜)
+);
+
+CREATE TABLE nepreSavProd (
+    subscription_id         VARCHAR2(20) PRIMARY KEY,       	-- 가입을 식별하는 고유 식별자
+    member_id               VARCHAR2(20) NOT NULL,          	-- 회원 ID (회원 테이블과 외래키 관계)
+    product_code            VARCHAR2(20) NOT NULL,          	-- 상품 코드 (적금상품 테이블과 외래키 관계)
+    subscription_date       DATE DEFAULT SYSDATE,          	 -- 가입일 (기본값: 현재 날짜)
+    subscription_amount     NUMBER(15, 2) NOT NULL,         	-- 가입 금액
+   subscription_select	VARCHAR2(20),				--  # 골든볼/일반
+    termination_date        DATE,                           		-- 해지일 (해지 시 기록)
+    status                  VARCHAR2(20) DEFAULT '활성',  		-- 가입 상태 (예: 활성, 해지)
+    early_refund 		NUMBER(15, 2),          			-- 중도 포기 시 환급 금액
+    total_payment 		NUMBER(15, 2),                  		-- # 지급된 총 금액
+    auto_enabled    CHAR(1) DEFAULT 'Y',            			-- 자동결제 가능 여부 ('Y' or 'N')
+    auto_amount     NUMBER(15, 2),                  			-- 자동결제 금액
+    auto_cycle      VARCHAR2(20),                   			-- 자동결제 주기 (예: '매일', '매주', '매월')
+    auto_account    VARCHAR2(50),                   			-- 자동결제 계좌 정보
+    auto_date       VARCHAR2(10)                    			-- 자동결제 시작일
+);
+
+--시퀀스 생성(상품 코드)
+CREATE SEQUENCE subscription_id_seq
+START WITH 1
+INCREMENT BY 1;
+
+
+CREATE TABLE neSavProd (
+    	product_code         		VARCHAR2(20) PRIMARY KEY,        	-- 고유 식별 번호 또는 코드
+    	product_name         		VARCHAR2(100) NOT NULL,          	-- 적금 상품의 이름
+	product_image			varchar2(50),				--  # 상품 이미지
+    	base_rate   				NUMBER(5, 2),                    		-- 기본 금리
+    	goldenball_rate     			NUMBER(5, 2),                    		-- 골든볼 금리
+    	subscription_method  		VARCHAR2(20),                    		-- 가입 방법 (예: 일/주/달 단위 정기결재)
+    	subscription_period  		VARCHAR2(20),                    		-- 가입 기간 (예: 1개월, 3개월, 6개월, 1년)
+    	accumulated_amount   		NUMBER(15, 2),                   		-- 누적 금액
+    	termination_conditions 		VARCHAR2(2500),                		-- 해지 조건
+    	early_fee 				NUMBER(5, 2),                   		-- 중도 포기 시 수수료
+    	product_status       		VARCHAR2(20) DEFAULT '활성',     	-- 상품 상태 (예: 활성, 비활성)
+    	minimum_deposit      		NUMBER(15, 2),                   		-- 최소 가입 금액
+    	maximum_deposit      		NUMBER(15, 2),                   		-- 최대 가입 금액
+    	start_date 				DATE NOT NULL,                 		-- 상품 시작일
+    	end_date   				DATE NOT NULL,                 		-- 상품 종료일
+    	product_description  		VARCHAR2(2500)                   	-- 상품 설명
+);
+
+--트리거 생성(시작일 입력시 자동으로 종료일 생성)
+CREATE OR REPLACE TRIGGER set_end_date
+BEFORE INSERT OR UPDATE ON neSavProd
+FOR EACH ROW
+BEGIN
+    IF :NEW.start_date IS NOT NULL THEN
+        CASE :NEW.subscription_period
+            WHEN '1년' THEN
+                :NEW.end_date := :NEW.start_date + INTERVAL '1' YEAR;
+            WHEN '6개월' THEN
+                :NEW.end_date := :NEW.start_date + INTERVAL '6' MONTH;
+            WHEN '3개월' THEN
+                :NEW.end_date := :NEW.start_date + INTERVAL '3' MONTH;
+            WHEN '1개월' THEN
+                :NEW.end_date := :NEW.start_date + INTERVAL '1' MONTH;
+        END CASE;
+    END IF;
+END;
+/
+
+--시퀀스 생성(상품 코드)
+CREATE SEQUENCE product_code_seq
+START WITH 1
+INCREMENT BY 1;
+
+CREATE TABLE nenotice (
+    id          NUMBER PRIMARY KEY,          -- 게시물 번호, 기본 키
+    author       VARCHAR2(100),               -- 작성자 이름
+    subject         VARCHAR2(100),        	--  # 게시물 제목
+    content       VARCHAR2(2500),             -- 게시물 내용
+    createtime    DATE NOT NULL,              -- 작성 시간
+    views       NUMBER DEFAULT 0,             -- 조회수
+    re_step       NUMBER DEFAULT 0,           -- 답글의 순서
+    re_level       NUMBER DEFAULT 0           -- 답글의 레벨 (깊이)
+);
+
+--시퀀스 생성(공지)
+create sequence nenotice_seq;
+
+
+CREATE TABLE necommunity (
+    id          NUMBER PRIMARY KEY,          -- 게시물 번호, 기본 키
+    author       VARCHAR2(100),               -- 작성자 이름
+    subject      VARCHAR2(100),        		-- # 게시물 제목
+    content       VARCHAR2(2500),             -- 게시물 내용
+    createtime    DATE NOT NULL,              -- 작성 시간
+    views       NUMBER DEFAULT 0,             -- 조회수
+    re_step       NUMBER DEFAULT 0,           -- 답글의 순서
+    re_level       NUMBER DEFAULT 0           -- 답글의 레벨 (깊이)
+);
+
+--시퀀스 생성(커뮤니티)
+create sequence necommunity_seq;
+
+CREATE TABLE neq_a (
+    id          NUMBER PRIMARY KEY,          -- 게시물 번호, 기본 키
+    author       VARCHAR2(100),               -- 작성자 이름
+    subject      VARCHAR2(100),        		-- # 게시물 제목
+    content       VARCHAR2(2500),             -- 게시물 내용
+    createtime    DATE NOT NULL,              -- 작성 시간
+    views       NUMBER DEFAULT 0,             -- 조회수
+    re_step       NUMBER DEFAULT 0,           -- 답글의 순서
+    re_level       NUMBER DEFAULT 0           -- 답글의 레벨 (깊이)
+);
+
+--시퀀스 생성(Q&A)
+create sequence neq_a_seq;

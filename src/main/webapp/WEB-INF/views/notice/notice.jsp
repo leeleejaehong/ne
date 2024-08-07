@@ -2,22 +2,22 @@
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<link rel="stylesheet" type="text/css" href="/css/notice/noticeInsert.css">
+<link rel="stylesheet" type="text/css" href="/css/notice/notice.css">
 
 <!DOCTYPE html>
 <jsp:include page="../header.jsp"/>
 <div class="container1">
     <form name="f" action="/notice/noticeInsert.do" method="post" onsubmit="return check()">
         <input type="hidden" name="id" value="${getNotice.id}" />
-        <h2>글 쓰 기</h2>
+        <h2>공지사항 작성</h2>
         <table border="1">
             <tr>
                 <th>제 목</th>
-                <td><input type="text" name="title" class="box" size="50"></td>
+                <td><input type="text" name="subject" class="box" size="50"></td>
             </tr>
             <tr>
                 <th>아이디</th>
-                <td><input type="text" name="author" class="box"></td>
+                <td><input type="text" name="author" class="box" value="<sec:authentication property='principal.username'/>" readonly ></td>
             </tr>
             <tr>
                 <th>내 용</th>
@@ -26,7 +26,6 @@
             <tr>
                 <td colspan="2">
                     <input type="submit" value="글쓰기">
-                    <input type="reset" value="다시작성">
                     <input type="button" value="목록보기" onclick="window.location='/notice/noticeList.do'">
                 </td>
             </tr>

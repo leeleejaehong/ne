@@ -35,11 +35,11 @@
 		views = views + 1 where id = #{id}
 	</update>
 	
-	<delete id="QnaDelete" parameterType="int">
+	<delete id="qnaDelete" parameterType="int">
 	delete from neq_a where id = #{id}
 	</delete>
 	
-	<update id="QnaUpdate" parameterType="QnaDTO">
+	<update id="qnaUpdate" parameterType="QnaDTO">
 		update neq_a set
 		subject=#{subject},content=#{content} where id=#{id}
 	</update>

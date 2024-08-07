@@ -46,4 +46,7 @@ public class NoticeService {
         return sqlSession.selectList("searchNoticeList", params);
     }
 
+    public NoticeDTO lastNotice() {
+        return sqlSession.selectOne("lastNotice");
+    }
 }

@@ -2,75 +2,183 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
 <mapper namespace="purproduct">
 
 	<!-- 상품 가입 -->
 	<insert id="insertSubscription" parameterType="Map">
 	    INSERT INTO nepreSavProd (
 	        subscription_id, member_id, product_code, subscription_amount, 
-	        termination_date, status, early_refund, 
+	        subscription_select,termination_date, status, early_refund, 
 	        interest_payment
 	    ) VALUES (
-	        #{subscriptionId}, #{memberId}, #{productCode}, #{subscriptionAmount}, 
-	        #{terminationDate}, #{status}, #{earlyRefund}, 
+	       	subscription_id_seq.nextval, #{memberId}, #{productCode}, #{subscriptionAmount}, 
+	        #{subscription_select}, #{terminationDate}, #{status}, #{earlyRefund}, 
 	        #{interestPayment} 
 	    )
 	</insert>
-	
-	<!-- 결제는 따로 가입 -->	<!-- 자동결제 등록 -->
-<!-- 	<insert id="insertSubscription" parameterType="Map">
- 		INSERT INTO nepreSavProd (
-			auto_enabled, auto_amount, 
-	        auto_cycle, auto_account, auto_date
-	    ) VALUES (
-			#{autoEnabled}, #{autoAmount}, 
-	        #{autoCycle}, #{autoAccount}, #{autoDate}
-	    )
-	</insert> -->
+
 	
 	<!-- 전체정보 가져오기 (회원ID) -->
-	<select id="getAllSubscriptionsByMemberId" parameterType="String" resultType="Map">
+	<select id="getAllSubscriptionsByMemberId" parameterType="String" resultType="NePreSavProdDTO">
 	    SELECT * 
 	    FROM nepreSavProd
 	    WHERE member_id = #{memberId}
 	</select>
 	
-
-	<!-- 만기시 누적금액 골든볼 등록 만기 회원 중 1명 random -->
-	<update id="registerGoldenBallForExpiredSubscriptions" parameterType="Map">
-	    UPDATE nepreSavProd
-	    SET early_refund = accumulated_amount * (goldenball_rate / 100)
-	    WHERE subscription_id = (
-	        SELECT subscription_id
-	        FROM (
-	            SELECT subscription_id
-	            FROM nepreSavProd
-	            WHERE status = 'Active'
-	            AND termination_date &lt;= SYSDATE
-	            ORDER BY DBMS_RANDOM.VALUE
-	        ) WHERE ROWNUM = 1
-	    )
-	</update>
-	
-	<!-- 만기시 기본 이율 반환 -->
-	<select id="getBaseRateForExpiredSubscriptions" parameterType="String" resultType="Double">
-	    SELECT base_rate
-	    FROM neSavProd np
-	    JOIN nepreSavProd nps ON np.product_code = nps.product_code
-	    WHERE nps.subscription_id = #{subscriptionId}
-	    AND nps.termination_date &lt;= SYSDATE
+	<!-- 전체정보 가져오기 (회원ID,상품ID) -->
+	<select id="getAllSubscriptionsIDPROD" parameterType="Map" resultType="NePreSavProdDTO">
+	    SELECT * 
+	    FROM nepreSavProd
+	    WHERE member_id = #{memberId}
+	    AND product_code = #{productCode}
 	</select>
 	
-	<!-- 상품 해지(회원 상태변경, 포기 환급액, 해지 날짜 기록)-->
+	<!-- 상품 해지(회원 상태변경, 포기 환급액, 해지 날짜 기록) -->
 	<update id="terminateSubscription" parameterType="Map">
 	    UPDATE nepreSavProd
 	    SET 
-	        status = 'Terminated',
+	        status = '해지',
 	        termination_date = SYSDATE,
-	        early_refund = (subscription_amount + interest_payment) * (early_fee / 100)
-	    WHERE subscription_id = #{subscriptionId}
+	        early_refund = (subscription_amount + 
+	                        (CASE 
+	                            WHEN auto_cycle = '매일' THEN auto_amount * 30
+	                            WHEN auto_cycle = '매주' THEN auto_amount * 4
+	                            WHEN auto_cycle = '매달' THEN auto_amount
+	                            ELSE 0
+	                         END)
+	                       ) * (1 - (SELECT early_fee FROM neSavProd WHERE product_code = nepreSavProd.product_code) / 100)
+	    WHERE member_id = #{memberId}
 	</update>
+
+
+	<!-- 상품의 종료일이 도래한 경우 골든볼에 대한 처리를 수행 -->
+	<!-- productCode만 주면 됨 -->
+    <update id="allocateGoldenBallAmount" parameterType="Map">
+	    UPDATE nepreSavProd
+	    SET total_payment = NVL(total_payment, 0) + (
+	        SELECT np.accumulated_amount
+	        FROM neSavProd np
+	        WHERE np.product_code = nepreSavProd.product_code
+	    )
+	    WHERE member_id = (
+	        SELECT member_id FROM (
+	            SELECT member_id
+	            FROM nepreSavProd
+	            WHERE product_code = #{productCode}
+	            AND status = '활성'
+	            ORDER BY DBMS_RANDOM.VALUE
+	        ) WHERE ROWNUM = 1
+	    )
+	    AND EXISTS (
+	        SELECT 1 FROM neSavProd
+	        WHERE product_code = #{productCode}
+	        AND end_date = SYSDATE
+	    )
+	</update>
+
+
+
+	<!-- 만기시 골든볼 이율만 반환 -->
+	<!-- memberId,productCode -->
+	<update id="applyGoldenBallRate" parameterType="Map">
+	    UPDATE nepreSavProd
+	    SET total_payment = NVL(total_payment, 0) + (
+	        CASE 
+	            WHEN auto_cycle = '매일' THEN auto_amount * 30
+	            WHEN auto_cycle = '매주' THEN auto_amount * 4
+	            WHEN auto_cycle = '매달' THEN auto_amount
+	            ELSE 0
+	        END * 
+	        (SELECT np.goldenball_rate / 100 
+	         FROM neSavProd np 
+	         WHERE np.product_code = nepreSavProd.product_code) *
+	        (SELECT CASE 
+	            WHEN nps.subscription_period LIKE '%개월%' THEN
+	                TO_NUMBER(SUBSTR(nps.subscription_period, 1, INSTR(nps.subscription_period, '개월') - 1))
+	            WHEN nps.subscription_period LIKE '%년%' THEN
+	                TO_NUMBER(SUBSTR(nps.subscription_period, 1, INSTR(nps.subscription_period, '년') - 1)) * 12
+	            ELSE 0
+	        END
+	        FROM nepreSavProd nps 
+	        WHERE nps.member_id = #{memberId}
+	        AND nps.product_code = #{productCode}
+	        )
+	    )
+	    WHERE member_id = #{memberId}
+	    AND product_code = #{productCode}
+	    AND subscription_select = '골든볼'
+	    AND EXISTS (
+	        SELECT 1 FROM neSavProd np
+	        WHERE np.product_code = nepreSavProd.product_code
+	        AND np.goldenball_rate IS NOT NULL
+	    )
+	</update>
+
+
 	
+	<!-- 기본 이율만 반환 -->
+	<update id="applyBaseRate" parameterType="Map">
+	    UPDATE nepreSavProd
+	    SET total_payment = NVL(total_payment, 0) + (
+	        CASE 
+	            WHEN auto_cycle = '매일' THEN auto_amount * 30
+	            WHEN auto_cycle = '매주' THEN auto_amount * 4
+	            WHEN auto_cycle = '매달' THEN auto_amount
+	            ELSE 0
+	        END * 
+	        (SELECT np.base_rate / 100 
+	         FROM neSavProd np 
+	         WHERE np.product_code = nepreSavProd.product_code) *
+	        (SELECT CASE 
+	            WHEN nps.subscription_period LIKE '%개월%' THEN
+	                TO_NUMBER(SUBSTR(nps.subscription_period, 1, INSTR(nps.subscription_period, '개월') - 1))
+	            WHEN nps.subscription_period LIKE '%년%' THEN
+	                TO_NUMBER(SUBSTR(nps.subscription_period, 1, INSTR(nps.subscription_period, '년') - 1)) * 12
+	            ELSE 0
+	        END
+	        FROM nepreSavProd nps 
+	        WHERE nps.member_id = #{memberId}
+	        AND nps.product_code = #{productCode}
+	        )
+	    )
+	    WHERE member_id = #{memberId}
+	    AND product_code = #{productCode}
+	    AND subscription_select = '기본'
+	    AND EXISTS (
+	        SELECT 1 FROM neSavProd np
+	        WHERE np.product_code = nepreSavProd.product_code
+	        AND np.goldenball_rate IS NOT NULL
+	    )
+	</update>
+
+	
+	<!-- 추가금 넣기 (완성X)-->
+	<update id="AdditionalAmount" parameterType="Map">
+	    UPDATE nepreSavProd
+	    SET total_payment = NVL(total_payment, 0) + (
+	        CASE 
+	            WHEN auto_cycle = '매일' THEN auto_amount * 30
+	            WHEN auto_cycle = '매주' THEN auto_amount * 4
+	            WHEN auto_cycle = '매달' THEN auto_amount
+	            ELSE 0
+	        END
+	    )
+	    WHERE member_id = #{memberId}
+	    AND product_code = #{productCode}
+	</update>
+
+
+	<!-- 결제는 따로 가입 -->	<!-- 자동결제 등록 -->
+ 	<insert id="insertAuto" parameterType="Map">
+ 		INSERT INTO nepreSavProd (
+			auto_enabled, auto_amount, 
+	        auto_cycle, auto_account, auto_date
+	    ) VALUES (
+			'Y', #{autoAmount}, 
+	        #{autoCycle}, #{autoAccount}, #{autoDate}
+	    )
+	</insert>
 
 	
 	<!-- 자동결제 수정 -->
@@ -81,11 +189,12 @@
 	        auto_cycle = #{autoCycle},
 	        auto_account = #{autoAccount},
 	        auto_date = #{autoDate}
-	    WHERE subscription_id = #{subscriptionId}
+	   	WHERE member_id = #{memberId}
+	    AND product_code = #{productCode}
 	</update>
 	
 	<!-- 자동결제 삭제 -->
-	<update id="deleteAutoPayment" parameterType="String">
+	<update id="deleteAutoPayment" parameterType="Map">
 	    UPDATE nepreSavProd
 	    SET 
 	        auto_enabled = 'N',
@@ -93,8 +202,10 @@
 	        auto_cycle = NULL,
 	        auto_account = NULL,
 	        auto_date = NULL
-	    WHERE subscription_id = #{subscriptionId}
+	   	WHERE member_id = #{memberId}
+	    AND product_code = #{productCode}
 	</update>
+
 	
 	
 </mapper>

@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -48,4 +49,15 @@ public class AdminService {
         return admindao.getTotalCount(params);
     }
     
+    public MemberDTO findMemberById(String memberID) {
+    	MemberDTO mdto = admindao.findMember(memberID);
+     System.out.println("memberDATE:"+mdto.getSignup_date());
+    	return admindao.findMember(memberID);
+    }
+    
+    @CacheEvict(value = "members", allEntries = true) // 모든 엔트리 무효화
+    public int updateMember(MemberDTO dto) {
+    	int res = admindao.updateMember(dto);
+    	return res;
+    }
 }

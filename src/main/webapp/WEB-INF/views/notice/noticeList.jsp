@@ -4,7 +4,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <jsp:include page="../header.jsp"/>
-<link rel="stylesheet" type="text/css" href="/css/notice/noticeStyle.css">
+<link rel="stylesheet" type="text/css" href="/css/notice/noticeListStyle.css">
 <script>
     function performSearch() {
         var searchType = document.getElementById("searchType").value;
@@ -27,20 +27,25 @@
     <div class="search-form">
         <select id="searchType">
             <option value="all" <c:if test="${searchType == 'all'}">selected</c:if>>전체</option>
-            <option value="title" <c:if test="${searchType == 'subject'}">selected</c:if>>제목</option>
+            <option value="subject" <c:if test="${searchType == 'subject'}">selected</c:if>>제목</option>
             <option value="author" <c:if test="${searchType == 'author'}">selected</c:if>>작성자</option>
         </select>
         <input type="text" placeholder="검색어를 입력하세요" id="search" value="${search}">
         <button onclick="performSearch()">검색</button>
     </div>
-    <div id="commu">
-        <table align="right">
-            <tr>
-                <td>
-                    <a href="/notice/noticeInsert.do" class="write-btn">글쓰기</a>
-                </td>
-            </tr>
-        </table>
+    <div id="notice">
+        <sec:authorize access="isAuthenticated()">
+            <sec:authentication property="principal.username" var="username" />
+            <c:if test="${username eq 'admin'}">
+                <table align="right">
+                    <tr>
+                        <td>
+                            <a href="/notice/noticeInsert.do" class="write-btn">글쓰기</a>
+                        </td>
+                    </tr>
+                </table>
+            </c:if>
+        </sec:authorize>
         <table class="notice-table">
             <thead>
             <tr class="notice-header">
@@ -61,7 +66,7 @@
                 <tr class="notice-row">
                     <td align="center">${dto.id}</td>
                     <td align="left">
-                        <a href="/notice/noticeView.do?id=${dto.id}" class="notice-link">${dto.title}</a>
+                        <a href="/notice/noticeView.do?id=${dto.id}" class="notice-link">${dto.subject}</a>
                     </td>
                     <td align="center">${dto.author}</td>
                     <td align="center">${dto.createtime}</td>

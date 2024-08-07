@@ -15,11 +15,11 @@ public class PaymentsRequestDTO {
     @NonNull
     private static final String payType = "CARD";
     @NonNull
-    private Long amount; // 가격 정보
+    private Long amount;
     @NonNull
-    private String orderName; // 주문명
+    private String orderName;
 
-    private String mySuccessUrl; // 성공 시 리다이렉트 될 URL
+    private String mySuccessUrl;
     private String myFailUrl;
 
     public Payments toEntity() {

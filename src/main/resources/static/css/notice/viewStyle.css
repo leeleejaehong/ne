@@ -1,0 +1,86 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+}
+
+.notice-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.notice-info {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.notice-info th, .notice-info td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.notice-info th {
+    background-color: #3366cc;
+    color: white;
+    width: 20%;
+}
+
+.content-box {
+    flex-grow: 1;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    overflow-y: auto;
+}
+
+.content-box h3 {
+    margin-top: 0;
+    color: #3366cc;
+}
+
+.notice-content {
+    line-height: 1.6;
+}
+
+.action-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    background-color: #3366cc;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #254e9e;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+}
+
+#dontShowAgain {
+    margin-right: 5px;
+}

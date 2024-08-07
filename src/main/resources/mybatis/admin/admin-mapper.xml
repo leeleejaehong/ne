@@ -58,5 +58,21 @@
             </choose>
         </where>
     </select>
+    <select id ="findMember" parameterType="String" resultType="MemberDTO">
+   SELECT *	FROM nemember WHERE memberid = #{memberID}
+    </select>
+    
+   <update id="updateMember" parameterType="MemberDTO">
+    UPDATE nemember
+    <set>
+        <if test="grade != null">grade = #{grade},</if>
+        <if test="name != null">name = #{name},</if>
+        <if test="profile != null">profile = #{profile},</if>
+        <if test="nickname != null">nickname = #{nickname},</if>
+        <if test="email != null">email = #{email},</if>
+        <if test="phone != null">phone = #{phone},</if>
+    </set>
+    WHERE memberid = #{memberID}
+</update>
 
 </mapper>

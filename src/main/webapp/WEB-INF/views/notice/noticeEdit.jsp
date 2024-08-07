@@ -2,7 +2,7 @@
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<link rel="stylesheet" type="text/css" href="/css/notice/noticeWrite.css">
+<link rel="stylesheet" type="text/css" href="/css/notice/notice.css">
 <!DOCTYPE html>
 <jsp:include page="../header.jsp"/>
 </header>
@@ -15,9 +15,10 @@
         <input type="hidden" name="id" value="${getNotice.id}"/>
         <table class="form-table">
             <tr>
-                <th>제목</th>
-                <td><input type="text" name="title" class="box" size="50" value="${getNotice.title}"></td>
+                <th>제 목</th>
+                <td><input type="text" name="subject" class="box" size="50" value="${getNotice.subject}"></td>
             </tr>
+<%--            value="${getNotice.subject}"--%>
             <tr>
                 <th>이름</th>
                 <td><input type="text" name="author" class="box" value="${getNotice.author}" readonly></td>
@@ -30,7 +31,6 @@
                 <td colspan="2" class="center-align">
                     <div class="btn-group">
                         <input type="submit" value="글 수정">
-                        <input type="reset" value="다시 작성">
                         <input type="button" value="목록 보기" onclick="window.location='/notice/noticeList.do'">
                     </div>
                 </td>

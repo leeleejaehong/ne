@@ -11,13 +11,13 @@ public class CustomMemberDetails implements UserDetails{
 	private String memberID;
 	private String password;
 	private String name;
-	private String AUTHORITY;
+	private String authority;
 	private boolean ENABLED;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-		auth.add(new SimpleGrantedAuthority(AUTHORITY));
+		auth.add(new SimpleGrantedAuthority(authority));
 		return auth;
 	}
 	
@@ -58,4 +58,8 @@ public class CustomMemberDetails implements UserDetails{
 	public void setNAME(String name) {
 		this.name = name;
 	}
+	public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
 }

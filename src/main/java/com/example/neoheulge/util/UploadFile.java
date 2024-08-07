@@ -22,7 +22,9 @@ public class UploadFile {
 	}
 
 	public boolean uploadFile(MultipartFile file) {
+		
 		String fileDir = ""; // 경로 프로퍼티 추가 예정
+		//test url:E:\\jh\\springBoot\\neoheulge\\src\\main\\resources\\static\\img\\
 		UUID uuid = UUID.randomUUID();
 		String[] uuids = uuid.toString().split("-");
 		String uniqueName = uuids[0];

@@ -2,7 +2,10 @@ package com.example.neoheulge.dto;
 
 import java.util.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MemberDTO {
+	private MultipartFile file;
 	private String memberID;
 	private String grade;
 	private String password;
@@ -12,6 +15,12 @@ public class MemberDTO {
 	private String email;
 	private String phone;
 	private Date signup_date;
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 	public String getMemberID() {
 		return memberID;
 	}
