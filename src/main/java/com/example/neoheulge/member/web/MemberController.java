@@ -30,4 +30,9 @@ public class MemberController {
 		memberservice.signupPro(member);
 		return "redirect:/";
 	}
+    
+    @GetMapping("/findid.do")
+    public String findId() {
+    	return "member/findid";
+    }
 }

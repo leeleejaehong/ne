@@ -23,22 +23,33 @@ body {
     box-sizing: border-box;
 }
 
+.commu-container {
+    max-width: 1200px;
+    width: 100%;
+	min-width: 800px;
+    margin: 0 auto;
+    padding: 0 0px;
+    box-sizing: border-box;
+}
+
 .hero-container {
 	display: flex;
     max-width: 1200px;
     width: 100%;
 	min-width: 800px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 0px;
     box-sizing: border-box;
     gap: 20px;
 }
 
 /* 헤더 스타일 */
 header {
-    background: #004d99;
-    color: #fff;
+    background: RGB(198,231,253);
+    color: black;
     padding: 1em 0;
+    
+    
 }
 
 /* 헤더 내 컨테이너 스타일 */
@@ -46,6 +57,7 @@ header .container {
   display: flex;
     justify-content: space-between;
     align-items: center;
+    
 }
 
 /* 헤더 제목 스타일 */
@@ -55,7 +67,7 @@ header h1 {
 
 /* 네비게이션 링크 스타일 */
 nav a {
-    color: #fff;
+    color: black;
     text-decoration: none;
     margin: 0 10px;
     font-weight: bold;
@@ -132,8 +144,8 @@ main {
 
 /* 푸터 스타일 */
 footer {
-    background: #004d99;
-    color: #fff;
+    background: RGB(198,231,253);
+    color: black;
     padding: 1em 0;
     text-align: center;
   
@@ -355,7 +367,7 @@ footer {
 
 @media screen and (min-width: 1201px) {
     body {
-        display: flex;
+      /*   display: flex; */
         flex-direction: column;
         align-items: center;
     }
@@ -363,4 +375,66 @@ footer {
     .container {
         width: 1200px;
     }
+}
+
+.page-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1800px; /* 전체 너비 조정 */
+    margin: 0 auto;
+}
+
+.main-content {
+    flex: 1;
+    max-width: 1200px; /* 기존 컨테이너 최대 너비 */
+    min-width: 1200px; /* 기존 컨테이너 최소 너비 */
+}
+/* 광고  */
+.ad-left, .ad-right {
+	padding-top: 10px;
+	display: none; /* 초기에는 광고를 숨깁니다 */
+    width: 250px;
+    height: 900px;
+    position: sticky;
+    top: 20px; /* 스크롤 시 상단에서 20px 떨어진 위치에 고정 */
+}
+
+.ad-left {
+    margin-right: 20px;
+}
+
+.ad-right {
+    margin-left: 20px;
+}
+
+
+
+
+/* 광고 닫기 버튼  */
+
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.close-btn:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.ad-blocked {
+    background-color: rgba(0, 0, 0, 0.7);
+   	color: #fff;
+    padding: 20px;
+  	border-radius: 5px;
+  	text-align: center; /* 텍스트를 수평으로 중앙 정렬 */
 }

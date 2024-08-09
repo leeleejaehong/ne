@@ -41,10 +41,12 @@
 
     // 페이지 로드 시 초기값 설정
     window.onload = function() {
+       checkAdVisibility();
         // 슬라이드 쇼 초기화
         showSlides(slideIndex);
         autoShowSlides();
 
+        
         // 퍼센트 채우기 초기화
         var initialValues = [
             { amount: 150000, goal: 1000000, fillId: 'box-fill-0', labelId: 'box-label-1' },
@@ -56,7 +58,33 @@
         initialValues.forEach(function(item) {
             updateFill(item.amount, item.goal, item.fillId, item.labelId);
         });
+        
     };
+    
+    function closeAd(adClass) {
+        var hideUntil = new Date().getTime() + (30 * 60 * 1000); // 30분 후
+        localStorage.setItem('hideAdUntil_' + adClass, hideUntil);
+        var adElement = document.querySelector('.' + adClass);
+        adElement.querySelector('.ad-image').style.display = 'none';
+        adElement.querySelector('.ad-blocked').style.display = 'block';
+    }
+
+    function checkAdVisibility() {
+        ['ad-left', 'ad-right'].forEach(function(adClass) {
+            var hideUntil = localStorage.getItem('hideAdUntil_' + adClass);
+            var adElement = document.querySelector('.' + adClass);
+
+            if (hideUntil && new Date().getTime() < hideUntil) {
+                adElement.querySelector('.ad-image').style.display = 'none';
+                adElement.querySelector('.ad-blocked').style.display = 'block';
+                adElement.style.display = 'block'; // 광고를 표시하여 텍스트를 표시
+            } else {
+                adElement.querySelector('.ad-image').style.display = 'block';
+                adElement.querySelector('.ad-blocked').style.display = 'none';
+                adElement.style.display = 'block'; // 광고를 표시
+            }
+        });
+    }
 </script>
 </head>
 <body>
@@ -75,6 +103,16 @@
                 <a href="#products">상품 목록</a>
                 <a href="${pageContext.request.contextPath}/qna/qnaList.do">고객지원</a>
                 <a href="${pageContext.request.contextPath}/admin/adminMember.do">회원관리</a>
+                <a href="${pageContext.request.contextPath}/admin/adminProdcut.do">상품관리</a>
             </nav>
         </div>
     </header>
+    <div class="page-wrapper">
+    <div class="ad-left">
+    <button class="close-btn" onclick="closeAd('ad-left')">X</button>
+    <a href="https://pokemongolive.com/ko" target="_blank">
+        <img src="${pageContext.request.contextPath}/img/poket1.jpg" alt="Left Advertisement" width="250" height="700" class="ad-image">
+    </a>
+    <div class="ad-blocked">30분 동안 광고 차단</div>
+</div>
+    <div class="main-content">

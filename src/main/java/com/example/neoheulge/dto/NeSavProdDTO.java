@@ -1,7 +1,9 @@
 package com.example.neoheulge.dto;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
+
+import org.springframework.web.multipart.MultipartFile;
 
 public class NeSavProdDTO {
 
@@ -21,7 +23,7 @@ public class NeSavProdDTO {
     private Date start_date;
     private Date end_date;
     private String product_description;
-    
+    private MultipartFile file;
     
 	public String getProduct_code() {
 		return product_code;
@@ -118,6 +120,12 @@ public class NeSavProdDTO {
 	}
 	public void setProduct_description(String product_description) {
 		this.product_description = product_description;
+	}
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
     
     

@@ -25,11 +25,11 @@
 
     <!-- 모든 상품 정보 가져오기 -->
     <select id="selectAllProducts" resultType="NeSavProdDTO">
-        SELECT * FROM neSavProd
+        SELECT * FROM neSavProd 
     </select>
 
     <!-- 특정 상품 코드에 따른 상품 정보 가져오기 -->
-    <select id="selectProductByCode" parameterType="NeSavProdDTO" >
+    <select id="selectProductByCode" parameterType="String" resultType="NeSavProdDTO" >
         SELECT * FROM neSavProd
         WHERE product_code = #{productCode}
     </select>
@@ -117,28 +117,11 @@
 
 		
 		
-	<!-- 상품의 상태를 가입 기간에 따라 업데이트 -->
-	<update id="updateProductStatus" parameterType="Map">
-	    UPDATE neSavProd
-	    <choose>
-	        <when test="status == '비활성'">
-	            SET product_status = '비활성'
-	            WHERE EXISTS (
-	                SELECT 1
-	                FROM nepreSavProd
-	                WHERE nepreSavProd.product_code = neSavProd.product_code
-	                AND nepreSavProd.termination_date &lt; SYSDATE
-	            )
-	        </when>
-	        <when test="status == '활성'">
-	            SET product_status = '활성'
-	            WHERE EXISTS (
-	                SELECT 1
-	                FROM nepreSavProd
-	                WHERE nepreSavProd.product_code = neSavProd.product_code
-	            )
-	        </when>
-	    </choose>
+	<!-- 상품 종료시 업데이트 -->
+	<update id="updateProductStatus">
+		UPDATE neSavProd
+		SET product_status = '비활성'
+		WHERE end_date &lt; SYSDATE
 	</update>
 
 	

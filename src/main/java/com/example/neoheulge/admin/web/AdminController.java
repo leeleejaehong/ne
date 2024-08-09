@@ -1,5 +1,7 @@
 package com.example.neoheulge.admin.web;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.neoheulge.admin.service.AdminDAO;
 import com.example.neoheulge.admin.service.AdminService;
 import com.example.neoheulge.dto.MemberDTO;
+import com.example.neoheulge.dto.NeSavProdDTO;
 import com.example.neoheulge.util.UploadFile;
 
 
@@ -103,5 +106,63 @@ public class AdminController {
             model.addAttribute("url", "/admin/updateMemberForm.do?memberID=" + dto.getMemberID());//"/admin/updateMemberForm.do?memberID=" + dto.getMemberID());
         }
         return "message";
+    
 }
+    @GetMapping("/adminProdcut.do")
+    public String adminProd() {
+    	return "admin/addProd";
+    }
+    
+    @PostMapping("/addProdPro.do")
+    public String addProdPro(@ModelAttribute NeSavProdDTO dto, BindingResult result, Model model) {
+    	 UploadFile uploadFile = new UploadFile(); 
+         try { 
+             if (dto.getFile() != null) {
+               if (uploadFile.uploadFile(dto.getFile())) {
+                     dto.setProduct_image(uploadFile.getFullName()); // 새 파일 이름으로 업데이트
+                 } 
+             }  
+        } catch (Exception e) {
+             e.printStackTrace();
+            }
+        
+        	 try { //3자리입력시 반올림
+        	        if (dto.getBase_rate() != null) {
+        	            dto.setBase_rate(dto.getBase_rate().setScale(2, RoundingMode.HALF_UP));
+        	        }
+        	        if (dto.getGoldenball_rate() != null) {
+        	            dto.setGoldenball_rate(dto.getGoldenball_rate().setScale(2, RoundingMode.HALF_UP));
+        	        }
+					
+        	        if (dto.getEarly_fee() != null) {
+        	            dto.setEarly_fee(dto.getEarly_fee().setScale(2, RoundingMode.HALF_UP));
+        	        }
+        	        if (dto.getMaximum_deposit() != null) {
+        	            dto.setMaximum_deposit(dto.getMaximum_deposit().setScale(2, RoundingMode.HALF_UP));
+        	        }
+        	        if (dto.getMinimum_deposit() != null) {
+        	            dto.setMinimum_deposit(dto.getMinimum_deposit().setScale(2, RoundingMode.HALF_UP));
+        	        }
+        	        if (dto.getAccumulated_amount()==null || dto.getAccumulated_amount().equals("")) {
+        	        	dto.setAccumulated_amount(null);
+        	        }
+        	    } catch (NumberFormatException e) {
+        	        e.printStackTrace();
+        	    }
+         
+         if (result.hasErrors()) {
+        	 //System.out.println("date:" + dto.getStart_date());
+             System.out.println("BindingResult 오류");
+            }
+        int res = adminservice.addProd(dto); 
+       
+        if (res > 0) {
+            model.addAttribute("msg", "상품추가 완료");
+            model.addAttribute("url", "/");
+         } else {
+        	 model.addAttribute("msg", "상품추가 실패");
+             model.addAttribute("url", "/");
+         }
+        return "message";
+    }
 }

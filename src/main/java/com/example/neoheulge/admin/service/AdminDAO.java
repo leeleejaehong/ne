@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.neoheulge.dto.MemberDTO;
+import com.example.neoheulge.dto.NeSavProdDTO;
 @Mapper
 public interface AdminDAO {
 
@@ -15,4 +16,5 @@ public interface AdminDAO {
     int getTotalMemberCount();
     MemberDTO findMember(String memberID);
     int updateMember(MemberDTO dto);
+    int addProd(NeSavProdDTO dto);
     }

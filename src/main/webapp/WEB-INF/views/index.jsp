@@ -73,7 +73,7 @@
                         <button type="submit">로그인</button>
                     </form>
                     <div class="links">
-                        <a href="/find-id">아이디 찾기</a> |
+                        <a href="${pageContext.request.contextPath}/member/findid.do">아이디 찾기</a> |
                         <a href="/find-password">비밀번호 찾기</a> |
                         <a href="${pageContext.request.contextPath}/member/signup.do">회원가입</a>
                     </div>
@@ -96,13 +96,15 @@
                     ${dto.accumulated_amount}
                 </div>
             </div>
+            <h2><a href="/product/dd.do?product_code=${dto.product_code}">임시</a></h2>
         </c:forEach>
+
     </div>
 </div>
    
 
     
-        <div class="container">
+        <div class="commu-container">
             <h2>커뮤니티</h2>
             <div class="community-content">
                 <div class="community-posts">

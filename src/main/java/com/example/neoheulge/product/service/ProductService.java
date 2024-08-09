@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.example.neoheulge.dto.NeSavProdDTO;
@@ -21,13 +22,15 @@ public class ProductService {
     }
 
     // 모든 상품 정보 가져오기
+    //윤장호 수정 상품정보가져올때 cache처리해서 가져오기
+    @Cacheable(value = "products")
     public List<NeSavProdDTO> selectAllProducts() {
         return sqlSession.selectList("selectAllProducts");
     }
 
     // 특정 상품 코드에 따른 상품 정보 가져오기
-    public NeSavProdDTO selectProductByCode(Map<String, Object> params) {
-        return sqlSession.selectOne("selectProductByCode", params);
+    public List<NeSavProdDTO> selectProductByCode(String product_code) {
+        return sqlSession.selectList("selectProductByCode", product_code);
     }
 
     // 전 회차 상금 가져오기
@@ -56,8 +59,8 @@ public class ProductService {
     }
 
     // 상품의 상태를 가입 기간에 따라 업데이트
-    public void updateProductStatus(Map<String, Object> params) {
-        sqlSession.update("updateProductStatus", params);
+    public void updateProductStatus() {
+        sqlSession.update("updateProductStatus");
     }
 
     // 상품 코드를 통한 상품 삭제

@@ -27,8 +27,34 @@
     }
     </script>
 <div class="qna">
-        <h2>고객지원</h2>
-        <br>
+    <div class="header-content">
+        <div class="login-form">
+            <sec:authorize access="isAuthenticated()">
+                <h2>로그아웃</h2>
+                <sec:authentication property="principal.Username"/>
+                <form action="<c:url value='/logout' />" method="post">
+                    <button type="submit">로그아웃</button>
+                </form>
+            </sec:authorize>
+            <sec:authorize access="isAnonymous()">
+                <h2>로그인</h2>
+                <form action="<c:url value='/login' />" method="post">
+                    <input type="text" name="username" placeholder="사용자 이름" required>
+                    <input type="password" name="password" placeholder="비밀번호" required>
+                    <button type="submit">로그인</button>
+                </form>
+                <div class="links">
+                    <a href="/find-id">아이디 찾기</a> |
+                    <a href="/find-password">비밀번호 찾기</a> |
+                    <a href="${pageContext.request.contextPath}/member/signup.do">회원가입</a>
+                </div>
+            </sec:authorize>
+        </div>
+        <div class="vanner">
+            <img alt="main" src="${pageContext.request.contextPath}/img/van.jpg" style="width:750px; height: 280px;">
+        </div>
+    </div>
+    <h3>문의사항</h3>
         <div class="search-form">
               <select id="searchType">
             <option value="all" <c:if test="${searchType == 'all'}">selected</c:if>>전체</option>
@@ -96,10 +122,10 @@
                 <div class="pagination">
                        
                     <%
-                        int pageSize = 5;
+                        int pageSize = 15;
                         int currentPage = (request.getParameter("pageNum") != null) ? Integer.parseInt(request.getParameter("pageNum")) : 1;
                         int count = (Integer) request.getAttribute("count");
-                        int pageBlock = 5;
+                        int pageBlock = 15;
                         int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
                         int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
                         int endPage = startPage + pageBlock - 1;

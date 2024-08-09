@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <link rel="stylesheet" type="text/css" href="/css/commu/commuWrite.css">
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%> 
+<link rel="stylesheet" type="text/css" href="/css/commu/commuStyle.css">
+
 <!-- writeForm.jsp -->
 <!DOCTYPE html>
 <jsp:include page="../header.jsp"/>
@@ -25,7 +27,36 @@
 		return true
 	}
 </script>
-<div class="container1">
+
+<div class="qna">
+<div class="header-content">
+        <div class="login-form">
+            <sec:authorize access="isAuthenticated()">
+                <h2>로그아웃</h2>
+                <sec:authentication property="principal.Username"/>
+                <form action="<c:url value='/logout' />" method="post">
+                    <button type="submit">로그아웃</button>
+                </form>
+            </sec:authorize>
+            <sec:authorize access="isAnonymous()">
+                <h2>로그인</h2>
+                <form action="<c:url value='/login' />" method="post">
+                    <input type="text" name="username" placeholder="사용자 이름" required>
+                    <input type="password" name="password" placeholder="비밀번호" required>
+                    <button type="submit">로그인</button>
+                </form>
+                <div class="links">
+                    <a href="/find-id">아이디 찾기</a> |
+                    <a href="/find-password">비밀번호 찾기</a> |
+                    <a href="${pageContext.request.contextPath}/member/signup.do">회원가입</a>
+                </div>
+            </sec:authorize>
+        </div>
+        <div class="vanner">
+            <img alt="main" src="${pageContext.request.contextPath}/img/van.jpg" style="width:750px; height: 280px;">
+        </div>
+    </div>
+    
     <form name="f" action="/commu/commuWrite.do" method="post" onsubmit="return check()">
         <input type="hidden" name="id" value="${getCommu.id}" />
         <input type="hidden" name="re_step" value="${getCommu.re_step}" />
@@ -52,8 +83,7 @@
                 </td>
             </tr>
         </table>
-    </form>
-    
+    </form> 
 </div>
 <jsp:include page="../footer.jsp"/>
 

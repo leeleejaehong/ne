@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+.header-content {
+    display: flex;
+    justify-content: space-between; /* 양쪽에 내용을 분산 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    margin-bottom: 20px; /* 밑에 공간 추가 */
+}
 
 .qna {
     background: #ffffff;
@@ -117,4 +123,71 @@
     background-color: #004d99;
     color: #fff;
     font-weight: bold;
+}
+
+/* 로그인 폼 스타일 */
+.login-form {
+    flex: 0 0 20%;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 240px; /* 원하는 높이로 설정 */
+}
+
+/* 로그인 폼 내부 요소 스타일 */
+.login-form h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.login-form input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.login-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #004d99;
+    color: #fff;
+    font-size: 1em;
+    cursor: pointer;
+
+}
+
+.login-form button:hover {
+    background: #003366;
+}
+
+.login-form .links a {
+    display: inline-block;
+    margin: 5px 0;
+    color: #004d99;
+    text-decoration: none;
+    font-size: 0.8em; /* 링크 텍스트 크기 조정 */
+}
+
+.login-form .links a:hover {
+    text-decoration: underline;
+}
+
+/* 회원가입 및 로그인 섹션 스타일 */
+.register, .login {
+    background: #f1f8e9;
+    padding: 2em 0;
+    text-align: center;
+
+}
+
+.vanner{
+    max-width: 100%; /* 이미지가 너무 크지 않도록 최대 너비 설정 */
+    margin-left: 10px;
+
 }

@@ -74,5 +74,35 @@
     </set>
     WHERE memberid = #{memberID}
 </update>
-
+	<insert id="addProd" parameterType="NeSavProdDTO">
+	    INSERT INTO neSavProd (
+        product_code,
+        product_name,
+        base_rate,
+        goldenball_rate,
+        subscription_method,
+        subscription_period,
+        accumulated_amount,
+        termination_conditions,
+        early_fee,
+        minimum_deposit,
+        maximum_deposit,
+        start_date,
+        product_description
+    ) VALUES (
+       	product_code_seq.NEXTVAL,
+        #{product_name},
+        #{base_rate},
+        #{goldenball_rate},
+        #{subscription_method},
+        #{subscription_period},
+       	NULL,
+        #{termination_conditions},
+        #{early_fee},
+        #{minimum_deposit},
+        #{maximum_deposit},
+        #{start_date, jdbcType=DATE},
+        #{product_description}
+    )
+</insert>
 </mapper>

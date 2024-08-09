@@ -50,11 +50,27 @@ public class PurproductService {
         sqlSession.update("applyBaseRate", params);
     }
 
+    //자동결제가 활성화된 회원 목록을 가져옴
+    public List<Map<String, Object>> getStatusY() {
+        return sqlSession.selectList("getStatusY");
+    }
+    
+    //자동결제가 활성화된 회원 목록을 가져옴
+    public List<Map<String, Object>> getActiveAuto() {
+        return sqlSession.selectList("getActiveAuto");
+    }
+    
     // 추가금 넣기
     public void addAdditionalAmount(Map<String, Object> params) {
         sqlSession.update("AdditionalAmount", params);
     }
+    
+    //날짜 업데이트
+    public void updateAutoDate(Map<String, Object> params) {
+    	sqlSession.update("updateAutoDate",params); 
+    }
 
+    
     // 자동결제 등록
     public void insertAuto(Map<String, Object> params) {
         sqlSession.insert("insertAuto", params);

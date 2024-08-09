@@ -35,9 +35,9 @@
     </update>
 
 
-    <select id="searchnoticeList" parameterType="map" resultType="NoticeDTO">
+    <select id="searchNoticeList" parameterType="map" resultType="NoticeDTO">
         select *
-        from nenoticenity
+        from nenotice
         where
         <if test="searchType == 'subject'">
             subject LIKE '%' || #{search} || '%'

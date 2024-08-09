@@ -151,21 +151,28 @@
 	        AND np.goldenball_rate IS NOT NULL
 	    )
 	</update>
-
 	
-	<!-- 추가금 넣기 (완성X)-->
+		<!-- 활성화된 회원 목록을 가져옴 -->
+    <select id="getStatusY" resultType="Map">
+        SELECT *
+        FROM nepreSavProd
+        WHERE status = '활성'
+    </select>
+
+	<!-- 자동결제가 활성화된 회원 목록을 가져옴 -->
+    <select id="getActiveAuto" resultType="Map">
+        SELECT *
+        FROM nepreSavProd
+        WHERE auto_enabled = 'Y'
+          AND status = '활성'
+    </select>
+    
+	<!-- 추가금 넣기 -->
 	<update id="AdditionalAmount" parameterType="Map">
-	    UPDATE nepreSavProd
-	    SET total_payment = NVL(total_payment, 0) + (
-	        CASE 
-	            WHEN auto_cycle = '매일' THEN auto_amount * 30
-	            WHEN auto_cycle = '매주' THEN auto_amount * 4
-	            WHEN auto_cycle = '매달' THEN auto_amount
-	            ELSE 0
-	        END
-	    )
-	    WHERE member_id = #{memberId}
-	    AND product_code = #{productCode}
+       UPDATE nepreSavProd
+        SET total_payment = NVL(total_payment, 0) + #{additionalAmount}
+        WHERE member_id = #{member_id}
+          AND product_code = #{product_code}
 	</update>
 
 
