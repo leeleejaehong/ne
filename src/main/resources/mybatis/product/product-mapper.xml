@@ -69,13 +69,13 @@
 	<update id="updateAccumulatedAmount" parameterType="Map">
 	    UPDATE neSavProd np
 	    SET np.accumulated_amount = NVL(np.accumulated_amount, 0) + (
-	        (SELECT nps.total_payment
+	        (SELECT nps.subscription_amount
 	         FROM nepreSavProd nps
-	         WHERE nps.member_id = #{memberId}
+	         WHERE nps.member_id = #{member_id}
 	         AND nps.product_code = np.product_code)
 	         * (np.early_fee / 100)
 	    )
-	    WHERE np.product_code = #{productCode}
+	    WHERE np.product_code = #{product_code}
 	</update>
 
 

@@ -1,0 +1,11 @@
+@charset "UTF-8";
+.content_header {
+    margin-bottom: 8px;
+    border-bottom: 2px solid #c0c0c0;
+}
+.login-form {
+	width: 35%; 
+	margin: auto; 
+	margin-top: 2%; 
+	height: 50%;
+}

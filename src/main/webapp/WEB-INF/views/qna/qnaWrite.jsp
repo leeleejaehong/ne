@@ -28,17 +28,30 @@
 	}
 </script>
 <div class="qna">
-<div class="header-content">
+    <div class="header-content">
+        <div class="vanner">
+            <img alt="main" src="${pageContext.request.contextPath}/img/van.jpg" style="width:750px; height: 280px;">
+        </div>
         <div class="login-form">
             <sec:authorize access="isAuthenticated()">
-                <h2>로그아웃</h2>
-                <sec:authentication property="principal.Username"/>
+                <img src="https://blogpfthumb-phinf.pstatic.net/MjAyNDA3MTZfMjAg/MDAxNzIxMTE1NzY3MjY4.ueDvccl7mHx7z0DVBHHqagXj2aoAhIi1uSYaQrufjS4g.1xT_9Yxv4LolXwixUFJ-SEK-Y0z39lD3qbv2YsZbhS4g.JPEG/%EC%96%B4%EB%9E%98%EA%B3%A4.jpeg/%25EC%2596%25B4%25EB%259E%2598%25EA%25B3%25A4.jpeg?type=w161"
+                     alt="프로필 이미지"/>
+                <div class="nick">
+                    <strong class="itemfont col" id="nickNameArea">현재 접속 아이디</strong> <br>
+                    <span class="itemfont col">
+                        <a id="blogDomainChange" onclick="return false;" class="set_domain_btn">
+                        <span class="blog_domain col"> <sec:authentication property="principal.username"/> </span>
+                        <span class ="set_domain_iconcol"></span>
+                        </a>
+                    </span>
+                </div>
                 <form action="<c:url value='/logout' />" method="post">
                     <button type="submit">로그아웃</button>
                 </form>
             </sec:authorize>
             <sec:authorize access="isAnonymous()">
-                <h2>로그인</h2>
+                <h1>neoheulge</h1>
+                <h4>더 안전하고 더 편리하게 </h4>
                 <form action="<c:url value='/login' />" method="post">
                     <input type="text" name="username" placeholder="사용자 이름" required>
                     <input type="password" name="password" placeholder="비밀번호" required>
@@ -50,9 +63,6 @@
                     <a href="${pageContext.request.contextPath}/member/signup.do">회원가입</a>
                 </div>
             </sec:authorize>
-        </div>
-        <div class="vanner">
-            <img alt="main" src="${pageContext.request.contextPath}/img/van.jpg" style="width:750px; height: 280px;">
         </div>
     </div>
 
@@ -73,7 +83,7 @@
             </tr>
             <tr>
                 <th>내 용</th>
-                <td><textarea name="content" rows="11" cols="50" class="box"></textarea></td>
+                <td><textarea name="content" rows="30" cols="50" class="box"></textarea></td>
             </tr>
             <tr>
                 <td colspan="2">
@@ -123,7 +133,7 @@
                     <p>상품4 1,681,500원</p>
                 </div>
             </div>
-        </div>
+    </div>
  </div>
 
 <jsp:include page="../footer.jsp"/>

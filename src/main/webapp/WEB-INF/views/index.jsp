@@ -2,10 +2,13 @@
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <jsp:include page="header.jsp"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index.css">
+<script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
 <script>
      document.addEventListener('DOMContentLoaded', () => {
             // 서버에서 전달받은 공지사항 유무 확인
@@ -29,6 +32,8 @@
     function viewNotice() {
         window.open("${pageContext.request.contextPath}/viewNotice.do", "Notice", "width=400,height=650");
     }
+    
+    
 </script>
 
 <div class="img-container-size">
@@ -40,25 +45,32 @@
    <div class="hero-container">
             <div class="slideshow-container">
                 <div class="slides fade">
-                    <img src="img/images1.jpg" width="100%" height="280">
+                    <img src="img/fast.jpg" width="100%" height="280">
                 </div>
                 <div class="slides fade">
-                    <img src="img/images2.jpg" width="100%" height="280">
+                    <img src="img/adult.jpg" width="100%" height="280">
                 </div>
                 <div class="slides fade">
-                    <img src="img/images3.jpg" width="100%" height="280">
+                    <img src="img/smart.jpg" width="100%" height="280">
+                </div>
+                <div class="slides fade">
+                    <img src="img/year.jpg" width="100%" height="280">
                 </div>
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
             </div>
             <div class="login-form">
                 <sec:authorize access="isAuthenticated()">
-                    <!-- 로그아웃 버튼을 표시합니다. -->
-                    <h2>로그아웃</h2>
-                    <sec:authentication property="principal.Username"/>
+                    <h2>안녕하세요, <sec:authentication property="principal.username"/> 님!</h2>
                     <%-- <sec:authorize access="hasRole('ROLE_1')">
                  	123
                  	</sec:authorize> --%>
+                 	<div>
+                 		<a href="${pageContext.request.contextPath}/member/myPage.do?user=<sec:authentication property="principal.username"/>">
+                 			마이 페이지
+                 		</a>
+                 	</div>
+                 	<div>대표 계좌 잔액 : 100원 </div>
                     <form action="<c:url value='/logout' />" method="post">
                         <button type="submit">로그아웃</button>
                     </form>
@@ -74,7 +86,7 @@
                     </form>
                     <div class="links">
                         <a href="${pageContext.request.contextPath}/member/findid.do">아이디 찾기</a> |
-                        <a href="/find-password">비밀번호 찾기</a> |
+                        <a href="/member/updatepw.do">비밀번호 변경</a> |
                         <a href="${pageContext.request.contextPath}/member/signup.do">회원가입</a>
                     </div>
                 </sec:authorize>
@@ -82,8 +94,7 @@
         </div>
     
 
-   
-
+  <%-- 
             <h2>상품 목록</h2>
             <div class="container">
     <div class="box-wrapper">
@@ -101,38 +112,104 @@
 
     </div>
 </div>
-   
-
+    --%>
     
+       		<h2 class="section-title">적금 상품</h2>
+   			<div class="container">
+                <div class="products">
+                <c:forEach var="dto" items="${prodList}" varStatus="status">
+                    <a href="/product/productDetail.do?product_code=${dto.product_code}">
+                    <div class="product-card">
+                        <div class="product-image">💰</div>
+                        	<div class="product-info">
+                            	<h3 class="product-title"> ${dto.product_name}</h3>
+                            	<h5>누적금액-<fmt:formatNumber value="${dto.accumulated_amount}" type="number" groupingUsed="true"/>원</h5>
+                           		<p class="product-description">
+                           			연 ${dto.base_rate}% 금리, ${dto.subscription_period} 만기, 최소 
+                        			<fmt:formatNumber value="${dto.minimum_deposit}" type="number" groupingUsed="true"/>원부터
+                    			</p>
+                        	</div>
+                    </div>
+                    </a>
+                </c:forEach>
+           		</div>
+            </div>
+
+		
         <div class="commu-container">
-            <h2>커뮤니티</h2>
+		<br>
+		<br>
             <div class="community-content">
                 <div class="community-posts">
                     <div>
                         <h3>공지글</h3>
+                        <table>
+				<thead>
+					<tr class="commu-header">
+						<th>제목</th>
+						<th>작성자</th>
+						<th>작성일</th>
+					</tr>
+				</thead>
+				<tbody>
                         <c:forEach var="dto" items="${noticeList}" varStatus="status">
                             <c:if test="${status.index < 5}">
-                                <p>
+                                <tr>
+                                 <td width="50%">
+                                <span>&nbsp;&nbsp;</span>
                                     <a href="/notice/noticeView.do?id=${dto.id}">
-                                            ${dto.subject}
+                                          ${dto.subject}
                                     </a>
-                                </p>
+                                    </td>
+                                <td align="center" width="25%">
+                                    ${dto.author}
+                                    </td>
+                               <td align="center">
+                                    <fmt:parseDate var="parsedDate" value="${dto.createtime}" pattern="yyyy-MM-dd HH:mm:ss" />
+                        			<fmt:formatDate value="${parsedDate}" pattern="MM-dd HH:mm" />		
+                                   </td>
+                               </tr>
                             </c:if>
                         </c:forEach>
+                        </tbody>
+                        </table>
                     </div>
                 </div>
+                
                 <div class="community-posts">
                     <div>
                         <h3>커뮤니티</h3>
+                        <table>
+				<thead>
+					<tr class="commu-header">
+						<th>제목</th>
+						<th>작성자</th>
+						<th>작성일</th>
+					</tr>
+				</thead>
+				<tbody>
+                        
                         <c:forEach var="dto" items="${commuList}" varStatus="status">
                             <c:if test="${status.index < 5}">
-                                <p>
+                                 <tr>
+                                <td width="50%">
+                                <span>&nbsp;&nbsp;</span>
                                     <a href="/commu/commuContent.do?id=${dto.id}">
-                                            ${dto.subject}
-                                    </a>
-                                </p>
+                                           ${dto.subject}
+                                 </a>
+                                    </td>
+                                    <td align="center" width="25%">
+                                    ${dto.author}
+                                    </td>
+                               <td align="center">
+                                    <fmt:parseDate var="parsedDate" value="${dto.createtime}" pattern="yyyy-MM-dd HH:mm:ss" />
+                        			<fmt:formatDate value="${parsedDate}" pattern="MM-dd HH:mm" />		
+                                   </td>
+                               </tr>
                             </c:if>
                         </c:forEach>
+                         </tbody>
+                        </table>
                     </div>
                 </div>
                 <div class="community-prizes">

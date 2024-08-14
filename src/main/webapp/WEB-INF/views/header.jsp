@@ -7,6 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="_csrf" content="${_csrf.token}">
+    <meta name="_csrf_header" content="${_csrf.headerName}">
     <title>적금 사이트</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/mainStyle.css">
  <script>
@@ -70,20 +72,17 @@
     }
 
     function checkAdVisibility() {
-        ['ad-left', 'ad-right'].forEach(function(adClass) {
-            var hideUntil = localStorage.getItem('hideAdUntil_' + adClass);
-            var adElement = document.querySelector('.' + adClass);
+        var adElement = document.querySelector('.ad-left');
+        var hideUntil = localStorage.getItem('hideAdUntil_ad-left');
 
-            if (hideUntil && new Date().getTime() < hideUntil) {
-                adElement.querySelector('.ad-image').style.display = 'none';
-                adElement.querySelector('.ad-blocked').style.display = 'block';
-                adElement.style.display = 'block'; // 광고를 표시하여 텍스트를 표시
-            } else {
-                adElement.querySelector('.ad-image').style.display = 'block';
-                adElement.querySelector('.ad-blocked').style.display = 'none';
-                adElement.style.display = 'block'; // 광고를 표시
-            }
-        });
+        if (hideUntil && new Date().getTime() < hideUntil) {
+            adElement.querySelector('.ad-image').style.display = 'none';
+            adElement.querySelector('.ad-blocked').style.display = 'block';
+        } else {
+            adElement.querySelector('.ad-image').style.display = 'block';
+            adElement.querySelector('.ad-blocked').style.display = 'none';
+        }
+        adElement.style.display = 'block';
     }
 </script>
 </head>
@@ -100,10 +99,9 @@
             <nav>
                 <a href="${pageContext.request.contextPath}/commu/commuList.do">커뮤니티</a>
                 <a href="${pageContext.request.contextPath}/notice/noticeList.do">공지사항</a>
-                <a href="#products">상품 목록</a>
+                <a href="${pageContext.request.contextPath}/product/productList.do">상품 목록</a>
                 <a href="${pageContext.request.contextPath}/qna/qnaList.do">고객지원</a>
-                <a href="${pageContext.request.contextPath}/admin/adminMember.do">회원관리</a>
-                <a href="${pageContext.request.contextPath}/admin/adminProdcut.do">상품관리</a>
+                <a href="${pageContext.request.contextPath}/admin/adminPage.do">관리자 페이지</a>
             </nav>
         </div>
     </header>

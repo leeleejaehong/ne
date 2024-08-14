@@ -7,6 +7,16 @@
 <link rel="stylesheet"	href="/css/qna/signup.css">
 </head>
 <body>
+<script type="text/javascript">
+	function subForm(){
+		const profile = document.getElementById("profile").value;
+		if(profile == ""){
+			alert("프로필 사진을 넣어주세요");
+		}else{
+			document.frm.submit();
+		}
+	}
+</script>
 	<div align="center" style="margin-top: 50px;">
 		<h1>
 			<span style="font-weight: bold; color: #004d99;">회원가입</span>
@@ -17,7 +27,7 @@
 				<tr>
 					<td>
 						<form action="/member/signupPro.do" method="post"
-							class="form-container">
+							class="form-container" name="frm">
 							<input type="hidden" name="${_csrf.parameterName}"
 								value="${_csrf.token}" />
 							<div class="signForm">
@@ -25,7 +35,7 @@
 								    <tr>
 									<td style="text-align: center;"><label for="profile"
 											style="display: none">프로필 사진</label> <input type="text"
-											id="profile" name="profile" placeholder="프로필 사진"></td>
+											id="profile" name="profile" placeholder="프로필 사진" ></td>
 									</tr>
 									<tr>
 										<td style="text-align: center;"><label for="name"
@@ -61,7 +71,7 @@
 									</tr>
 									<tr>
 										<td style="text-align: center;">
-											<button type="submit">회원가입</button>
+											<button type="button" onclick="subForm()">회원가입</button>
 										</td>
 									</tr>
 								</table>

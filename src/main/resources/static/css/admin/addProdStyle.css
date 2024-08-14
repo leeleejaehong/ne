@@ -1,0 +1,105 @@
+@charset "UTF-8";
+
+/* 상품 추가 페이지 스타일 */
+.add-product-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 2rem;
+    background-color: #f4f4f4;
+}
+
+.add-product-page h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.add-product-page form {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 800px;
+}
+
+.add-product-page table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.add-product-page td {
+    padding: 0.5rem;
+}
+
+.add-product-page label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.add-product-page input[type="text"],
+.add-product-page input[type="date"],
+.add-product-page textarea,
+.add-product-page select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.add-product-page input[type="file"] {
+    margin-bottom: 1rem;
+}
+
+.add-product-page input[type="submit"] {
+    background-color: #004d99;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.add-product-page input[type="submit"]:hover {
+    background-color: #003366;
+}
+
+/* 오류 및 성공 메시지 스타일 */
+.add-product-page .message {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.add-product-page .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.add-product-page .success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* 상품 추가 버튼 스타일 */
+.add-product-page .update-btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.add-product-page .update-btn:hover {
+    background-color: #218838;
+}

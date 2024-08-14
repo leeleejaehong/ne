@@ -36,6 +36,13 @@ public class QnaController {
 	@GetMapping("/qnaList.do")
 	public String qnaList(HttpServletRequest req,@RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "searchType", required = false, defaultValue = "all") String searchType) {
+
+		List<NoticeDTO> noticelist = noticeService.noticeList();
+		req.setAttribute("noticeList", noticelist);
+
+		List<CommuDTO> commulist = commuService.commuList();
+		req.setAttribute("commuList", commulist);
+
 		int pageSize = 15; // 한 페이지당 보여줄 게시물 수
 	    String pageNumStr = req.getParameter("pageNum"); // 현재 페이지 번호를 파라미터로 받아옴
 

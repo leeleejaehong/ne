@@ -105,4 +105,55 @@
         #{product_description}
     )
 </insert>
+<select id ="prodList" resultType="neSavProdDTO">
+	select * from neSavProd
+</select>
+	<select id="prodInfo" resultType="neSavProdDTO" parameterType ="String">
+	select * from neSavProd where product_code=#{product_code}
+	</select>
+	<update id="updateProd" parameterType="neSavProdDTO">
+    UPDATE neSavProd
+    SET 
+        product_name = #{product_name},
+        <if test="product_image != null">
+            product_image = #{product_image},
+        </if>
+        base_rate = #{base_rate},
+        goldenball_rate = #{goldenball_rate},
+        subscription_method = #{subscription_method},
+        subscription_period = #{subscription_period},
+        termination_conditions = #{termination_conditions},
+        minimum_deposit = #{minimum_deposit},
+        maximum_deposit = #{maximum_deposit},
+        start_date = #{start_date, jdbcType=DATE},
+        product_description = #{product_description}
+    WHERE product_code = #{product_code}
+</update>
+<delete id="deleteProd" parameterType="String">
+	Delete from NeSavProd where product_code=#{product_code}
+</delete>
+<delete id ="deleteExpired">
+DELETE FROM NESAVPROD WHERE END_DATE &lt; ADD_MONTHS(SYSDATE,-12)
+</delete>
+<select id="chartList" resultType="neSavProdDTO" parameterType="String">
+<!-- SELECT chart화 쿼리-->
+	   Select
+	    p.product_code,
+	    p.accumulated_amount,
+	    COUNT(s.MEMBER_ID) AS numberOfSubscribers
+	FROM 
+	    neSavProd p
+	LEFT JOIN 
+	    nepreSavProd s 
+	ON 
+	    p.product_code = s.product_code
+	WHERE 
+	    p.product_code = #{product_code}
+	GROUP BY 
+	    p.product_code, p.accumulated_amount
+	ORDER BY 
+	    p.product_code
+
+</select>
+
 </mapper>

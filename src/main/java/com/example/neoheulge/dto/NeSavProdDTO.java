@@ -24,6 +24,7 @@ public class NeSavProdDTO {
     private Date end_date;
     private String product_description;
     private MultipartFile file;
+    private int numberOfSubscribers;
     
 	public String getProduct_code() {
 		return product_code;
@@ -126,6 +127,13 @@ public class NeSavProdDTO {
 	}
 	public void setFile(MultipartFile file) {
 		this.file = file;
+	}
+	
+	public int getNumberOfSubscribers() {
+		return numberOfSubscribers;
+	}
+	public void setNumberOfSubscribers(int numberOfSubscribers) {
+		this.numberOfSubscribers = numberOfSubscribers;
 	}
     
     

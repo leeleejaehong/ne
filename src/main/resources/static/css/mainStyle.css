@@ -13,6 +13,11 @@ body {
     overflow-x: auto;
 } 
 
+a {
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 부모 요소의 텍스트 색상 상속 */
+}
+
 /* 컨테이너 클래스 - 콘텐츠의 최대 너비 제한 */
 .container {
     max-width: 1200px;
@@ -233,6 +238,7 @@ footer {
 }
 
 /* 커뮤니티 섹션 스타일 */
+
 .community {
     padding: 2rem 0;
 }
@@ -242,6 +248,31 @@ footer {
     justify-content: space-between;
     gap: 0;
     height: 100%;
+}
+
+.community-posts table, .community-prizes table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+
+}
+
+.community-posts th, .community-prizes th {
+    background-color: RGB(198, 231, 253);
+    font-weight: bold;
+    border: 1px solid #bbb; /* 테두리 추가 */
+}
+
+
+.community-posts td a, .community-prizes td a {
+    color: #004d99;
+    text-decoration: none;
+  
+}
+
+.community-posts td a:hover, .community-prizes td a:hover {
+    text-decoration: underline;
+    
 }
 
 /* 커뮤니티 포스트 및 상금 정보 스타일 */
@@ -438,3 +469,48 @@ footer {
   	border-radius: 5px;
   	text-align: center; /* 텍스트를 수평으로 중앙 정렬 */
 }
+
+
+
+.products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-image {
+            height: 150px;
+            background-color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .product-description {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }

@@ -1,0 +1,215 @@
+@charset "UTF-8";
+
+
+    :root {
+        --primary-color: #007bff;
+        --secondary-color: #28a745;
+        --text-color: #333;
+        --bg-color: #f8f9fa;
+        --card-bg: #ffffff;
+        --border-radius: 8px;
+    }
+
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .product-header {
+        display: flex;
+        align-items: center;
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        position: relative;
+    }
+
+    .product-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 2rem;
+        border: 3px solid var(--primary-color);
+    }
+
+    .product-title h1 {
+        font-size: 2rem;
+        margin: 0 0 0.5rem;
+        color: var(--primary-color);
+    }
+
+    .status-badge {
+        display: inline-block;
+        background-color: var(--secondary-color);
+        color: white;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .status-badge.inactive {
+        background-color: #dc3545;
+    }
+
+    .product-code {
+        color: #6c757d;
+        font-size: 0.875rem;
+    }
+
+    .signup-container {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .signup-btn {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .signup-btn:hover {
+        background-color: #0056b3;
+    }
+
+	.product-info {
+	    display: grid;
+	    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+	    gap: 1.5rem;
+	    margin-bottom: 2rem;
+	}
+
+    .info-card {
+	    background-color: var(--card-bg);
+	    border-radius: var(--border-radius);
+	    padding: 1.5rem;
+	    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+	    transition: transform 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.info-card:hover {
+	    transform: translateY(-3px);
+	    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+	}
+
+	.info-card h2, .termination-info h2 {
+	    color: var(--primary-color);
+	    margin-top: 0;
+	    font-size: 1.25rem;
+	    margin-bottom: 1rem;
+	    border-bottom: 2px solid var(--primary-color);
+	    padding-bottom: 0.5rem;
+	}
+	
+	.termination-info {
+	    background-color: var(--card-bg);
+	    border-radius: var(--border-radius);
+	    padding: 1.5rem;
+	    margin-bottom: 2rem;
+	    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+	    grid-column: 1 / -1;  /* 전체 너비를 차지하도록 설정 */
+	}
+	
+	.termination-info p {
+	    margin-bottom: 0.5rem;
+	}
+	
+	.termination-info i {
+	    margin-right: 0.5rem;
+	    color: var(--primary-color);
+	}
+
+    .rate {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--secondary-color);
+    }
+
+    .info-card i {
+        margin-right: 0.5rem;
+        color: var(--primary-color);
+    }
+
+    .product-description, .product-progress {
+        background-color: var(--card-bg);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .product-description h2, .product-progress h2 {
+        color: var(--primary-color);
+        margin-top: 0;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .progress-box {
+        background-color: #e9ecef;
+        border-radius: 20px;
+        height: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        margin-top: 1rem;
+    }
+
+    .progress-fill {
+        background-color: var(--secondary-color);
+        height: 100%;
+        width: 0;
+        transition: width 0.5s ease-in-out;
+        border-radius: 20px;
+    }
+
+    .progress-text {
+        position: absolute;
+        top: 0px;
+        left: 1rem;
+        transform: translateY(-50%);
+        color: var(--text-color);
+        font-weight: bold;
+        font-size: 0.875rem;
+    }
+
+    @media (max-width: 768px) {
+        .product-info {
+	        grid-template-columns: 1fr;
+	    }
+	    
+        .product-header {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .product-image {
+            margin-right: 0;
+            margin-bottom: 1rem;
+        }
+
+        .info-card {
+            padding: 1rem;
+        }
+
+        .signup-container {
+            position: static;
+            margin-top: 1rem;
+        }
+    }

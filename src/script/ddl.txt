@@ -120,3 +120,16 @@ CREATE TABLE neq_a (
 
 --시퀀스 생성(Q&A)
 create sequence neq_a_seq;
+
+CREATE TABLE neacount(
+	acount_id		VARCHAR2(20) PRIMARY KEY, 		-- 식별코드
+	acount_number	VARCHAR2(20) NOT NULL,		-- 계좌번호
+	member_id		VARCHAR2(20) NOT NULL,		-- 회원ID
+	money		NUMBER(15),				-- 돈
+	acount_status	CHAR(1) DEFAULT 'N'			-- 주계좌 상태(ex. Y : 주 계좌, N : 주 계좌X)
+);
+
+CREATE SEQUENCE neacount_seq
+START WITH 1
+INCREMENT BY 1;
+

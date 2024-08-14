@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.neoheulge.commu.service.CommuService;
 import com.example.neoheulge.dto.CommuDTO;
+import com.example.neoheulge.dto.NoticeDTO;
+import com.example.neoheulge.notice.service.NoticeService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -22,7 +24,8 @@ public class CommuController {
 
 	@Autowired
 	CommuService commuService;
-	
+	@Autowired
+    private NoticeService noticeService;
 	
 	
 	@GetMapping("/commuList.do")
@@ -54,6 +57,10 @@ public class CommuController {
 	    int startPage = (pageNum - 1) / pageBlock * pageBlock + 1; // 시작 페이지 번호
 	    int endPage = Math.min(startPage + pageBlock - 1, pageCount); // 끝 페이지 번호
 
+	    
+		List<NoticeDTO> noticelist = noticeService.noticeList();
+		req.setAttribute("noticeList", noticelist);
+	    
 	    // 결과를 request에 저장
 	    req.setAttribute("count", totalCount);
 	    req.setAttribute("commuList", paginatedList); // 현재 페이지에 해당하는 게시판 목록
@@ -78,6 +85,13 @@ public class CommuController {
 		        dto.setRe_step(0);
 		        dto.setRe_level(0);
 			}
+			
+			List<NoticeDTO> noticelist = noticeService.noticeList();
+			req.setAttribute("noticeList", noticelist);
+			
+			List<CommuDTO> commulist = commuService.commuList();
+			req.setAttribute("commuList", commulist);
+			
 			req.setAttribute("getCommu",dto);
 			return "commu/commuWrite";
 		
@@ -106,6 +120,12 @@ public class CommuController {
 		int res = commuService.commuViews(id);
 		CommuDTO dto = commuService.getCommu(id);
 		req.setAttribute("getCommu",dto);
+		
+		List<NoticeDTO> noticelist = noticeService.noticeList();
+		req.setAttribute("noticeList", noticelist);
+		
+		List<CommuDTO> commulist = commuService.commuList();
+		req.setAttribute("commuList", commulist);
 
 		return "commu/commuContent";
 	}
@@ -120,6 +140,12 @@ public class CommuController {
 	public String commuUpdateForm(HttpServletRequest req, int id) {
 		CommuDTO dto = commuService.getCommu(id);
 		req.setAttribute("getCommu", dto);
+		
+		List<NoticeDTO> noticelist = noticeService.noticeList();
+		req.setAttribute("noticeList", noticelist);
+		
+		List<CommuDTO> commulist = commuService.commuList();
+		req.setAttribute("commuList", commulist);
 		return "commu/commuUpdate";
 	}
 	

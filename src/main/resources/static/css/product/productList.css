@@ -1,0 +1,138 @@
+@charset "UTF-8";
+
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #f39c12;
+    --background-color: #f5f7fa;
+    --text-color: #333;
+    --card-background: #fff;
+}
+
+
+.section-title {
+    text-align: center;
+    color: var(--primary-color);
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: var(--secondary-color);
+    margin: 10px auto;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-bottom : 20px;
+}
+
+
+.product-card {
+    background-color: var(--card-background);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+
+.product-image {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 64px;
+    height: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-info {
+    padding: 25px;
+}
+
+.product-title {
+    font-size: 24px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.product-info p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.show-details {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.show-details:hover {
+    background-color: #e67e22;
+}
+
+.product-details {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    display: none;
+}
+
+.vanner {
+    flex: 1;
+    max-width: 750px;
+    margin-right: 20px;
+}
+
+.vanner img {
+    width: 100%;
+    height: auto;
+}
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .products {
+        grid-template-columns: 1fr;
+    }
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+    }
+    .vanner, .login-ad-container {
+        width: 100%;
+        max-width: 750px;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .login-form, .ad_container {
+        width: 100%;
+        max-width: 250px;
+        margin: 0 auto 20px;
+    }
+}

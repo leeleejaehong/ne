@@ -17,4 +17,10 @@ public interface AdminDAO {
     MemberDTO findMember(String memberID);
     int updateMember(MemberDTO dto);
     int addProd(NeSavProdDTO dto);
+    List<NeSavProdDTO> prodList();
+    NeSavProdDTO prodInfo(String product_code);
+    int updateProd(NeSavProdDTO dto);
+    int deleteProd(String product_code);
+    public void deleteExpried();
+    List<NeSavProdDTO> chartList(String product_code);
     }
