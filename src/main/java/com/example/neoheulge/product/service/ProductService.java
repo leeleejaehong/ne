@@ -23,7 +23,7 @@ public class ProductService {
 
     // 모든 상품 정보 가져오기
     //윤장호 수정 상품정보가져올때 cache처리해서 가져오기
-    @Cacheable(value = "products")
+    //@Cacheable(value = "products")
     public List<NeSavProdDTO> selectAllProducts() {
         return sqlSession.selectList("selectAllProducts");
     }
