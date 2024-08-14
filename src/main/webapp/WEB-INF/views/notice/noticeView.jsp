@@ -8,11 +8,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>글내용 보기</title>
+   <link rel="stylesheet" type="text/css" href="/css/notice/noticeListStyle.css">
     <link rel="stylesheet" type="text/css" href="/css/notice/noticeViewStyle.css">
 </head>
 <body>
 <jsp:include page="../header.jsp"/>
-<div class="container1">
+<div class="notice">
+<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	<div class="slideshow-container">
+                <div class="slides fade">
+                    <img src="../img/fast.jpg" width="100%" height="280">
+                </div>
+                <div class="slides fade">
+                    <img src="../img/adult.jpg" width="100%" height="280">
+                </div>
+                <div class="slides fade">
+                    <img src="../img/smart.jpg" width="100%" height="280">
+                </div>
+                <div class="slides fade">
+                    <img src="../img/year.jpg" width="100%" height="280">
+                </div>
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+            </div>
     <h2>글내용 보기</h2>
     <table>
         <tr>

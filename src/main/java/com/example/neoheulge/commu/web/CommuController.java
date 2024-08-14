@@ -32,7 +32,7 @@ public class CommuController {
 	public String commuList(HttpServletRequest req, @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "searchType", required = false, defaultValue = "all") String searchType) {
 		
-		int pageSize = 5; // 한 페이지당 보여줄 게시물 수
+		int pageSize = 15; // 한 페이지당 보여줄 게시물 수
 	    String pageNumStr = req.getParameter("pageNum"); // 현재 페이지 번호를 파라미터로 받아옴
 
 	    int pageNum = (pageNumStr == null) ? 1 : Integer.parseInt(pageNumStr); // 현재 페이지 번호, 기본값은 1
@@ -53,7 +53,7 @@ public class CommuController {
 	    List<CommuDTO> paginatedList = list.subList(start, end);
 	    
 	    int pageCount = (int) Math.ceil((double) totalCount / pageSize); // 전체 페이지 수
-	    int pageBlock = 5; // 페이지 블록 사이즈
+	    int pageBlock = 15; // 페이지 블록 사이즈
 	    int startPage = (pageNum - 1) / pageBlock * pageBlock + 1; // 시작 페이지 번호
 	    int endPage = Math.min(startPage + pageBlock - 1, pageCount); // 끝 페이지 번호
 

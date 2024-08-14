@@ -124,7 +124,7 @@
 </div>
     --%>
 
-	<h2 class="section-title">적금 상품</h2>
+	<h2 class="section-title" style="margin-bottom: 8px; border-bottom: 2px solid #c0c0c0;">적금 상품</h2>
 	<div class="container">
 		<div class="products">
 			<c:forEach var="dto" items="${prodList}" varStatus="status">
@@ -158,7 +158,7 @@
 		<div class="community-content">
 			<div class="community-posts">
 				<div>
-					<h3>공지글</h3>
+					<h3 style="margin-bottom: 8px; border-bottom: 2px solid #c0c0c0;">공지사항</h3>
 					<table>
 						<thead>
 							<tr class="commu-header">
@@ -185,11 +185,15 @@
 						</tbody>
 					</table>
 				</div>
+				<div class="button" style="text-align: ceter;">
+				<a href="/notice/noticeList.do">
+				공지사항 바로가기 </a>
+			</div>
 			</div>
 
 			<div class="community-posts">
 				<div>
-					<h3>커뮤니티</h3>
+					<h3 style="margin-bottom: 8px; border-bottom: 2px solid #c0c0c0;">커뮤니티</h3>
 					<table>
 						<thead>
 							<tr class="commu-header">
@@ -217,20 +221,28 @@
 						</tbody>
 					</table>
 				</div>
+				<div class="button" style="text-align: ceter;">
+				<a href="/commu/commuList.do">
+				커뮤니티 바로가기 </a>
+			</div>
 			</div>
 			<div class="community-prizes">
-				<h3>전회차 상금</h3>
+				<h3 style="margin-bottom: 8px; border-bottom: 2px solid #c0c0c0;">전회차
+					상금</h3>
 				<p>상품1 100,000원</p>
 				<p>상품2 145,000원</p>
 				<p>상품3 609,000원</p>
 				<p>상품4 1,681,500원</p>
 			</div>
+			
 		</div>
+		
 	</div>
-	<br><br>
+	
+	<br> <br>
 	<div class="section-main area-banner6">
-		<a href="/quics?page=C063677"> 
-		<img src="https://oimg1.kbstar.com/img/ocommon/o_banner/banner_2022_chatbot2.png "
+		<a href="/quics?page=C063677"> <img
+			src="https://oimg1.kbstar.com/img/ocommon/o_banner/banner_2022_chatbot2.png "
 			alt="챗봇에게 물어봐~ 24시간 간편한 채팅상담 인터넷뱅킹 궁금증을 해결해드려요!">
 
 		</a>

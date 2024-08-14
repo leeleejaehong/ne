@@ -33,7 +33,17 @@
 	width:70%;
 	height:280px;
 }
-
+.button{
+	text-align: center; 
+	padding: 1% 10%; 
+	background-color: #ffffff;  
+    border: 3px solid; 
+    border-image: linear-gradient(to right, #00f, #004d99) 1;
+    border-radius: 10px; 
+    cursor: pointer; 
+    font-size: 20px;
+    color: #6b6b6b;
+}
 
 
 

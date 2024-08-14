@@ -65,9 +65,8 @@
 		</div>
 	</div>
 
-	<div class="commu">
-		<h1>커뮤니티</h1>
-		<br>
+
+		<h3>커뮤니티</h3>
 		<div class="search-form">
 			<select id="searchType">
 				<option value="all"
@@ -81,7 +80,7 @@
 			<button onclick="performSearch()">검색</button>
 		</div>
 		<div id="commu">
-			<table align="right" style="margin-bottom: 20px">
+			<table align="right">
 				<tr>
 					<td><sec:authorize access="isAuthenticated()">
 							<a href="/commu/commuWrite.do" class="write-btn">글쓰기</a>
@@ -130,7 +129,6 @@
 							<td align="right">${dto.views}</td>
 						</tr>
 					</c:forEach>
-
 				</tbody>
 			</table>
 
@@ -138,10 +136,10 @@
 				<div class="pagination">
 
 					<%
-					int pageSize = 5;
+					int pageSize = 15;
 					int currentPage = (request.getParameter("pageNum") != null) ? Integer.parseInt(request.getParameter("pageNum")) : 1;
 					int count = (Integer) request.getAttribute("count");
-					int pageBlock = 5;
+					int pageBlock = 15;
 					int pageCount = count / pageSize + (count % pageSize == 0 ? 0 : 1);
 					int startPage = (currentPage - 1) / pageBlock * pageBlock + 1;
 					int endPage = startPage + pageBlock - 1;
@@ -180,7 +178,6 @@
 				</div>
 			</c:if>
 		</div>
-	</div>
 	 <br>
     <div class="commu-container">
         <div class="community-content">

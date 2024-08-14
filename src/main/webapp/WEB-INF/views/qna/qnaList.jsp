@@ -101,7 +101,7 @@
             <tbody>
             <c:if test="${empty qnaList}">
                 <tr>
-                    <td colspan="4" class="no-data">등록된 문의글이 없습니다.</td>
+                    <td colspan="5" class="no-data">등록된 문의글이 없습니다.</td>
                 </tr>
             </c:if>
             <c:forEach var="dto" items="${qnaList}">

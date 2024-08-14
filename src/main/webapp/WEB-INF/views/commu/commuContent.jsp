@@ -40,16 +40,28 @@
 	
 	<div class="commu">
 	<div class="header-content">
+        <div class="vanner">
+            <img alt="main" src="${pageContext.request.contextPath}/img/van.jpg" style="width:750px; height: 280px;">
+        </div>
         <div class="login-form">
             <sec:authorize access="isAuthenticated()">
-                <h2>로그아웃</h2>
-                <sec:authentication property="principal.Username"/>
+                <img src="https://blogpfthumb-phinf.pstatic.net/MjAyNDA3MTZfMjAg/MDAxNzIxMTE1NzY3MjY4.ueDvccl7mHx7z0DVBHHqagXj2aoAhIi1uSYaQrufjS4g.1xT_9Yxv4LolXwixUFJ-SEK-Y0z39lD3qbv2YsZbhS4g.JPEG/%EC%96%B4%EB%9E%98%EA%B3%A4.jpeg/%25EC%2596%25B4%25EB%259E%2598%25EA%25B3%25A4.jpeg?type=w161"
+                     alt="프로필 이미지"/>
+                <div class="nick">
+                    <strong class="itemfont col" id="nickNameArea">현재 접속 아이디</strong> <br>
+                    <span class="itemfont col">
+                        <a id="blogDomainChange" onclick="return false;" class="set_domain_btn">
+                        <span class="blog_domain col"> <sec:authentication property="principal.username"/> </span>
+                        <span class ="set_domain_iconcol"></span>
+                        </a>
+                    </span>
+                </div>
                 <form action="<c:url value='/logout' />" method="post">
                     <button type="submit">로그아웃</button>
                 </form>
             </sec:authorize>
             <sec:authorize access="isAnonymous()">
-                <h2>로그인</h2>
+                <h4>neoheulge <br> 더 안전하고 더 편리하게</h4>
                 <form action="<c:url value='/login' />" method="post">
                     <input type="text" name="username" placeholder="사용자 이름" required>
                     <input type="password" name="password" placeholder="비밀번호" required>
@@ -62,12 +74,9 @@
                 </div>
             </sec:authorize>
         </div>
-        <div class="vanner">
-            <img alt="main" src="${pageContext.request.contextPath}/img/van.jpg" style="width:750px; height: 280px;">
-        </div>
     </div>
         <h2>글내용 보기</h2>
-        <table>
+        <table class="content-table">
             <tr>
                 <th>글번호</th>
                 <td>${getCommu.id}</td>
@@ -108,34 +117,78 @@
                 </td>
             </tr>
         </table>
-        <div class="commu-container">
+      <div class="commu-container">
         <div class="community-content">
             <div class="community-posts">
                 <div>
                     <h3>공지글</h3>
-                    <c:forEach var="dto" items="${noticeList}" varStatus="status">
-                        <c:if test="${status.index < 5}">
-                            <p>
-                                <a href="/notice/noticeView.do?id=${dto.id}">
-                                        ${dto.subject}
-                                </a>
-                            </p>
-                        </c:if>
-                    </c:forEach>
+                    <table>
+                        <thead>
+                        <tr class="commu-header">
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="dto" items="${noticeList}" varStatus="status">
+                            <c:if test="${status.index < 5}">
+                                <tr>
+                                    <td width="50%">
+                                        <span>&nbsp;&nbsp;</span>
+                                        <a href="/notice/noticeView.do?id=${dto.id}">
+                                                ${dto.subject}
+                                        </a>
+                                    </td>
+                                    <td align="center" width="25%">
+                                            ${dto.author}
+                                    </td>
+                                    <td align="center">
+                                        <fmt:parseDate var="parsedDate" value="${dto.createtime}" pattern="yyyy-MM-dd HH:mm:ss" />
+                                        <fmt:formatDate value="${parsedDate}" pattern="MM-dd HH:mm" />
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
             <div class="community-posts">
                 <div>
                     <h3>커뮤니티</h3>
-                    <c:forEach var="dto" items="${commuList}" varStatus="status">
-                        <c:if test="${status.index < 5}">
-                            <p>
-                                <a href="/commu/commuContent.do?id=${dto.id}">
-                                        ${dto.subject}
-                                </a>
-                            </p>
-                        </c:if>
-                    </c:forEach>
+                    <table>
+                        <thead>
+                        <tr class="commu-header">
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <c:forEach var="dto" items="${commuList}" varStatus="status">
+                            <c:if test="${status.index < 5}">
+                                <tr>
+                                    <td width="50%">
+                                        <span>&nbsp;&nbsp;</span>
+                                        <a href="/commu/commuContent.do?id=${dto.id}">
+                                                ${dto.subject}
+                                        </a>
+                                    </td>
+                                    <td align="center" width="25%">
+                                            ${dto.author}
+                                    </td>
+                                    <td align="center">
+                                        <fmt:parseDate var="parsedDate" value="${dto.createtime}" pattern="yyyy-MM-dd HH:mm:ss" />
+                                        <fmt:formatDate value="${parsedDate}" pattern="MM-dd HH:mm" />
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="community-prizes">

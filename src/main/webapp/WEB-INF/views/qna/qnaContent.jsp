@@ -78,7 +78,7 @@
         </div>
     </div>
     <h2>글내용 보기</h2>
-    <table>
+   <table class="content-table">
         <tr>
             <th>글번호</th>
             <td>${getQna.id}</td>
@@ -124,29 +124,73 @@
             <div class="community-posts">
                 <div>
                     <h3>공지글</h3>
-                    <c:forEach var="dto" items="${noticeList}" varStatus="status">
-                        <c:if test="${status.index < 5}">
-                            <p>
-                                <a href="/notice/noticeView.do?id=${dto.id}">
-                                        ${dto.subject}
-                                </a>
-                            </p>
-                        </c:if>
-                    </c:forEach>
+                    <table>
+                        <thead>
+                        <tr class="commu-header">
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="dto" items="${noticeList}" varStatus="status">
+                            <c:if test="${status.index < 5}">
+                                <tr>
+                                    <td width="50%">
+                                        <span>&nbsp;&nbsp;</span>
+                                        <a href="/notice/noticeView.do?id=${dto.id}">
+                                                ${dto.subject}
+                                        </a>
+                                    </td>
+                                    <td align="center" width="25%">
+                                            ${dto.author}
+                                    </td>
+                                    <td align="center">
+                                        <fmt:parseDate var="parsedDate" value="${dto.createtime}" pattern="yyyy-MM-dd HH:mm:ss" />
+                                        <fmt:formatDate value="${parsedDate}" pattern="MM-dd HH:mm" />
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
             <div class="community-posts">
                 <div>
                     <h3>커뮤니티</h3>
-                    <c:forEach var="dto" items="${commuList}" varStatus="status">
-                        <c:if test="${status.index < 5}">
-                            <p>
-                                <a href="/commu/commuContent.do?id=${dto.id}">
-                                        ${dto.subject}
-                                </a>
-                            </p>
-                        </c:if>
-                    </c:forEach>
+                    <table>
+                        <thead>
+                        <tr class="commu-header">
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <c:forEach var="dto" items="${commuList}" varStatus="status">
+                            <c:if test="${status.index < 5}">
+                                <tr>
+                                    <td width="50%">
+                                        <span>&nbsp;&nbsp;</span>
+                                        <a href="/commu/commuContent.do?id=${dto.id}">
+                                                ${dto.subject}
+                                        </a>
+                                    </td>
+                                    <td align="center" width="25%">
+                                            ${dto.author}
+                                    </td>
+                                    <td align="center">
+                                        <fmt:parseDate var="parsedDate" value="${dto.createtime}" pattern="yyyy-MM-dd HH:mm:ss" />
+                                        <fmt:formatDate value="${parsedDate}" pattern="MM-dd HH:mm" />
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="community-prizes">

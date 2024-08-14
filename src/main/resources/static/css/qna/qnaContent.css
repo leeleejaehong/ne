@@ -1,15 +1,7 @@
 @charset "UTF-8";
 
 /* 컨테이너 스타일 */
-.container1 {
-    background: #ffffff;
-    padding: 2em;
-    margin: 20px auto;
-    border-radius: 8px;
-    width: 80%;
-    max-width: 800px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+
 
 /* 폼 제목 스타일 */
 h2 {
@@ -20,29 +12,29 @@ h2 {
 }
 
 /* 테이블 스타일 */
-table {
+.content-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-th {
+.content-table th {
     background-color: #004d99;
     color: #ffffff;
     padding: 10px;
     text-align: left;
 }
 
-td {
+.content-table td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
     text-align: center;
 }
 
-tr:nth-child(even) {
+.content-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-tr:hover {
+.content-table tr:hover {
     background-color: #f1f1f1;
 }
 

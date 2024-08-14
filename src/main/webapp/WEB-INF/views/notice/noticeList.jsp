@@ -20,7 +20,8 @@
         }
     }
 </script>
-<div class="noticelist">
+
+<div class="notice">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<div class="slideshow-container">
                 <div class="slides fade">
@@ -38,8 +39,7 @@
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
             </div>
-    <h2>공지사항</h2>
-    <br>
+     <h3>공지사항</h3>
     <div class="search-form">
         <select id="searchType">
             <option value="all" <c:if test="${searchType == 'all'}">selected</c:if>>전체</option>
@@ -50,6 +50,7 @@
         <button onclick="performSearch()">검색</button>
     </div>
     <div id="notice">
+  		
         <sec:authorize access="isAuthenticated()">
             <sec:authentication property="principal.username" var="username" />
             <c:if test="${username eq 'admin'}">

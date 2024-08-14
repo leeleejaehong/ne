@@ -2,12 +2,13 @@
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <link rel="stylesheet" type="text/css" href="/css/commu/commuWrite.css">
 <link rel="stylesheet" type="text/css" href="/css/commu/commuStyle.css">
 <!DOCTYPE html>
   <jsp:include page="../header.jsp"/> 
 
- 
     <div class="commu">
     <div class="header-content">
         <div class="vanner">
@@ -46,13 +47,12 @@
             </sec:authorize>
         </div>
     </div>
-</div>
-        <div class="center-align">
-            <h3 class="form-title">글 수정</h3>
-        </div>
+
+  
         <form name="f" action="/commu/commuUpdate.do" method="post" onsubmit="return checkForm()">
             <input type="hidden" name="id" value="${getCommu.id}"/>    
-            <table class="form-table">
+            <h2>글 수 정</h2>
+            <table class="write-table" border="1">
                 <tr>
                     <th>제목</th>
                     <td><input type="text" name="subject" class="box" size="50" value="${getCommu.subject}"></td>
@@ -75,37 +75,81 @@
                     </td>
                 </tr>
             </table>
-        </form>
+            </form>
 <div class="commu-container">
-    <div class="community-content">
-        <div class="community-posts">
-            <div>
-                <h3>공지글</h3>
-                <c:forEach var="dto" items="${noticeList}" varStatus="status">
-                    <c:if test="${status.index < 5}">
-                        <p>
-                            <a href="/notice/noticeView.do?id=${dto.id}">
-                                    ${dto.subject}
-                            </a>
-                        </p>
-                    </c:if>
-                </c:forEach>
+        <div class="community-content">
+            <div class="community-posts">
+                <div>
+                    <h3>공지글</h3>
+                    <table>
+                        <thead>
+                        <tr class="commu-header">
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="dto" items="${noticeList}" varStatus="status">
+                            <c:if test="${status.index < 5}">
+                                <tr>
+                                    <td width="50%">
+                                        <span>&nbsp;&nbsp;</span>
+                                        <a href="/notice/noticeView.do?id=${dto.id}">
+                                                ${dto.subject}
+                                        </a>
+                                    </td>
+                                    <td align="center" width="25%">
+                                            ${dto.author}
+                                    </td>
+                                    <td align="center">
+                                        <fmt:parseDate var="parsedDate" value="${dto.createtime}" pattern="yyyy-MM-dd HH:mm:ss" />
+                                        <fmt:formatDate value="${parsedDate}" pattern="MM-dd HH:mm" />
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <div class="community-posts">
-            <div>
-                <h3>커뮤니티</h3>
-                <c:forEach var="dto" items="${commuList}" varStatus="status">
-                    <c:if test="${status.index < 5}">
-                        <p>
-                            <a href="/commu/commuContent.do?id=${dto.id}">
-                                    ${dto.subject}
-                            </a>
-                        </p>
-                    </c:if>
-                </c:forEach>
+
+            <div class="community-posts">
+                <div>
+                    <h3>커뮤니티</h3>
+                    <table>
+                        <thead>
+                        <tr class="commu-header">
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <c:forEach var="dto" items="${commuList}" varStatus="status">
+                            <c:if test="${status.index < 5}">
+                                <tr>
+                                    <td width="50%">
+                                        <span>&nbsp;&nbsp;</span>
+                                        <a href="/commu/commuContent.do?id=${dto.id}">
+                                                ${dto.subject}
+                                        </a>
+                                    </td>
+                                    <td align="center" width="25%">
+                                            ${dto.author}
+                                    </td>
+                                    <td align="center">
+                                        <fmt:parseDate var="parsedDate" value="${dto.createtime}" pattern="yyyy-MM-dd HH:mm:ss" />
+                                        <fmt:formatDate value="${parsedDate}" pattern="MM-dd HH:mm" />
+                                    </td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
         <div class="community-prizes">
             <h3>전회차 상금</h3>
             <p>상품1 100,000원</p>
@@ -114,6 +158,7 @@
             <p>상품4 1,681,500원</p>
         </div>
     </div>
+</div>
 </div>
 
     <script type="text/javascript">

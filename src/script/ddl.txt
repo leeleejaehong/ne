@@ -21,7 +21,7 @@ CREATE TABLE nepreSavProd (
     status                  VARCHAR2(20) DEFAULT '활성',  		-- 가입 상태 (예: 활성, 해지)
     early_refund 		NUMBER(15, 2),          			-- 중도 포기 시 환급 금액
     total_payment 		NUMBER(15, 2),                  		-- # 지급된 총 금액
-    auto_enabled    CHAR(1) DEFAULT 'Y',            			-- 자동결제 가능 여부 ('Y' or 'N')
+    auto_enabled    CHAR(1) DEFAULT 'N',            			-- 자동결제 가능 여부 ('Y' or 'N')
     auto_amount     NUMBER(15, 2),                  			-- 자동결제 금액
     auto_cycle      VARCHAR2(20),                   			-- 자동결제 주기 (예: '매일', '매주', '매월')
     auto_account    VARCHAR2(50),                   			-- 자동결제 계좌 정보

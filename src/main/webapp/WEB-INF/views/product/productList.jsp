@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
-<link rel="stylesheet" type="text/css" href="/css/member/myStyle.css">
+<link rel="stylesheet" type="text/css" href="/css/product/ProductStyle.css">
 <link rel="stylesheet" type="text/css" href="/css/product/productList.css">
 
 <div class="myPage">

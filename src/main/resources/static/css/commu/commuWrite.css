@@ -20,19 +20,19 @@ h2 {
 }
 
 /* 테이블 스타일 */
-table {
+.write-table {
     width: 100%;
     border-collapse: collapse;
 }
 
-th {
+.write-table th {
     background-color: #004d99;
     color: #ffffff;
     padding: 10px;
     text-align: left;
 }
 
-td {
+.write-table td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
 }
