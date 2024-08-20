@@ -119,9 +119,12 @@
 		
 	<!-- 상품 종료시 업데이트 -->
 	<update id="updateProductStatus">
-		UPDATE neSavProd
-		SET product_status = '비활성'
-		WHERE end_date &lt; SYSDATE
+		UPDATE neSavProd np
+		JOIN nepreSavProd nps ON np.product_code = nps.product_code
+		SET 
+		    np.product_status = '비활성',
+		    nps.status = '만기'
+		WHERE np.end_date &lt; SYSDATE;
 	</update>
 
 	

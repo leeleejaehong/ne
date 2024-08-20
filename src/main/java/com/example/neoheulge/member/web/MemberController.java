@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.neoheulge.acount.service.AcountService;
 import com.example.neoheulge.dto.MemberDTO;
+import com.example.neoheulge.dto.NeAcountDTO;
 import com.example.neoheulge.dto.NePreSavProdDTO;
 import com.example.neoheulge.member.service.MemberService;
 import com.example.neoheulge.purproduct.service.PurproductService;
@@ -27,10 +29,16 @@ import jakarta.servlet.http.HttpServletRequest;
 public class MemberController {
 	@Autowired
 	private MemberService memberservice;
+	
 	@Autowired
 	private SmsUtil sms;
+	
 	@Autowired
 	PurproductService purproductService;
+	
+	@Autowired
+	AcountService acountService;
+	
 	@GetMapping("/login.do")
 	public String login() {
 		return "member/login";
@@ -63,11 +71,15 @@ public class MemberController {
     public String myPage(HttpServletRequest req,NePreSavProdDTO dto,
     		@RequestParam String user) {
     	dto.setMember_id(user);
+    	System.out.println(user);
     	
     	List<Map<String, Object>> getByMemberId = purproductService.getByMemberId(dto);
     	req.setAttribute("getByMemberId", getByMemberId);
     	
-    	System.out.println(user);
+    	List<NeAcountDTO> acount = acountService.getAccountsByMemberId(user);
+    	req.setAttribute("acount", acount);
+    	System.out.println(acount);
+    	
     	return "member/myPage";
     }
     

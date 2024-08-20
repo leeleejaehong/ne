@@ -9,20 +9,20 @@
         --card-bg: #ffffff;
         --border-radius: 8px;
     }
-
+/* 
     body {
         font-family: 'Arial', sans-serif;
         background-color: var(--bg-color);
         color: var(--text-color);
         line-height: 1.6;
-    }
-
+    } */
+/* 
     .container {
         max-width: 1140px;
         margin: 0 auto;
         padding: 2rem 1rem;
     }
-
+ */
     .product-header {
         display: flex;
         align-items: center;
@@ -94,6 +94,7 @@
 	    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 	    gap: 1.5rem;
 	    margin-bottom: 2rem;
+	    padding: 0;
 	}
 
     .info-card {

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="../header.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html>
 <link rel="stylesheet" type="text/css" href="/css/product/ProductStyle.css">
@@ -45,72 +46,30 @@
     </div>
 
     <h2 class="section-title">적금 상품</h2>
+        
+    
     <div class="products">
+    <c:forEach var="dto" items="${product}">
         <div class="product-card">
             <div class="product-image">💰</div>
             <div class="product-info">
-                <a class="product-title" href="productDetail.do">초단기 적금</a>
-                <p><strong>금리:</strong> 연 3.5%</p>
-                <p><strong>만기:</strong> 12개월</p>
-                <p><strong>최소금액:</strong> 10만원부터</p>
+                <a class="product-title" href="productDetail.do">${dto.product_name}</a>
+                <p><strong>기본 금리:</strong> ${dto.base_rate}</p>
+                <p><strong>골든볼 금리:</strong> ${dto.goldenball_rate}</p>
+                <p><strong>만기:</strong> ${dto.subscription_period}</p>
+                <p><strong>최소금액:</strong> ${dto.minimum_deposit}</p>
                 <button class="show-details" onclick="toggleDetails(this)">상세 정보</button>
                 <div class="product-details">
-                    <p><strong>월 납입액:</strong> 10만원 ~ 300만원</p>
-                    <p><strong>중도해지 금리:</strong> 기본금리의 50%</p>
-                    <p><strong>특징:</strong> 스마트폰 앱을 통한 간편 가입 및 관리</p>
+                    <p><strong>월 납입액:</strong> ${dto.minimum_deposit}원 ~ ${dto.maximum_deposit}원</p>
+                    <p><strong>중도해지 금리:</strong> 전체의 ${dto.early_fee}%</p>
+                    <p><strong>상품설명:</strong> ${dto.product_description}</p>
                 </div>
             </div>
         </div>
-
-        <div class="product-card">
-            <div class="product-image">💰</div>
-            <div class="product-info">
-                <a class="product-title" href="productDetail.do">청년 적금</a>
-                <p><strong>금리:</strong> 연 3.5%</p>
-                <p><strong>만기:</strong> 12개월</p>
-                <p><strong>최소금액:</strong> 10만원부터</p>
-                <button class="show-details" onclick="toggleDetails(this)">상세 정보</button>
-                <div class="product-details">
-                    <p><strong>월 납입액:</strong> 10만원 ~ 300만원</p>
-                    <p><strong>중도해지 금리:</strong> 기본금리의 50%</p>
-                    <p><strong>특징:</strong> 스마트폰 앱을 통한 간편 가입 및 관리</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <div class="product-image">💰</div>
-            <div class="product-info">
-                <a class="product-title" href="productDetail.do">스마트 적금</a>
-                <p><strong>금리:</strong> 연 3.5%</p>
-                <p><strong>만기:</strong> 12개월</p>
-                <p><strong>최소금액:</strong> 10만원부터</p>
-                <button class="show-details" onclick="toggleDetails(this)">상세 정보</button>
-                <div class="product-details">
-                    <p><strong>월 납입액:</strong> 10만원 ~ 300만원</p>
-                    <p><strong>중도해지 금리:</strong> 기본금리의 50%</p>
-                    <p><strong>특징:</strong> 스마트폰 앱을 통한 간편 가입 및 관리</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="product-card">
-            <div class="product-image">💰</div>
-            <div class="product-info">
-                <a class="product-title" href="productDetail.do">연간 목표 달성 적금</a>
-                <p><strong>금리:</strong> 연 3.5%</p>
-                <p><strong>만기:</strong> 12개월</p>
-                <p><strong>최소금액:</strong> 10만원부터</p>
-                <button class="show-details" onclick="toggleDetails(this)">상세 정보</button>
-                <div class="product-details">
-                    <p><strong>월 납입액:</strong> 10만원 ~ 300만원</p>
-                    <p><strong>중도해지 금리:</strong> 기본금리의 50%</p>
-                    <p><strong>특징:</strong> 스마트폰 앱을 통한 간편 가입 및 관리</p>
-                </div>
-            </div>
-        </div>
-        <!-- 다른 상품들도 위와 같은 구조로 추가 -->
+	 </c:forEach>
+        
     </div>
+   
     <div class="commu-container">
         <div class="community-content">
             <div class="community-posts">

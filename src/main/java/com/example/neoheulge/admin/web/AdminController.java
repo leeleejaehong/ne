@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.neoheulge.admin.service.AdminDAO;
@@ -42,6 +43,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import jakarta.servlet.ServletContext;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -50,7 +53,12 @@ public class AdminController {
 	@Autowired 
 	private AdminService adminservice;
 	
-	private UploadFile uploadFile;
+
+	@Autowired
+	ServletContext servletcontext;
+
+	
+	
 	
     @GetMapping("/adminMember.do")
     public String adminMember() {
@@ -133,14 +141,15 @@ public class AdminController {
     }
     
     @PostMapping("/addProdPro.do")
-    public String addProdPro(@ModelAttribute NeSavProdDTO dto, BindingResult result, Model model) {
-    	 UploadFile uploadFile = new UploadFile(); 
+    public String addProdPro(@RequestParam(name = "file", required = false) MultipartFile mf,@ModelAttribute NeSavProdDTO dto, BindingResult result, Model model) {
          try { 
-             if (dto.getFile() != null) {
-               if (uploadFile.uploadFile(dto.getFile())) {
-                     dto.setProduct_image(uploadFile.getFullName()); // 새 파일 이름으로 업데이트
-                 } 
-             }  
+        	 String filename = mf.getOriginalFilename();
+	            String path = servletcontext.getRealPath("/img");
+	            File file = new File(path, filename);
+	            mf.transferTo(file);
+
+	            dto.setProduct_image(filename); // 새 파일 이름으로 업데이트
+
         } catch (Exception e) {
              e.printStackTrace();
             }
@@ -197,14 +206,24 @@ public class AdminController {
     	model.addAttribute("PDTO", PDTO);
     	return "admin/updateProd";
     }
+    
+    
     @PostMapping("/updateProdOk.do")
-    public String updateProdOk(@ModelAttribute NeSavProdDTO dto, BindingResult result, Model model) {
-    	 UploadFile uploadFile = new UploadFile(); 
+    public String updateProdOk(@RequestParam(name = "file", required = false) MultipartFile mf, 
+			@RequestParam("previousImg") String previousImg,@ModelAttribute NeSavProdDTO dto, BindingResult result, Model model) {
+    	 
          try { 
-             if (dto.getFile() != null) {
-               if (uploadFile.uploadFile(dto.getFile())) {
-                     dto.setProduct_image(uploadFile.getFullName()); // 새 파일 이름으로 업데이트
-                 } 
+        	 if (mf != null && !mf.isEmpty()) {
+		            // 새로운 이미지가 업로드된 경우 처리
+		            String filename = mf.getOriginalFilename();
+		            String path = servletcontext.getRealPath("/img");
+		            File file = new File(path, filename);
+		            mf.transferTo(file);
+
+		            dto.setProduct_image(filename); // 새 파일 이름으로 업데이트
+                 }else {
+                	 dto.setProduct_image(previousImg); // 새 파일 이름으로 업데이트
+                	 
              }  
         } catch (Exception e) {
              e.printStackTrace();

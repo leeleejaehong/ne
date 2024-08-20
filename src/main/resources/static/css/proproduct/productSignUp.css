@@ -1,13 +1,13 @@
 @charset "UTF-8";
 
 
-        .main-content {
+        .sign-content {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+            box-shadow: 0 1px 5px #555;
+            margin-top: 2rem;
+          	padding: 10px;
+           
+        } 
 
         section {
             margin-bottom: 2rem;
@@ -29,7 +29,7 @@
         }
 
         input, select {
-            width: 100%;
+            
             padding: 0.5rem;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -43,7 +43,6 @@
             padding: 0.75rem 1.5rem;
             font-size: 1rem;
             border-radius: 4px;
-            cursor: pointer;
             transition: background-color 0.3s;
         }
 

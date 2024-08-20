@@ -78,6 +78,7 @@
 	    INSERT INTO neSavProd (
         product_code,
         product_name,
+        product_image,
         base_rate,
         goldenball_rate,
         subscription_method,
@@ -92,6 +93,7 @@
     ) VALUES (
        	product_code_seq.NEXTVAL,
         #{product_name},
+        #{product_image},
         #{base_rate},
         #{goldenball_rate},
         #{subscription_method},

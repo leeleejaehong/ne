@@ -13,9 +13,10 @@
 </head>
 
     <!-- 헤더 include -->
-    <%@ include file="../header.jsp" %>
+<jsp:include page="../header.jsp" />
 
 
+<div class="sign-content">
         <section id="product-info">
             <h2>상품 정보</h2>
             <p><span class="icon">💰</span> 기본 이율: ${product.base_rate} %</p>
@@ -58,15 +59,13 @@
                 <p>네, 고객센터를 통해 월 납입일 변경이 가능합니다.</p>
             </details>
         </section>
+        </div>
 
 
 	
 
-    <%@ include file="../footer.jsp" %>
+   <jsp:include page="../footer.jsp" />
 
-    <script>
-        
 
-    </script>
 
 </html>

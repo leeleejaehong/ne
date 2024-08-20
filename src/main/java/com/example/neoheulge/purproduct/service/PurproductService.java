@@ -71,8 +71,8 @@ public class PurproductService {
 
     
     // 자동결제 등록
-    public void insertAuto(Map<String, Object> params) {
-        sqlSession.insert("insertAuto", params);
+    public void insertAuto(NePreSavProdDTO dto) {
+        sqlSession.insert("insertAuto", dto);
     }
 
     // 자동결제 수정

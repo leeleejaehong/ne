@@ -26,7 +26,7 @@
 	    JOIN neSavProd ns
 	    ON nsp.product_code = ns.product_code
 	    WHERE nsp.member_id = #{member_id}
-	    AND nsp.status IN ('활성', '해지')
+	    AND nsp.status IN ('활성', '해지', '만기')
 	</select>
 	
 	<!-- 전체정보 가져오기 (회원ID,상품ID) -->
@@ -177,7 +177,7 @@
 
 
 	<!-- 결제는 따로 가입 -->	<!-- 자동결제 등록 -->
- 	<insert id="insertAuto" parameterType="Map">
+ 	<insert id="insertAuto" parameterType="NePreSavProdDTO">
  		INSERT INTO nepreSavProd (
 			auto_enabled, auto_amount, 
 	        auto_cycle, auto_account, auto_date

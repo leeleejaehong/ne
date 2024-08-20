@@ -81,8 +81,8 @@ public class Scheduler {
     }
 
     
-    //상품 종료 업데이트
-    //골든볼 처리
+    //상품 종료 업데이트(완료)
+    //골든볼 처리(완료)
     @Scheduled(cron = "0 5 0 * * *") // 매일 12시 5분에 실행 (cron = "0/1 * * * * *") (cron = "0 5 0 * * *")
     public void updateExpiredProductsStatus() {
         try {

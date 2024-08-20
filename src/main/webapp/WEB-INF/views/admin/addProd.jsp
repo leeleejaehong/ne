@@ -22,7 +22,7 @@
             <tr>
                 <td>
                     <label for="prodcut_image">Product Image :</label>
-                    <input type="file" name="file" id="prodcut_image" />
+                    <input type="file" name="file" id="product_image" accept="image/*" />
                 </td>
             </tr>
             <tr>

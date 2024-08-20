@@ -3,6 +3,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 
 <link rel="stylesheet" type="text/css" href="/css/commu/commuWrite.css">
 <link rel="stylesheet" type="text/css" href="/css/commu/commuStyle.css">
@@ -96,7 +98,15 @@
                                     <td width="50%">
                                         <span>&nbsp;&nbsp;</span>
                                         <a href="/notice/noticeView.do?id=${dto.id}">
-                                                ${dto.subject}
+                                              <c:choose>
+                                        <c:when test="${fn:length(dto.subject) > 8}">
+                                            ${fn:substring(dto.subject, 0, 8)}...
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${dto.subject}
+                                        </c:otherwise>
+                                    </c:choose>
+
                                         </a>
                                     </td>
                                     <td align="center" width="25%">
@@ -133,7 +143,15 @@
                                     <td width="50%">
                                         <span>&nbsp;&nbsp;</span>
                                         <a href="/commu/commuContent.do?id=${dto.id}">
-                                                ${dto.subject}
+                                               <c:choose>
+                                        <c:when test="${fn:length(dto.subject) > 8}">
+                                            ${fn:substring(dto.subject, 0, 8)}...
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${dto.subject}
+                                        </c:otherwise>
+                                    </c:choose>
+
                                         </a>
                                     </td>
                                     <td align="center" width="25%">
