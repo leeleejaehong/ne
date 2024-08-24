@@ -14,6 +14,13 @@ public class TossPaymentConfig {
     @Value("${toss.api.secretKey}")
     private  String testSecretKey;
 
+    @Value("${toss.success.url}")
+    private String successUrl;
+
+    @Value("${toss.fail.url}")
+    private String failUrl;
+
     public static final String URL = "https://api.tosspayments.com/v1/payments";
+
 
 }

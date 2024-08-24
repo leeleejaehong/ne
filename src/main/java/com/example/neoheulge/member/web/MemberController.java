@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,7 @@ import com.example.neoheulge.purproduct.service.PurproductService;
 import com.example.neoheulge.util.SmsUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/member")
@@ -71,14 +73,12 @@ public class MemberController {
     public String myPage(HttpServletRequest req,NePreSavProdDTO dto,
     		@RequestParam String user) {
     	dto.setMember_id(user);
-    	System.out.println(user);
     	
     	List<Map<String, Object>> getByMemberId = purproductService.getByMemberId(dto);
     	req.setAttribute("getByMemberId", getByMemberId);
     	
     	List<NeAcountDTO> acount = acountService.getAccountsByMemberId(user);
     	req.setAttribute("acount", acount);
-    	System.out.println(acount);
     	
     	return "member/myPage";
     }
@@ -115,4 +115,59 @@ public class MemberController {
     	memberservice.updatePw(member);
     	return "redirect:/index.do";
     }
+    
+    
+    
+    @PostMapping("/mail.do")
+    public String sendMail(String email,String id, HttpServletRequest req) {
+        // 6자리 랜덤 숫자 생성
+        Random rand = new Random();
+        int randomNum = rand.nextInt(900000) + 100000;  // 100000(최소값)부터 999999(최대값) 사이의 숫자
+        
+        HttpSession session = req.getSession();
+
+        // 세션에 랜덤 숫자 저장
+        session.setAttribute("randomNum", randomNum);
+        session.setAttribute("email",email);
+        session.setAttribute("id",id);
+        session.setAttribute("timestamp", System.currentTimeMillis()); // 현재 시간을 밀리초 단위로 저장
+
+
+        // 이메일 전송
+        acountService.sendSimpleEmail(email, "인증번호", "인증번호 : " + randomNum + "입니다.");
+        return "checkMe";
+    }
+	
+	
+	
+
+	
+    @PostMapping("/confirmCheckNumber.do")
+    public ResponseEntity<String> confirmCheckNumber(@RequestParam int checkNumber, HttpServletRequest req) {
+    	HttpSession session = req.getSession();
+        Integer sessionCheckNumber = (Integer) session.getAttribute("randomNum"); // Integer로 가져오기
+        Long timestamp = (Long) session.getAttribute("timestamp"); // 타임스탬프 가져오기
+        
+        if (sessionCheckNumber == null || timestamp == null) {
+            return new ResponseEntity<>("failure", HttpStatus.OK); // 인증번호나 타임스탬프가 없는 경우 실패
+        }
+        
+        long currentTime = System.currentTimeMillis();
+        long elapsedTime = currentTime - timestamp; // 현재 시간과 저장된 시간의 차이
+        
+        
+        if (sessionCheckNumber == checkNumber) {
+        	if (elapsedTime > 180000) { // 3분이 경과한 경우
+        		return new ResponseEntity<>("over", HttpStatus.OK); // 인증번호가 만료됨
+        	}else {
+        		session.removeAttribute("randomNum");
+                session.removeAttribute("timestamp");
+        		return new ResponseEntity<>("success", HttpStatus.OK); // 인증 성공
+        	}
+        } else {
+            return new ResponseEntity<>("failure", HttpStatus.OK); // 인증 실패
+        }
+        
+    }
+    
 }

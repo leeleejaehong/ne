@@ -1,4 +1,4 @@
-package com.example.neoheulge.dto;
+	package com.example.neoheulge.dto;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -25,6 +25,7 @@ public class NeSavProdDTO {
     private String product_description;
     private MultipartFile file;
     private int numberOfSubscribers;
+    private String winner;
     
 	public String getProduct_code() {
 		return product_code;
@@ -134,6 +135,12 @@ public class NeSavProdDTO {
 	}
 	public void setNumberOfSubscribers(int numberOfSubscribers) {
 		this.numberOfSubscribers = numberOfSubscribers;
+	}
+	public String getWinner() {
+		return winner;
+	}
+	public void setWinner(String winner) {
+		this.winner = winner;
 	}
     
     

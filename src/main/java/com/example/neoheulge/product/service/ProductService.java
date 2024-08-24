@@ -34,8 +34,8 @@ public class ProductService {
     }
 
     // 전 회차 상금 가져오기
-    public List<NeSavProdDTO> selectPreviousRoundPrize(Map<String, Object> params) {
-        return sqlSession.selectList("selectPreviousRoundPrize", params);
+    public List<NeSavProdDTO> winnerList() {
+        return sqlSession.selectList("winnerList");
     }
 
     // 지난 날짜에 따른 이자 포함 총 금액

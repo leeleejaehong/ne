@@ -43,10 +43,12 @@
 
     // 페이지 로드 시 초기값 설정
     window.onload = function() {
+        loadWinners();
        checkAdVisibility();
         // 슬라이드 쇼 초기화
         showSlides(slideIndex);
         autoShowSlides();
+		
 
         
         // 퍼센트 채우기 초기화
@@ -84,6 +86,36 @@
         }
         adElement.style.display = 'block';
     }
+    
+    function loadWinners() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "${pageContext.request.contextPath}/product/winner.do", true);
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                // 데이터를 localStorage에 저장
+                localStorage.setItem('winnerList', JSON.stringify(response));
+                // 현재 페이지에서 데이터를 사용하거나 다른 페이지로 이동할 수 있습니다.
+                displayWinners(response);
+            }
+        };
+        xhr.send();
+    }
+
+    function displayWinners(winnerList) {
+        var scrollingTextContainer = document.querySelector(".scrolling-text");
+        scrollingTextContainer.innerHTML = ""; // 기존 내용을 비웁니다.
+
+        winnerList.forEach(function(winner,index) {
+            var winnerText = winner.product_name + "의 당첨자 " + winner.winner + "님";
+         // 마지막 항목이 아니면 쉼표 추가
+         if (index < winnerList.length - 1) {
+            winnerText += ", ";
+        }
+            scrollingTextContainer.innerHTML += winnerText;
+        });
+    }
+    
 </script>
 </head>
 <body>
@@ -94,7 +126,7 @@
             style="width: 70px; height: 60px; vertical-alignt: bottom"></a>
             <h1><a href="/index.do">neoheulge</a></h1>
             <div class="scrolling-text-container">
-            <div class="scrolling-text">상품1의 당첨자 xxx님,상품2의 당첨자 xxx님</div>
+            <div class="scrolling-text"></div>
         </div>
             <nav>
                 <a href="${pageContext.request.contextPath}/commu/commuList.do">커뮤니티</a>

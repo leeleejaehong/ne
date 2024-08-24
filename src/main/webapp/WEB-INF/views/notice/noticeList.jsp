@@ -20,7 +20,7 @@
         }
     }
 </script>
-
+<main>
 <div class="notice">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<div class="slideshow-container">
@@ -124,4 +124,5 @@
         </c:if>
     </div>
 </div>
+</main>
 <jsp:include page="../footer.jsp"/>

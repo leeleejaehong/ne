@@ -249,12 +249,10 @@
 
 			</div>
 			<div class="community-prizes">
-				<h3 style="margin-bottom: 8px; border-bottom: 2px solid #c0c0c0;">전회차
-					상금</h3>
-				<p>상품1 100,000원</p>
-				<p>상품2 145,000원</p>
-				<p>상품3 609,000원</p>
-				<p>상품4 1,681,500원</p>
+				<h3 style="margin-bottom: 8px; border-bottom: 2px solid #c0c0c0;">전회차 상금</h3>
+				 <c:forEach var="dto" items="${sessionScope.winnerList}">
+           			 <p>${dto.product_name} ${dto.accumulated_amount}원</p>
+       			 </c:forEach>
 			</div>
 			
 		</div>

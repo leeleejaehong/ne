@@ -15,7 +15,7 @@ CREATE TABLE nepreSavProd (
     member_id               VARCHAR2(20) NOT NULL,          	-- 회원 ID (회원 테이블과 외래키 관계)
     product_code            VARCHAR2(20) NOT NULL,          	-- 상품 코드 (적금상품 테이블과 외래키 관계)
     subscription_date       DATE DEFAULT SYSDATE,          	 -- 가입일 (기본값: 현재 날짜)
-    subscription_amount     NUMBER(15, 2) NOT NULL,         	-- 가입 금액
+    subscription_amount     NUMBER(15, 2) NOT NULL,         	-- 처음 가입 금액
    subscription_select	VARCHAR2(20),				--  # 골든볼/일반
     termination_date        DATE,                           		-- 해지일 (해지 시 기록)
     status                  VARCHAR2(20) DEFAULT '활성',  		-- 가입 상태 (예: 활성, 해지)
@@ -50,7 +50,8 @@ CREATE TABLE neSavProd (
     	maximum_deposit      		NUMBER(15, 2),                   		-- 최대 가입 금액
     	start_date 				DATE NOT NULL,                 		-- 상품 시작일
     	end_date   				DATE NOT NULL,                 		-- 상품 종료일
-    	product_description  		VARCHAR2(2500)                   	-- 상품 설명
+    	product_description  		VARCHAR2(2500),                   	-- 상품 설명
+    	winner					varchar2(50)						-- 골든볼 당첨자
 );
 
 --트리거 생성(시작일 입력시 자동으로 종료일 생성)

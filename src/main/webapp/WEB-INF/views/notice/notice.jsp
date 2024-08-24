@@ -7,6 +7,7 @@
 
 <!DOCTYPE html>
 <jsp:include page="../header.jsp"/>
+<main>
 <div class="notice">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<div class="slideshow-container">
@@ -40,7 +41,7 @@
             </tr>
             <tr>
                 <th>내 용</th>
- <td><textarea name="content" rows="30" cols="50" class="box"></textarea></td>            </tr>
+ 			<td><textarea name="content" rows="30" cols="50" class="box"></textarea></td>            </tr>
             <tr>
                 <td colspan="2">
                     <input type="submit" value="글쓰기">
@@ -49,8 +50,8 @@
             </tr>
         </table>
     </form>
-
 </div>
+</main>
 <jsp:include page="../footer.jsp"/>
 
 

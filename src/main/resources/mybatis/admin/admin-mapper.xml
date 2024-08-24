@@ -74,6 +74,11 @@
     </set>
     WHERE memberid = #{memberID}
 </update>
+
+	<delete id ="deleteMember" parameterType="String">
+		delete from nemember where memberid = #{memberID} 
+	</delete>
+	
 	<insert id="addProd" parameterType="NeSavProdDTO">
 	    INSERT INTO neSavProd (
         product_code,

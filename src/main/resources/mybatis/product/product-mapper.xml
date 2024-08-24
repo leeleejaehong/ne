@@ -12,13 +12,13 @@
 	        subscription_method, subscription_period, accumulated_amount,
 	        termination_conditions, early_fee, product_status,
 	        minimum_deposit, maximum_deposit, start_date, end_date,  
-	        product_description
+	        product_description,winner
 	    ) VALUES (
 	        product_code_seq.nextval, #{productName}, #{baseRate}, #{goldenballRate},
 	        #{subscriptionMethod}, #{subscriptionPeriod}, 0,
 	        #{terminationConditions}, #{earlyFee}, #{productStatus},
 	        #{minimumDeposit}, #{maximumDeposit}, SYSDATE, NULL,  <!-- end_date를 NULL로 설정(트리거) -->
-	        #{productDescription}
+	        #{productDescription},NUll
 	    )
 	</insert>
 
@@ -36,12 +36,47 @@
 
 
     <!-- 전 회차 상금 가져오기 -->
-    <select id="selectPreviousRoundPrize" parameterType="NeSavProdDTO" >
-        SELECT product_code, product_name, start_date, end_date
+    <select id="winnerList" resultType="NeSavProdDTO">
+<![CDATA[
+    WITH RankedProducts AS (
+        SELECT 
+            product_name, 
+            accumulated_amount,
+            subscription_period,
+            end_date,
+            winner,
+            ROW_NUMBER() OVER (
+                PARTITION BY 
+                    CASE 
+                        WHEN subscription_period = '1개월' THEN '1개월'
+                        WHEN subscription_period = '3개월' THEN '3개월'
+                        WHEN subscription_period = '6개월' THEN '6개월'
+                        WHEN subscription_period = '1년' THEN '1년'
+                    END
+                ORDER BY end_date DESC
+            ) AS rn
         FROM neSavProd
-        WHERE subscription_period = #{subscriptionPeriod}
-        AND (start_date = #{startDate} OR end_date = #{endDate})
-    </select>
+        WHERE end_date < SYSDATE
+        AND subscription_period IN ('1개월', '3개월', '6개월', '1년')
+    )
+    SELECT 
+        product_name, 
+        accumulated_amount,
+        subscription_period,
+        end_date,
+        winner
+    FROM RankedProducts
+    WHERE rn = 1
+    ORDER BY 
+        CASE subscription_period
+            WHEN '1개월' THEN 1
+            WHEN '3개월' THEN 2
+            WHEN '6개월' THEN 3
+            WHEN '1년' THEN 4
+        END
+]]>
+</select>
+
 
 
 	<!-- 지난 날짜에 따른 이자 포함 총 금액(다시) -->
@@ -133,6 +168,7 @@
 	  	DELETE FROM neSavProd
 	   	WHERE product_code = #{productCode}
 	</delete>
+	
 	
 	
 </mapper>

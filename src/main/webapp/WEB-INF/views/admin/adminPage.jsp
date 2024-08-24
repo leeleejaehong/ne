@@ -100,16 +100,16 @@
                     <div class="menu-link">상품관리</div>
                     <div class="submenu">
                         <a href="${pageContext.request.contextPath}/admin/updateProd.do">상품 목록</a>
- 						<a href="${pageContext.request.contextPath}/admin/adminProdcut.do" class="add-product">상품 추가</a>                    </div>
+ 						<a href="${pageContext.request.contextPath}/admin/adminProdcut.do" class="add-product">상품 추가</a> 
+ 						<a href="${pageContext.request.contextPath}/product/adminwinner.do">전회차 당첨자 확인용</a> 
+ 					</div>
                 </div>
                 <div class="menu-item">
-                    <div class="menu-link">매출관리/공지</div>
+                    <div class="menu-link">매출관리</div>
                     <div class="submenu">
-                        <a href="${pageContext.request.contextPath}/admin/adminChart.do"">매출관리</a>
-						<a href="${pageContext.request.contextPath}/admin/adminNotice.do"">공지쓰기</a>
+                        <a href="${pageContext.request.contextPath}/admin/adminChart.do">매출관리</a>
                     </div>
                 </div>
-				
             </div>
         </div>
     </main>

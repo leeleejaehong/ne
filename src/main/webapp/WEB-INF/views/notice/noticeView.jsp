@@ -13,6 +13,7 @@
 </head>
 <body>
 <jsp:include page="../header.jsp"/>
+<main>
 <div class="notice">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<div class="slideshow-container">
@@ -65,6 +66,6 @@
         </tr>
     </table>
 </div>
+</main>
 <jsp:include page="../footer.jsp"/>
-</body>
-</html>
+

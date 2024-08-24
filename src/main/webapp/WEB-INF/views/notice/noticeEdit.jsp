@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="/css/notice/noticeListStyle.css">
 
 <jsp:include page="../header.jsp"/>
+<main>
 <div class="notice">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	<div class="slideshow-container">
@@ -55,5 +56,5 @@
         </table>
     </form>
 </div>
-
+</main>
 <jsp:include page="../footer.jsp"/>

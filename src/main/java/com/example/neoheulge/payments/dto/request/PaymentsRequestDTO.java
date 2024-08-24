@@ -1,19 +1,20 @@
 package com.example.neoheulge.payments.dto.request;
 
 
+import com.example.neoheulge.payments.dto.PayType;
 import com.example.neoheulge.payments.entity.Payments;
 import lombok.*;
 
 import java.util.UUID;
 
 @Builder
-@Getter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentsRequestDTO {
 
     @NonNull
-    private static final String payType = "CARD";
+    private PayType payType;
     @NonNull
     private Long amount;
     @NonNull
@@ -22,13 +23,14 @@ public class PaymentsRequestDTO {
     private String mySuccessUrl;
     private String myFailUrl;
 
+
     public Payments toEntity() {
         return Payments.builder()
                 .paymentType(payType)
-                .amount(amount)
-                .orderName(orderName)
+                .amount(this.amount)
                 .orderId(UUID.randomUUID().toString())
+                .orderName(orderName)
+                .successYN(false)
                 .build();
     }
-
 }

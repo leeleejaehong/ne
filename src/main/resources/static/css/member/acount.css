@@ -1,0 +1,155 @@
+@charset "UTF-8";
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.mylogin-form {
+    flex: 0 0 20%;
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 240px; /* 원하는 높이로 설정 */
+}
+
+.mylogin-form h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.mylogin-form input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.mylogin-form button {
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background: #004d99;
+    color: #fff;
+    cursor: pointer;
+}
+.acount {
+    background: #ffffff;
+    padding: 1em;
+    text-align: center;
+    border-radius: 8px;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.vanner {
+    flex: 1;
+    max-width: 750px;
+    margin-right: 20px;
+}
+
+.vanner img {
+    width: 100%;
+    height: auto;
+}
+
+.container1 {
+    max-width: 1200px;
+    width: 100%;
+    min-width: 800px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.subscription-header{
+    background-color: #004d99;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom : 10px;
+}
+.subscription-body{
+    font-weight : bold;
+}
+
+.form-wrapper {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.form-container {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 60%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(1, 1, 1, 0.2);
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+.form-container table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.form-container td {
+    padding: 10px;
+    text-align: center;
+}
+
+.form-container input[type="text"],
+.form-container input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 5px auto;
+    font-size: 14px;
+}
+
+.form-container button {
+    background-color: #004D99;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px; /* 버튼의 모서리 둥글기 */
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+.form-container .actions form {
+    display: inline;
+}
+.form-container button:hover {
+    background-color: #003a7d;
+}
+
+.form-container input::placeholder {
+    color: #6a6a6a;
+}
+
+.form-container label {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #333;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-align: center;
+    z-index: 1;
+}

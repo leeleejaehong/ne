@@ -29,4 +29,8 @@ public class MemberDAO {
 	 public int updatePw(MemberDTO member) {
 		 return sqlSession.update("member.updatePw", member);
 	 }
+
+	public String IdEmail(String member) {
+		return sqlSession.selectOne("member.IdEmail", member);
+	}
 }

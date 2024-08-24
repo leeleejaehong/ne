@@ -2,6 +2,8 @@ package com.example.neoheulge.acount.service;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.example.neoheulge.dto.NeAcountDTO;
@@ -15,10 +17,21 @@ public class AcountService {
 
     @Autowired
     private SqlSession sqlSession;
+    
+    @Autowired
+    private JavaMailSender mailSender;
+
 
     // 계좌 추가
     public void addAccount(NeAcountDTO dto) {
+        // 주계좌 설정 전 모든 계좌의 상태를 'N'으로 변경
+        sqlSession.update("updateAllAccountsToNonPrimary", dto.getMember_id());
+
+        // 새로운 계좌 추가
         sqlSession.insert("insertNeacount", dto);
+
+        // 주계좌로 설정
+        sqlSession.update("updatePrimaryAccountStatus", dto);
     }
 
     // 계좌 삭제
@@ -45,4 +58,34 @@ public class AcountService {
     public void logPayment(Map<String, Object> params) {
         sqlSession.insert("insertPaymentLog", params);
     }
+    
+    public void sendSimpleEmail(String toEmail, String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("your-email@gmail.com");
+        message.setTo(toEmail);
+        message.setSubject(subject);
+        message.setText(body);
+
+        mailSender.send(message);
+    }
+    
+    public void updateAllAccountsToNonPrimary(String member_id) {
+    	sqlSession.update("updateAllAccountsToNonPrimary",member_id);
+    }
+    
+    public void updatePrimaryAccountStatus(int acount_id) {
+    	sqlSession.update("updatePrimaryAccountStatus",acount_id);
+    }
+    
+    public boolean changeMainAccount(String username, int accountId) {
+        try {
+            updateAllAccountsToNonPrimary(username);
+            updatePrimaryAccountStatus(accountId);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+  
 }

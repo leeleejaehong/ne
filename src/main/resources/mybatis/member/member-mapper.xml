@@ -21,4 +21,7 @@
 	<update id="updatePw" parameterType="MemberDTO">
 		update nemember set password = #{password} where memberID = #{memberID}
 	</update>
+	<select id="IdEmail" parameterType="String" resultType="String">
+		select email from nemember where memberID= #{memberID}
+	</select>
 </mapper>

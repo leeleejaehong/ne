@@ -1,53 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper 
-	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="acount">
 
-	<!-- 계좌 추가 -->
-	<insert id="insertNeacount" parameterType="NeAcountDTO">
+    <!-- 계좌 추가 -->
+    <insert id="insertNeacount" parameterType="NeAcountDTO">
         INSERT INTO neacount (
-           	acount_id, acount_number,member_id,
-            money,acount_status
+        acount_id, member_id, acount_number,
+        money, acount_status
         ) VALUES (
-            neacount_seq.nextval, #{acount_number}, #{member_id},
-            0, #{acount_status}
+        neacount_seq.nextval, #{member_id, jdbcType=VARCHAR}, #{acount_number, jdbcType=VARCHAR},
+        0, #{acount_status, jdbcType=VARCHAR}
         )
     </insert>
-    
+
     <!-- 계좌 삭제 -->
     <delete id="deleteNeAcountById" parameterType="NeAcountDTO">
-        DELETE FROM neacount
-        WHERE member_id = #{member_id}
-        AND acount_number = #{acount_number}
+        DELETE FROM neacount WHERE acount_id = #{acount_id, jdbcType=VARCHAR}
     </delete>
-    
+
     <!-- 계좌 리스트(회원ID) -->
     <select id="memberAcount" parameterType="String" resultType="NeAcountDTO">
-    	SELECT * FROM neacount WHERE member_id = #{member_id}
+		SELECT * 
+		FROM neacount 
+		WHERE member_id = #{member_id, jdbcType=VARCHAR}
+		ORDER BY CASE WHEN acount_status = 'Y' THEN 1 ELSE 2 END
     </select>
-    
+
     <!-- 주 계좌 상태 변경 -->
     <update id="updateAccountStatus" parameterType="NeAcountDTO">
-	    UPDATE neacount
-	    SET acount_status = #{acount_status}
-	    WHERE member_id = #{member_id}
-        AND acount_number = #{acount_number}
-	</update>
-	
-	<!-- 계좌에서 돈 차감 -->
+        UPDATE neacount
+        SET acount_status = #{acount_status, jdbcType=VARCHAR}
+        WHERE member_id = #{member_id, jdbcType=VARCHAR}
+        AND acount_number = #{acount_number, jdbcType=VARCHAR}
+    </update>
+
+    <!-- 모든 계좌의 상태를 N으로 변경 -->
+    <update id="updateAllAccountsToNonPrimary" parameterType="String">
+        UPDATE neacount
+        SET acount_status = 'N'
+        WHERE member_id = #{member_id, jdbcType=VARCHAR}
+    </update>
+
+    <!-- 특정 계좌의 상태를 Y로 변경 -->
+    <update id="updatePrimaryAccountStatus" parameterType="int">
+        UPDATE neacount
+        SET acount_status = 'Y'
+        WHERE acount_id = #{acount_id, jdbcType=VARCHAR}
+    </update>
+
+
+    <!-- 계좌에서 돈 차감 -->
     <update id="deductMoneyFromAccount">
         UPDATE neacount
-        SET money = money - #{autoAmount}
-        WHERE acount_id = #{autoAccount}
-        AND money &gt;= #{autoAmount}  <!-- 잔액 확인: &gt;=는 >= -->
+        SET money = money - #{autoAmount, jdbcType=INTEGER}
+        WHERE acount_id = #{autoAccount, jdbcType=INTEGER}
+        AND money >= #{autoAmount, jdbcType=INTEGER}
     </update>
 
     <!-- 결제 로그 기록 -->
     <insert id="insertPaymentLog">
         INSERT INTO payment_log (subscription_id, payment_date, payment_amount, status)
-        VALUES (#{subscriptionId}, SYSDATE, #{autoAmount}, #{status})
+        VALUES (#{subscriptionId, jdbcType=VARCHAR}, SYSDATE, #{autoAmount, jdbcType=INTEGER}, #{status, jdbcType=VARCHAR})
     </insert>
-    
+
 </mapper>

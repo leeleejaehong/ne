@@ -10,11 +10,11 @@
 <link rel="stylesheet" type="text/css" href="/css/commu/commuStyle.css">
 <!DOCTYPE html>
   <jsp:include page="../header.jsp"/> 
-
+<main>
     <div class="commu">
     <div class="header-content">
         <div class="vanner">
-            <img alt="main" src="${pageContext.request.contextPath}/img/van.jpg" style="width:750px; height: 280px;">
+            <img alt="main" src="${pageContext.request.contextPath}/img/van.jpg" style="width:898px; height: 280px;">
         </div>
         <div class="login-form">
             <sec:authorize access="isAuthenticated()">
@@ -170,15 +170,14 @@
             </div>
         <div class="community-prizes">
             <h3>전회차 상금</h3>
-            <p>상품1 100,000원</p>
-            <p>상품2 145,000원</p>
-            <p>상품3 609,000원</p>
-            <p>상품4 1,681,500원</p>
+            <c:forEach var="dto" items="${sessionScope.winnerList}">
+           			 <p>${dto.product_name} ${dto.accumulated_amount}원</p>
+       			 </c:forEach>
         </div>
     </div>
 </div>
 </div>
-
+</main>
     <script type="text/javascript">
         function checkForm() {
             if (document.f.subject.value.trim() === "") {
