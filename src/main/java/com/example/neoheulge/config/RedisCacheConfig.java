@@ -25,11 +25,14 @@ public class RedisCacheConfig { //캐시설정, 직렬화
     }
 
     @Bean
+    //redis데이터와 연결 / 키 value json데이터로 직렬화
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<String, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
         template.setKeySerializer(new StringRedisSerializer());
         template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         return template;
+   
     }
+   
 }

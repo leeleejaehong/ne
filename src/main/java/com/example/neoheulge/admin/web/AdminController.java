@@ -406,7 +406,12 @@ public class AdminController {
         @GetMapping("/adminPage.do")
     	public String adminPage() {
     		return "admin/adminPage";
-    	} 	
+    	}
+        @GetMapping("adminNotice.do")
+        public String adminNotice() {
+            return "admin/adminNotice";
+        }
+        
     }
 
     	
