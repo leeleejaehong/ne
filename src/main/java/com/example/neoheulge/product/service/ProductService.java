@@ -27,6 +27,10 @@ public class ProductService {
     public List<NeSavProdDTO> selectAllProducts() {
         return sqlSession.selectList("selectAllProducts");
     }
+    
+    public List<NeSavProdDTO> selectNowProducts() {
+    	return sqlSession.selectList("selectNowProducts");
+    }
 
     // 특정 상품 코드에 따른 상품 정보 가져오기
     public NeSavProdDTO selectProductByCode(String product_code) {

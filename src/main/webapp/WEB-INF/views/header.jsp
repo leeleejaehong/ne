@@ -140,8 +140,8 @@
     <div class="page-wrapper">
     <div class="ad-left">
     <button class="close-btn" onclick="closeAd('ad-left')">X</button>
-    <a href="https://pokemongolive.com/ko" target="_blank">
-        <img src="${pageContext.request.contextPath}/img/poket1.jpg" alt="Left Advertisement" width="250" height="700" class="ad-image">
+    <a href="https://m.shinhan.com/rib/mnew/index.jsp#220011110001" target="_blank">
+        <img src="${pageContext.request.contextPath}/img/save.jpg" alt="Left Advertisement" width="250" height="700" class="ad-image">
     </a>
     <div class="ad-blocked">30분 동안 광고 차단</div>
 </div>

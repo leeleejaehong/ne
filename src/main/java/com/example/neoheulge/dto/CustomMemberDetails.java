@@ -2,6 +2,7 @@ package com.example.neoheulge.dto;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,13 +13,22 @@ public class CustomMemberDetails implements UserDetails{
 	private String password;
 	private String name;
 	private String authority;
-	private boolean ENABLED;
+	private boolean enabled;
 	
+	
+	 public CustomMemberDetails(String memberID, String password, String name, String authority, boolean enabled) {
+	        this.memberID = memberID;
+	        this.password = password;
+	        this.name = name;
+	        this.authority = authority;
+	        this.enabled = enabled;
+	    }
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-		auth.add(new SimpleGrantedAuthority(authority));
-		return auth;
+		//ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+		//auth.add(new SimpleGrantedAuthority(authority));
+		//return auth;
+		 return Collections.singletonList(new SimpleGrantedAuthority(authority));
 	}
 	
 	@Override
@@ -48,7 +58,7 @@ public class CustomMemberDetails implements UserDetails{
 	
 	@Override
 	public boolean isEnabled() {
-		return ENABLED;
+		return enabled;
 	}
 	
 	public String getName() {

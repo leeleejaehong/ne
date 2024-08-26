@@ -45,7 +45,7 @@ public class ProductController {
 		
 		@GetMapping("/productList.do")
 		public String productList(HttpServletRequest req) {
-			List<NeSavProdDTO> prodList = productService.selectAllProducts();
+			List<NeSavProdDTO> prodList = productService.selectNowProducts();
 			req.setAttribute("product", prodList);
 			List<NoticeDTO> noticelist = noticeService.noticeList();
 			req.setAttribute("noticeList", noticelist);

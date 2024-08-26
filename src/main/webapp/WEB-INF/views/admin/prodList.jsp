@@ -6,7 +6,6 @@
     .container {
         max-width: 1200px;
         margin: 0 auto;
-        padding: 20px;
     }
     h1 {
         color: #333;
@@ -49,9 +48,8 @@
 
 <div class="container">
     <h1>상품 리스트</h1>
-    
-   
-    
+
+
     <div class="product-list">
         <c:forEach var="dto" items="${prodList}">
             <form name="f" action="/admin/updateProdPro.do" method="POST" class="product-card">

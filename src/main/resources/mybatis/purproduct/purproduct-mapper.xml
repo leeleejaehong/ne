@@ -212,6 +212,10 @@
 	   	WHERE member_id = #{memberId}
 	    AND product_code = #{productCode}
 	</update>
+	
+	<delete id="deleteProProduct" parameterType="int">
+	delete from nepreSavProd where subscription_id = #{subscription_id}
+	</delete>
 
 	
 	

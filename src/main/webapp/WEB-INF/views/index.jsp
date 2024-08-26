@@ -64,29 +64,36 @@
 			<div class="slides fade">
 				<img src="img/year.jpg" width="100%" height="280">
 			</div>
-			<a class="prev" onclick="plusSlides(-1)">&#10094;</a> <a class="next"
-				onclick="plusSlides(1)">&#10095;</a>
+			<a class="prev" onclick="plusSlides(-1)">&#10094;</a> 
+			<a class="next" onclick="plusSlides(1)">&#10095;</a>
 		</div>
-		<div class="login-form">
-			<sec:authorize access="isAuthenticated()">
-				<h2>
-					안녕하세요,
-					<sec:authentication property="principal.username" />
-					님!
-				</h2>
 				<%-- <sec:authorize access="hasRole('ROLE_1')">
                  	123
                  	</sec:authorize> --%>
-				<div>
-					<a
-						href="${pageContext.request.contextPath}/member/myPage.do?user=<sec:authentication property="principal.username"/>">
-						마이 페이지 </a>
-				</div>
-				<div>대표 계좌 잔액 : 100원</div>
-				<form action="<c:url value='/logout' />" method="post">
-					<button type="submit">로그아웃</button>
-				</form>
-			</sec:authorize>
+		<div class="login-form">
+			<sec:authorize access="isAuthenticated()">
+		<div class="logview">
+    	<div class="profile-container">
+        <img src="https://blogpfthumb-phinf.pstatic.net/MjAyNDA3MTZfMjAg/MDAxNzIxMTE1NzY3MjY4.ueDvccl7mHx7z0DVBHHqagXj2aoAhIi1uSYaQrufjS4g.1xT_9Yxv4LolXwixUFJ-SEK-Y0z39lD3qbv2YsZbhS4g.JPEG/%EC%96%B4%EB%9E%98%EA%B3%A4.jpeg/%25EC%2596%25B4%25EB%259E%2598%25EA%25B3%25A4.jpeg?type=w161"
+            alt="프로필 이미지" class="profile-img"/>
+        
+        <div class="profile-info">
+            <strong class="itemfont col" id="nickNameArea">
+                <sec:authentication property="principal.username"/>
+            </strong> 
+            <br>
+            <div class="links">
+                <a href="${pageContext.request.contextPath}/member/myPage.do?user=<sec:authentication property="principal.username"/>" class="link-btn">마이페이지</a>
+                <a href="" class="link-btn">내 정보 수정(링크 없음)</a>
+            </div>
+        </div>
+        
+        <form action="<c:url value='/logout' />" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">로그아웃</button>
+        </form>
+    </div>
+    </div>
+</sec:authorize>
 
 			<sec:authorize access="isAnonymous()">
 				<!-- 로그인 폼을 표시합니다. -->
@@ -162,7 +169,7 @@
 				<div>
 					<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #c0c0c0; margin-bottom: 8px;">
 					    <span style="text-align: left;"><h3 style="margin: 0;">공지사항</h3></span>
-					    <span style="text-align: left;"><a href="/notice/noticeList.do"> 더보기 >> </a></span>
+					    <span style="text-align: left;"><a href="/notice/noticeList.do"> 더보기 + </a></span>
 					</div>
 					<table>
 
@@ -208,7 +215,7 @@
 				<div>
 					<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #c0c0c0; margin-bottom: 8px;">
 					    <span style="text-align: left;"><h3 style="margin: 0;">커뮤니티</h3></span>
-					    <span style="text-align: left;"><a href="/commu/commuList.do">더보기 >></a></span>
+					    <span style="text-align: left;"><a href="/commu/commuList.do">더보기 +</a></span>
 					</div>
 					<table>
 						<thead>
@@ -233,8 +240,7 @@
                                             ${dto.subject}
                                         </c:otherwise>
                                     </c:choose>
-
-												</a></td>
+									</a></td>
 										<td align="center" width="25%">${dto.author}</td>
 										<td align="center"><fmt:parseDate var="parsedDate"
 												value="${dto.createtime}" pattern="yyyy-MM-dd HH:mm:ss" />
@@ -248,15 +254,37 @@
 				</div>
 
 			</div>
+				
 			<div class="community-prizes">
-				<h3 style="margin-bottom: 8px; border-bottom: 2px solid #c0c0c0;">전회차 상금</h3>
-				 <c:forEach var="dto" items="${sessionScope.winnerList}">
-           			 <p>${dto.product_name} ${dto.accumulated_amount}원</p>
-       			 </c:forEach>
+				<div>
+					<div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #c0c0c0; margin-bottom: 8px;">
+					    <span style="text-align: left;"><h3 style="margin: 0;">전회차 상금</h3></span>
+					</div>
+					<table>
+						<thead>
+							<tr class="commu-header">
+								<th>상품이름</th>
+								<th>누적 금액</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="dto" items="${sessionScope.winnerList}" varStatus="status">
+									<tr>
+										<td width="50%"><span>&nbsp;&nbsp;</span> 
+											${dto.product_name}
+										</td>
+										<td align="right" width="50%">
+										<fmt:formatNumber value="${dto.accumulated_amount}"
+									type="number" groupingUsed="true" />
+										원</td>
+									</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			
 		</div>
-		
 	</div>
 	
 	<br> <br>

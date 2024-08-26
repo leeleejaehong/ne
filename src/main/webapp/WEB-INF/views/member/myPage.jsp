@@ -45,10 +45,11 @@
 
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <main>
     <div class="myPage">
         <div class="header-content">
             <div class="vanner">
-                <img alt="main" src="${pageContext.request.contextPath}/img/van.jpg" style="width:750px; height: 280px;">
+                <img alt="main" src="${pageContext.request.contextPath}/img/van.jpg" style="width:898px; height: 280px;">
             </div>
             <div class="mylogin-form">
                 <sec:authorize access="isAuthenticated()">
@@ -65,6 +66,7 @@
                     </div>
                     <div>
                         <button>
+                       <%-- <button onclick="window.location.href='/admin/updateMemberForm.do?memberID=<sec:authentication property="principal.username"/>'"> --%>
                             <a href="">회원정보수정</a><br>
                         </button>
                     <form action="<c:url value='/logout' />" method="post">
@@ -194,6 +196,7 @@
                     <div class="cancellation-body">
                         <div class="products">
                             <c:forEach items="${getByMemberId}" var="product">
+                   
                                 <c:if test="${product.STATUS == '해지'}">
                                     <div class="product-card">
                                         <div class="product-info">
@@ -205,7 +208,7 @@
                                                     ${product.STATUS}
                                             </p>
                                             <div class="product-actions">
-                                                <form action="" method="post">
+                                                <form action="${pageContext.request.contextPath}/proProduct/deleteProProduct.do?subscription_id=${product.SUBSCRIPTION_ID}" method="POST">
                                                     <button type="submit" class="btn btn-secondary">삭제하기</button>
                                                 </form>
                                             </div>
@@ -249,6 +252,7 @@
                 </div>
              </div>
     </div>
+</main>
 <button type="button" class="btn btn-primary" onclick="openModal()">충전하기</button>
 
 <!-- 모달 구조 -->
@@ -261,7 +265,6 @@
         </div>
     </div>
 </div>
-
 <style>
 /* 모달 배경 */
 .modal {

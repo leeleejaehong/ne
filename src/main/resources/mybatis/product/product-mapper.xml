@@ -27,6 +27,12 @@
     <select id="selectAllProducts" resultType="NeSavProdDTO">
         SELECT * FROM neSavProd 
     </select>
+    
+    <!-- 현재 진행중인 상품 정보 가져오기 -->
+    <select id="selectNowProducts" resultType="NeSavProdDTO">
+        SELECT * FROM neSavProd 
+    WHERE end_date > SYSDATE OR end_date IS NULL
+    </select>
 
     <!-- 특정 상품 코드에 따른 상품 정보 가져오기 -->
     <select id="selectProductByCode" parameterType="String" resultType="NeSavProdDTO" >

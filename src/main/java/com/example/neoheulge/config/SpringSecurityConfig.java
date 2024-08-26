@@ -26,7 +26,8 @@ public class SpringSecurityConfig {
 			http.csrf(AbstractHttpConfigurer::disable)
 	        	.authorizeHttpRequests(authz -> authz
 //	            .requestMatchers("/WEB-INF/views/index.jsp", "/css/**","/img/**").permitAll()
-	            .requestMatchers("/**", "/css/**","/img/**").permitAll()
+	        	.requestMatchers("/admin/**").hasAuthority("ROLE_1") //관리자페이지 접근제어
+	        	.requestMatchers("/**", "/css/**","/img/**").permitAll()
 	            .anyRequest().authenticated()  // 나머지 경로는 인증 필요
 	        )
 	        .formLogin(form -> form

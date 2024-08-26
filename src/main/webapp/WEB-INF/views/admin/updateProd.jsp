@@ -89,7 +89,6 @@
 
 <main>
     <h1>상품 수정</h1>
-
     <!-- 상품 수정 폼 -->
     <form name="updateForm" action="/admin/updateProdOk.do" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />

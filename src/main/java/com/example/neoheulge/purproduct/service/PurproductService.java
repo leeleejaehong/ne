@@ -84,4 +84,9 @@ public class PurproductService {
     public void deleteAutoPayment(Map<String, Object> params) {
         sqlSession.update("deleteAutoPayment", params);
     }
+    
+    //해지한 상품정보 삭제
+    public int deleteProProduct(int subscription_id) {
+    	return sqlSession.delete("deleteProProduct",subscription_id);
+    }
 }

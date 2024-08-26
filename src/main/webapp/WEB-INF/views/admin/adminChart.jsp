@@ -7,7 +7,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <title>adminChart</title>
 
- <a href="/admin/calTest.do">계산기</a>
+ <a href="/admin/calTest.do">계산기</a> <br>
     <form id="productForm">
         <label for="productSelect">Select Product:</label>
         <select id="productSelect" name="product_code">

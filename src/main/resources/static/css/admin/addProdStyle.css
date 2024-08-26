@@ -5,9 +5,8 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    flex-direction: column;
-    padding: 2rem;
-    background-color: #f4f4f4;
+    
+   
 }
 
 .add-product-page h2 {

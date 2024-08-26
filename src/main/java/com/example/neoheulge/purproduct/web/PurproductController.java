@@ -84,7 +84,13 @@ public class PurproductController {
 		purproductService.terminateSubscription(pdto);
 		productService.updateAccumulatedAmount(params);
 		
-		return "index";
+		return "redirect:../index.do";
+	}
+	
+	@PostMapping("/deleteProProduct.do")
+	public String deleteProProduct(HttpServletRequest req,int subscription_id) {
+		int res = purproductService.deleteProProduct(subscription_id);
+		return "redirect:../index.do";
 	}
 }
 
