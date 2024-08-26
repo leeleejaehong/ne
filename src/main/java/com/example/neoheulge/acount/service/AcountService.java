@@ -87,5 +87,9 @@ public class AcountService {
             return false;
         }
     }
+    
+    public void updateMoney(NeAcountDTO dto) {
+    	sqlSession.update("updateMoney",dto);
+    }
   
 }

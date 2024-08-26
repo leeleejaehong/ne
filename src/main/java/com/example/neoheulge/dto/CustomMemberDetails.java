@@ -16,19 +16,18 @@ public class CustomMemberDetails implements UserDetails{
 	private boolean enabled;
 	
 	
-	 public CustomMemberDetails(String memberID, String password, String name, String authority, boolean enabled) {
-	        this.memberID = memberID;
-	        this.password = password;
-	        this.name = name;
-	        this.authority = authority;
-	        this.enabled = enabled;
-	    }
+	/*
+	 * public CustomMemberDetails(String memberID, String password, String name,
+	 * String authority, boolean enabled) { this.memberID = memberID; this.password
+	 * = password; this.name = name; this.authority = authority; this.enabled =
+	 * enabled; }
+	 */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		//ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
-		//auth.add(new SimpleGrantedAuthority(authority));
-		//return auth;
-		 return Collections.singletonList(new SimpleGrantedAuthority(authority));
+		ArrayList<GrantedAuthority> auth = new ArrayList<GrantedAuthority>();
+		auth.add(new SimpleGrantedAuthority(authority));
+		return auth;
+		 //return Collections.singletonList(new SimpleGrantedAuthority(authority));
 	}
 	
 	@Override

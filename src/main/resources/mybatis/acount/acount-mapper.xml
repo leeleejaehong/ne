@@ -50,6 +50,12 @@
         SET acount_status = 'Y'
         WHERE acount_id = #{acount_id, jdbcType=VARCHAR}
     </update>
+    
+    <update id="updateMoney" parameterType="NeAcountDTO">
+    	UPDATE neacount
+    	SET money = money+ #{money}
+    	WHERE acount_id = #{acount_id, jdbcType=VARCHAR}
+    </update>
 
 
     <!-- 계좌에서 돈 차감 -->

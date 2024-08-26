@@ -29,6 +29,6 @@ public class CustomeMeberDetailsService implements UserDetailsService{
 		}
 		
 		
-		return user;
+		return new User(user.getUsername(), user.getPassword(), user.getAuthorities());
 	}
 }

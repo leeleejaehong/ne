@@ -4,7 +4,7 @@ public class NeAcountDTO {
 	private String acount_id;
 	private String acount_number;
 	private String member_id;
-	private int money;
+	private Long money;
 	private String acount_status;
 	
 	public String getAcount_id() {
@@ -25,11 +25,11 @@ public class NeAcountDTO {
 	public void setMember_id(String member_id) {
 		this.member_id = member_id;
 	}
-	public int getMoney() {
+	public Long getMoney() {
 		return money;
 	}
-	public void setMoney(int money) {
-		this.money = money;
+	public void setMoney(Long long1) {
+		this.money = long1;
 	}
 	public String getAcount_status() {
 		return acount_status;
