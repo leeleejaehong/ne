@@ -2,6 +2,7 @@ package com.example.neoheulge.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -9,50 +10,63 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import com.example.neoheulge.util.IpAddressAccessControlFilter;
+import com.example.neoheulge.util.CustomAccessDeniedHandler;
 import com.example.neoheulge.util.CustomAuthenticationFailureHandler;
-
 import lombok.RequiredArgsConstructor;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity(debug = false)
 @RequiredArgsConstructor
 public class SpringSecurityConfig {
 
-	@Bean
+    private final Environment env;
+
+    @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-			http.csrf(AbstractHttpConfigurer::disable)
-	        	.authorizeHttpRequests(authz -> authz
-//	            .requestMatchers("/WEB-INF/views/index.jsp", "/css/**","/img/**").permitAll()
-	        	//.requestMatchers("/admin/**").hasAuthority("ROLE_1") //관리자페이지 접근제어
-	        	.requestMatchers("/**", "/css/**","/img/**").permitAll()
-	            .anyRequest().authenticated()  // 나머지 경로는 인증 필요
-	        )
-	        .formLogin(form -> form
-	            .loginPage("/member/login.do") // 로그인 페이지 설정
-	            .loginProcessingUrl("/login")
-	            .failureHandler(new CustomAuthenticationFailureHandler()) // 커스텀 핸들러 추가
-	            .defaultSuccessUrl("/")
-	            .permitAll()  // 로그인 페이지는 모든 사용자에게 허용
-	         
-	        )
-	        .logout((logout) -> logout
-	                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-	                .logoutSuccessUrl("/")
-	                .invalidateHttpSession(true))
-	        .httpBasic(basic -> basic.disable()); // HTTP Basic 인증 비활성화
-	    return http.build();
-	}
-	@Bean
-    WebSecurityCustomizer webSecurityCustomizer() { // security를 적용하지 않을 리소스
-        return web -> web.ignoring()
-                // error endpoint를 열어줘야 함, favicon.ico 추가!
-                .requestMatchers("/error", "/favicon.ico", "/");
+        http.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_1")
+                        //.requestMatchers("/지정경로/**").hasAnyAuthority("ROLE_1", "ROLE_2")-> 일반회원/비회원구분
+                        .requestMatchers("/**", "/css/**", "/img/**").permitAll()
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/member/login.do")
+                        .loginProcessingUrl("/login")
+                        .failureHandler(new CustomAuthenticationFailureHandler())
+                        .defaultSuccessUrl("/")
+                        .permitAll())
+                .exceptionHandling(exceptions -> exceptions
+                        .accessDeniedHandler(new CustomAccessDeniedHandler()))
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true))
+                .httpBasic(basic -> basic.disable());
+        return http.build();
     }
-	 @Bean
-	    public static BCryptPasswordEncoder bCryptPasswordEncoder() {
-	        return new BCryptPasswordEncoder();
-	    }
+
+	/*
+	 * @Bean public FilterRegistrationBean<IpAddressAccessControlFilter>
+	 * ipAddressAccessControlFilter() { String adminIp =
+	 * env.getProperty("admin.ipaddress"); // properties에서 IP 주소 가져오기
+	 * IpAddressAccessControlFilter filter = new
+	 * IpAddressAccessControlFilter(adminIp);
+	 * FilterRegistrationBean<IpAddressAccessControlFilter> registrationBean = new
+	 * FilterRegistrationBean<>(); registrationBean.setFilter(filter);
+	 * registrationBean.addUrlPatterns("/admin/*"); // 관리자 페이지에만 적용
+	 * registrationBean.setOrder(1); // 필터 순서, 숫자 낮을수록 높은 우선순위 return
+	 * registrationBean; }
+	 */
+
+    @Bean
+    WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring().requestMatchers("/error", "/favicon.ico", "/css/**", "/js/**", "/img/**");
+    }
+
+    @Bean
+    public static BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 }

@@ -20,6 +20,8 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 			throws IOException, ServletException {
 		System.out.println(exception.getMessage());
 		String errorMessage = URLEncoder.encode(exception.getMessage(), StandardCharsets.UTF_8.toString());
+		
+		
         response.sendRedirect("/member/login.do?error=true&message=" + errorMessage);
 		
 		

@@ -18,7 +18,7 @@
             <div class="signup-container">
             	<c:if test="${product.product_status == '활성'}">
 	                <sec:authorize access="isAuthenticated()">
-	                    <a href="/proProduct/does.do?product_code=${product.product_code}" class="signup-btn">가입하기</a>
+	                    <a href="/proProduct/does.do?product_code=${product.product_code}&member_id=<sec:authentication property="principal.username"/>" class="signup-btn">가입하기</a>
 	                </sec:authorize> 
 	                
 	                <sec:authorize access="isAnonymous()">

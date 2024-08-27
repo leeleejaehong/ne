@@ -213,10 +213,17 @@
 	    AND product_code = #{productCode}
 	</update>
 	
+	<!--해지한 상품 정보 삭제 -->
 	<delete id="deleteProProduct" parameterType="int">
 	delete from nepreSavProd where subscription_id = #{subscription_id}
 	</delete>
 
-	
+	<select id="findProdDo" parameterType="NePreSavProdDTO" resultType="NePreSavProdDTO">
+    SELECT *
+    FROM nepreSavProd 
+    WHERE member_id = #{member_id}
+    AND product_code = #{product_code}
+    AND status IN ('활성')
+</select>
 	
 </mapper>

@@ -1,5 +1,6 @@
 package com.example.neoheulge.purproduct.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -88,5 +89,13 @@ public class PurproductService {
     //해지한 상품정보 삭제
     public int deleteProProduct(int subscription_id) {
     	return sqlSession.delete("deleteProProduct",subscription_id);
+    }
+    
+    //상품 중복 가입 확인
+    public NePreSavProdDTO findProdDo(String member_id,String product_code) {
+    	Map<String, Object> params = new HashMap<>();
+	    params.put("product_code",product_code);
+	    params.put("member_id",member_id);
+    	return sqlSession.selectOne("findProdDo",params);
     }
 }

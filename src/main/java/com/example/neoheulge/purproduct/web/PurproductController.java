@@ -31,12 +31,18 @@ public class PurproductController {
 	PurproductService purproductService;
 	
 	@GetMapping("/does.do")
-	public String productSignUp(HttpServletRequest req,@RequestParam String product_code,
-			@RequestParam(value="id", required=false, defaultValue="0")Integer id ) {
-		NeSavProdDTO prod = productService.selectProductByCode(product_code);
-		req.setAttribute("product", prod);
-		
-		return "proproduct/productSignUp";
+	public String productSignUp(HttpServletRequest req,NePreSavProdDTO dto,@RequestParam String product_code,
+			@RequestParam String member_id) {
+		NePreSavProdDTO find = purproductService.findProdDo(dto.getMember_id(),dto.getProduct_code());
+		if(find	!=null) {
+			req.setAttribute("msg", "이미 가입한 상품입니다.");
+			req.setAttribute("url", "../index.do");
+			return "message";
+		}else {
+			NeSavProdDTO prod = productService.selectProductByCode(product_code);
+			req.setAttribute("product", prod);
+			return "proproduct/productSignUp";
+		}
 	}
 	
 	@PostMapping("/input.do")
@@ -84,7 +90,7 @@ public class PurproductController {
 		purproductService.terminateSubscription(pdto);
 		productService.updateAccumulatedAmount(params);
 		
-		return "redirect:../index.do";
+		return "redirect:/member/myPage.do?user="+user;
 	}
 	
 	@PostMapping("/deleteProProduct.do")

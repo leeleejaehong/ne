@@ -106,6 +106,17 @@ public class AdminController {
         return "admin/updateMemberForm"; // JSP 페이지 이름
     }
     
+    @GetMapping("/editMemberForm.do")
+    public String editUpdateForm(@RequestParam("memberID") String memberID, Model model) {
+    	
+    	MemberDTO mdto = adminservice.findMemberById(memberID);
+    	model.addAttribute("member", mdto);
+    	System.out.println("memberID: "+ mdto.getMemberID());
+    	//   System.out.println("memberDATE:"+mdto.getSignup_date());
+    	
+    	return "member/editMemberForm"; // JSP 페이지 이름
+    }
+    
 	
     @PostMapping("/updateMemberPro.do")
     public String updateMemberPro(@ModelAttribute MemberDTO dto, BindingResult result,  Model model) {
@@ -135,6 +146,35 @@ public class AdminController {
         return "message";
     
 }
+    
+    @PostMapping("/editMemberPro.do")
+    public String editMemberPro(@ModelAttribute MemberDTO dto, BindingResult result,  Model model) {
+    	UploadFile uploadFile = new UploadFile(); 
+    	try { 
+    		if (dto.getFile() != null) {
+    			if (uploadFile.uploadFile(dto.getFile())) {
+    				dto.setProfile(uploadFile.getFullName()); // 새 파일 이름으로 업데이트
+    			} 
+    		}  
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	if (result.hasErrors()) {
+    		System.out.println("BindingResult 오류");
+    	}
+    	
+    	int res = adminservice.updateMember(dto);
+    	if (res > 0) {
+    		model.addAttribute("msg", "업데이트 완료");
+    		model.addAttribute("url", "/admin/editMemberForm.do?memberID=" + dto.getMemberID());//"/admin/updateMemberForm.do?memberID=" + dto.getMemberID());
+    	} else {
+    		System.out.println("업데이트 실패: res = " + res);
+    		model.addAttribute("msg", "업데이트 실패");
+    		model.addAttribute("url", "/admin/editMemberForm.do?memberID=" + dto.getMemberID());//"/admin/updateMemberForm.do?memberID=" + dto.getMemberID());
+    	}
+    	return "message";
+    	
+    }
     @GetMapping("/adminProdcut.do")
     public String adminProd() {
     	return "admin/addProd";
