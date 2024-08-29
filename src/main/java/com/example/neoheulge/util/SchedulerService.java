@@ -26,7 +26,6 @@ public class SchedulerService {
             
             // 날짜를 정수로 변환
             int autoDateDay = Integer.parseInt(autoDateStr);
-
             if (shouldProcessPayment(today, autoDateDay, autoCycle)) {
                 processPayment(member);
             }
