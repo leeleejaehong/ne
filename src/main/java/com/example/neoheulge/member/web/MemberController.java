@@ -24,11 +24,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.neoheulge.acount.service.AcountService;
 import com.example.neoheulge.admin.service.AdminService;
+import com.example.neoheulge.commu.service.CommuService;
 import com.example.neoheulge.dto.MemberDTO;
 import com.example.neoheulge.dto.NeAcountDTO;
 import com.example.neoheulge.dto.NePreSavProdDTO;
 import com.example.neoheulge.member.service.MemberService;
 import com.example.neoheulge.purproduct.service.PurproductService;
+import com.example.neoheulge.qna.service.QnaService;
 import com.example.neoheulge.util.SmsUtil;
 
 import jakarta.servlet.ServletContext;
@@ -52,6 +54,13 @@ public class MemberController {
 	
 	@Autowired 
 	private AdminService adminservice;
+	
+	@Autowired
+	QnaService qnaService;
+	
+	@Autowired
+	CommuService commuService;
+	
 	
 	@Autowired
 	ServletContext servletcontext;
@@ -246,4 +255,33 @@ public class MemberController {
     	
     }
     
+    @GetMapping("/deleteMember.do")
+    public String deleteMember(String member_id, HttpServletRequest request, Model model,NePreSavProdDTO dto) {
+        
+    	dto.setMember_id(member_id);
+    	
+    	List<Map<String, Object>> getByMemberId = purproductService.getSignMemberId(dto);
+    	List<NeAcountDTO> acount = acountService.getAccountsByMemberId(member_id);
+    	System.out.println("상품 : "+getByMemberId+" , 계좌 :  "+acount);
+    	if ((getByMemberId != null && !getByMemberId.isEmpty()) || (acount != null && !acount.isEmpty())) {
+    		model.addAttribute("msg", "계좌나 가입한 상품이 존재합니다!!");
+            model.addAttribute("url", "/member/myPage.do?user="+member_id);
+    	}else {
+    	int productRes = purproductService.deleteAllProduct(member_id);
+        int acountRes = acountService.deleteAllAcount(member_id);
+        int commuRes = commuService.deleteEditCommu(member_id);
+        int qnaRes = qnaService.deleteEditQna(member_id);
+        int memberRes = memberservice.deleteMember(member_id);
+
+        // 세션 무효화
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+	
+        model.addAttribute("msg", "회원 탈퇴가 완료 되었습니다!!");
+        model.addAttribute("url", "/index.do");
+    	}
+        return "message";
+    }
 }

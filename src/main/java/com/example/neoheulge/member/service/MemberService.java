@@ -55,5 +55,9 @@ public class MemberService {
 	public String IdEmail(String member) {
 		return memberDAO.IdEmail(member);
 	}
+	
+	public int deleteMember(String member_id) {
+		return memberDAO.deleteMember(member_id);
+	}
 
 }

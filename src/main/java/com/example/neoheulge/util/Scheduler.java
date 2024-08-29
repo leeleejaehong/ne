@@ -100,7 +100,10 @@ public class Scheduler {
     public void updateExpiredProductsStatus() {
         try {
             productService.updateProductStatus();
-            purproductService.allocateGoldenBallAmount();
+            
+            String member_id = purproductService.selectRandomMemberId();
+            purproductService.allocateGoldenBallAmount(member_id);
+            purproductService.updateWinner(member_id);
             //logger.info("updateExpiredProductsStatus completed successfully.");
         } catch (Exception e) {
             //logger.error("Error occurred while updating product statuses: {}", e.getMessage(), e);

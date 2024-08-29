@@ -54,5 +54,9 @@ public class CommuService {
 	        params.put("search", search);
 	        return sqlSession.selectList("searchCommuList", params);
 	    }
+	 
+	 public int deleteEditCommu(String member_id) {
+		 return sqlSession.update("deleteEditCommu",member_id);
+	 }
 
 }

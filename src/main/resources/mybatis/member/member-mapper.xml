@@ -24,4 +24,8 @@
 	<select id="IdEmail" parameterType="String" resultType="String">
 		select email from nemember where memberID= #{memberID}
 	</select>
+	
+	<delete id="deleteMember" parameterType="String">
+		delete from nemember where memberid = #{member_id}
+	</delete>
 </mapper>

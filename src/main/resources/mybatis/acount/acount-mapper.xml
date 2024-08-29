@@ -73,4 +73,8 @@
         VALUES (#{subscriptionId, jdbcType=VARCHAR}, SYSDATE, #{autoAmount, jdbcType=INTEGER}, #{status, jdbcType=VARCHAR})
     </insert>
 
+	<!-- 계좌 전부 삭제 -->
+    <delete id="deleteAllAcount" parameterType="String">
+        DELETE FROM neacount WHERE member_id = #{member_id}
+    </delete>
 </mapper>

@@ -56,4 +56,8 @@ public class QnaService {
 	        params.put("search", search);
 	        return sqlSession.selectList("searchQnaList", params);
 	    }
+	 
+	 public int deleteEditQna(String member_id) {
+		 return sqlSession.update("deleteEditQna",member_id);
+	 }
 }

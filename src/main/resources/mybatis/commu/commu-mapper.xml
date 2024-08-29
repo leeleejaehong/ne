@@ -61,5 +61,12 @@
     </if>
 	</select>
 
+	<update id="deleteEditCommu" parameterType="String">
+	UPDATE necommunity
+		SET author = '삭제된 아이디',
+    	subject = '삭제된 글',
+    	content = '삭제된 글'
+	WHERE author = #{member_id}
+	</update>
 
 </mapper>

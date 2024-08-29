@@ -36,8 +36,16 @@ public class PurproductService {
     }
 
     // 상품의 종료일 도래 시 골든볼 처리
-    public void allocateGoldenBallAmount() {
-        sqlSession.update("allocateGoldenBallAmount");
+    public String selectRandomMemberId() {
+    	return sqlSession.selectOne("selectRandomMemberId");
+    }
+    
+    public void allocateGoldenBallAmount(String member_id) {
+        sqlSession.update("allocateGoldenBallAmount",member_id);
+    }
+    
+    public void updateWinner(String member_id) {
+    	sqlSession.update("updateWinner",member_id);
     }
 
     // 만기 시 골든볼 이율 적용
@@ -97,5 +105,15 @@ public class PurproductService {
 	    params.put("product_code",product_code);
 	    params.put("member_id",member_id);
     	return sqlSession.selectOne("findProdDo",params);
+    }
+    
+    //가입한 상품정보 전체 삭제
+    public int deleteAllProduct(String member_id) {
+    	return sqlSession.delete("deleteAllProduct",member_id);
+    }
+    
+    //회원 삭제전 가입한 상품 있는지 확인
+    public List<Map<String, Object>> getSignMemberId(NePreSavProdDTO dto) {
+        return sqlSession.selectList("getSignMemberId", dto);
     }
 }

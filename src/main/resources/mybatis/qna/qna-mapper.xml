@@ -58,5 +58,14 @@
         (subject LIKE '%' || #{search} || '%' OR author LIKE '%' || #{search} || '%')
     </if>
 	</select>
+	
+	
+	<update id="deleteEditQna" parameterType="String">
+	UPDATE neq_a
+		SET author = '삭제된 아이디',
+    	subject = '삭제된 글',
+    	content = '삭제된 글'
+	WHERE author = #{member_id}
+	</update>
 
 </mapper>

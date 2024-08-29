@@ -33,4 +33,9 @@ public class MemberDAO {
 	public String IdEmail(String member) {
 		return sqlSession.selectOne("member.IdEmail", member);
 	}
+	
+	
+	public int deleteMember(String member_id) {
+		return sqlSession.delete("member.deleteMember",member_id);
+	}
 }
