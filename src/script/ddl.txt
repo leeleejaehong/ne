@@ -134,3 +134,10 @@ CREATE SEQUENCE neacount_seq
 START WITH 1
 INCREMENT BY 1;
 
+--admin select시 인덱스사용
+CREATE INDEX idx_signup_date ON nemember(signup_date); 
+CREATE INDEX idx_product_code ON neSavProd(product_code);
+CREATE INDEX idx_chart_product_code ON neSavProd(product_code);
+CREATE INDEX idx_chart_member_id ON nepreSavProd(product_code);
+
+

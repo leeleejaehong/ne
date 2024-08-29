@@ -16,6 +16,7 @@ public class NeoheulgeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(NeoheulgeApplication.class, args);
+		
 	}
 
 }

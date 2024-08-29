@@ -33,7 +33,24 @@ public class Scheduler {
 
     @Autowired
     private AdminDAO admindao;
-
+    
+    @Autowired
+    private NotificationService notificationService;
+    
+	
+	/*
+	 * // 테스트용 스케줄러 (1분마다 자동예외발생시켜서 오류시 메일발송테스트)
+	 * 
+	 * @Scheduled(cron = "0 * * * * *") // 매 분 0초에 실행 public void testScheduler() {
+	 * try { // 의도적으로 예외를 발생시킴 throw new
+	 * RuntimeException("Forced exception for testing purposes."); } catch
+	 * (Exception e) { // logger.error("Error occurred in testScheduler: {}",
+	 * e.getMessage(), e); notificationService.
+	 * sendErrorNotification("Scheduler Test Error: testScheduler", e.getMessage());
+	 * } }
+	 */
+	 
+    
     // 추가금 넣기
     @Scheduled(cron = "0 0 0 * * *") // 매일 자정에 실행 (cron = "0/1 * * * * *")(cron = "0 0 0 * * *")
     public void schedulePayments() {
@@ -43,7 +60,7 @@ public class Scheduler {
                 schedulerService.scheduleAutoPayments(members);
                 for (Map<String, Object> member : members) {
                     if (member.containsKey("TOTAL_PAYMENT")) {
-                        //logger.info("TOTAL_PAYMENT: {}", member.get("TOTAL_PAYMENT"));
+                    //   logger.info("TOTAL_PAYMENT: {}", member.get("TOTAL_PAYMENT"));
                     }
                 }
                 //logger.info("schedulePayments completed successfully.");
@@ -52,6 +69,7 @@ public class Scheduler {
             }
         } catch (Exception e) {
             //logger.error("Error occurred while scheduling payments: {}", e.getMessage(), e);
+        	 notificationService.sendErrorNotification("Scheduler Error: schedulePayments", e.getMessage());
         }
     }
 
@@ -73,6 +91,7 @@ public class Scheduler {
             }
         } catch (Exception e) {
             //logger.error("Error occurred while applying monthly interest: {}", e.getMessage(), e);
+        	notificationService.sendErrorNotification("Scheduler Error: applyMonthlyInterest", e.getMessage());
         }
     }
 
@@ -85,6 +104,7 @@ public class Scheduler {
             //logger.info("updateExpiredProductsStatus completed successfully.");
         } catch (Exception e) {
             //logger.error("Error occurred while updating product statuses: {}", e.getMessage(), e);
+        	 notificationService.sendErrorNotification("Scheduler Error: updateExpiredProductsStatus", e.getMessage());
         }
     }
 
@@ -96,6 +116,7 @@ public class Scheduler {
             //logger.info("deleteExpiredProduct completed successfully.");
         } catch (Exception e) {
             //logger.error("Error occurred while deleting expired products: {}", e.getMessage(), e);
+        	notificationService.sendErrorNotification("Scheduler Error: deleteExpiredProduct", e.getMessage());
         }
     }
 }
