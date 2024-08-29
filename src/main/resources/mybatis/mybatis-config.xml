@@ -4,5 +4,6 @@
     <settings>        
         <setting name="mapUnderscoreToCamelCase" value="true" />
         <setting name="jdbcTypeForNull" value="VARCHAR"/>
+         <setting name="logImpl" value="SLF4J"/>
     </settings>
 </configuration>    

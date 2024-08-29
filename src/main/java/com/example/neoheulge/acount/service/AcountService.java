@@ -56,15 +56,14 @@ public class AcountService {
         sqlSession.insert("insertPaymentLog", params);
     }
     
-    public void sendSimpleEmail(String toEmail, String subject, String body) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("your-email@gmail.com");
-        message.setTo(toEmail);
-        message.setSubject(subject);
-        message.setText(body);
-
-        mailSender.send(message);
-    }
+	
+	  public void sendSimpleEmail(String toEmail, String subject, String body) {
+	  SimpleMailMessage message = new SimpleMailMessage();
+	  message.setFrom("yjh961010@gmail.com"); message.setTo(toEmail);
+	  message.setSubject(subject); message.setText(body);
+	  
+	  mailSender.send(message); }
+	 
     
     public void updateAllAccountsToNonPrimary(String member_id) {
     	sqlSession.update("updateAllAccountsToNonPrimary",member_id);
