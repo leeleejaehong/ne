@@ -24,12 +24,9 @@ public class AcountService {
 
     // 계좌 추가
     public void addAccount(NeAcountDTO dto) {
-        // 주계좌 설정 전 모든 계좌의 상태를 'N'으로 변경
-        sqlSession.update("updateAllAccountsToNonPrimary", dto.getMember_id());
 
         // 새로운 계좌 추가
         sqlSession.insert("insertNeacount", dto);
-
         // 주계좌로 설정
         sqlSession.update("updatePrimaryAccountStatus", dto);
     }
@@ -71,6 +68,11 @@ public class AcountService {
     
     public void updateAllAccountsToNonPrimary(String member_id) {
     	sqlSession.update("updateAllAccountsToNonPrimary",member_id);
+    }
+    
+    
+    public void updateNToNonPrimary(int acount_id) {
+    	sqlSession.update("updateNToNonPrimary",acount_id);
     }
     
     public void updatePrimaryAccountStatus(int acount_id) {

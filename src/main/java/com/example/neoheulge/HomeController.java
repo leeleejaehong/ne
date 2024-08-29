@@ -3,6 +3,7 @@ package com.example.neoheulge;
 import java.util.List;
 
 import com.example.neoheulge.dto.NoticeDTO;
+import com.example.neoheulge.member.service.MemberDAO;
 import com.example.neoheulge.notice.service.NoticeService;
 import com.example.neoheulge.product.service.ProductService;
 
@@ -11,12 +12,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.neoheulge.commu.service.CommuService;
 import com.example.neoheulge.dto.CommuDTO;
+import com.example.neoheulge.dto.CustomMemberDetails;
 import com.example.neoheulge.dto.NeSavProdDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 
 
@@ -28,6 +32,9 @@ public class HomeController {
 	
     @Autowired
     private NoticeService noticeService;
+    
+    @Autowired
+    private MemberDAO memberDAO;
     
     @Autowired
     ProductService productService;
@@ -44,13 +51,20 @@ public class HomeController {
 		List<NeSavProdDTO> prodList = productService.selectNowProducts();
 		req.setAttribute("prodList", prodList);
 		
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String username = authentication.getName();
-//        System.out.println(username);
+	
+		  Authentication authentication =
+		  SecurityContextHolder.getContext().getAuthentication(); String username =
+		  authentication.getName(); CustomMemberDetails profile =
+		  memberDAO.findById(username);
+		  
+		  HttpSession session = req.getSession(); session.setAttribute("profile",
+		  profile);
+		 
 
+    
 		boolean hasNotice = !noticelist.isEmpty();
 		req.setAttribute("hasNotice", hasNotice);
-
+		
 		// 가장 최근 공지사항 정보 전달 (있는 경우)
 		if (hasNotice) {
 			req.setAttribute("latestNotice", noticelist.get(0));

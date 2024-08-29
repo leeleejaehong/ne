@@ -43,17 +43,18 @@
         <table class="profile-table">
             <tr>
                 <td width="50%" class="profile-image-cell">
-                    <img src="${pageContext.request.contextPath}/img/fast.jpg" alt="프로필 이미지" class="profile-img"/>
+                    <img src="${pageContext.request.contextPath}/img/${profile.profile}" alt="프로필 이미지" class="profile-img"/>
                 </td>
                 <td class="profile-info-cell">
                     <div class="profile-info">
                         <strong class="itemfont col" id="nickNameArea">
-                            <sec:authentication property="principal.username"/>
+                            환영합니다<br>
+                            <sec:authentication property="principal.username"/>님
                         </strong>
                         <br>
                         <div class="links">
                             <a href="${pageContext.request.contextPath}/member/myPage.do?user=<sec:authentication property="principal.username"/>" class="link-btn">마이페이지</a>
-                            <a href="/admin/editMemberForm.do?memberID=<sec:authentication property='principal.username'/>" class="link-btn">내 정보 수정</a>
+                            <a href="/member/editMemberForm.do?memberID=<sec:authentication property='principal.username'/>" class="link-btn">내 정보 수정</a>
                         </div>
                     </div>
                 </td>

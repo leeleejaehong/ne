@@ -31,17 +31,14 @@ public class MemberService {
 		member.setPassword(bcryptPasswordEncoder.encode(member.getPassword()));
 		return memberDAO.signupPro(member);
 	}
-	public Member findMember(String email) {
-		return memberRepository.findByEmail(email)
+
+
+	public Member findMember(String UserName) {
+		System.out.println("memberRepository = " + memberRepository.findByName(UserName));
+		return memberRepository.findByName(UserName)
 				.orElseThrow(() -> new RuntimeException("없는 계정입니다."));
 	}
 
-	public Member findDefaultMember() {
-		// 테스트용 기본 회원을 반환하는 로직
-		// 예: 데이터베이스에서 특정 ID나 이메일을 가진 회원을 조회
-		return memberRepository.findByEmail("default@example.com")
-				.orElseThrow(() -> new RuntimeException("ad"));
-	}
 	public MemberDTO findByName(String name) {
 		return memberDAO.findByName(name);
 	}

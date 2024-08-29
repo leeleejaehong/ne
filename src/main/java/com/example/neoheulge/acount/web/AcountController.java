@@ -39,8 +39,11 @@ public class AcountController {
 	public String addAccount(NeAcountDTO dto) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
-
-		// 주계좌 설정 전 모든 계좌의 상태를 'N'으로 변경
+		
+		System.out.println("39: "+dto.getAcount_status()+", 333 "+dto.getMember_id());
+		if("Y".equals(dto.getAcount_status())) {
+			acountService.updateAllAccountsToNonPrimary(dto.getMember_id());
+		}
 		acountService.addAccount(dto);
 
 		return "redirect:/member/myPage.do?user=" + username;

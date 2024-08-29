@@ -26,9 +26,9 @@
 
         .admin-menu {
             display: flex;
-            background-color: #34495e;
-           
+           /* 	background-color: #34495e; */
             position: relative;
+
         }
 
         .menu-item {
@@ -47,15 +47,17 @@
             text-decoration: none;
             font-weight: bold;
             cursor: default; /* Make sure cursor is not a pointer */
-            background-color: #34495e;
+            background-color: #2c3e50;
+            border-top: 1px solid white;
         }
 
        
 
         .submenu {
             display: block; /* Always show the submenu */
-            background-color: #2c3e50;
-            border-top: 1px solid white;
+            background-color: #34495e;
+
+           
         }
 
         .submenu a {
@@ -64,6 +66,7 @@
             color: #ecf0f1;
             text-align: left;
             text-decoration: none;
+            border: 1px solid white;
         }
 
         .submenu a:hover {
@@ -93,7 +96,6 @@
                     <div class="menu-link">회원관리</div>
                     <div class="submenu">
                         <a href="${pageContext.request.contextPath}/admin/adminMember.do">회원관리</a>
-                        <a href="">회원 추가</a>
                     </div>
                 </div>
                 <div class="menu-item">

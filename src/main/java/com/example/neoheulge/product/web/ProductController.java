@@ -6,9 +6,13 @@ import java.util.List;
 
 import com.example.neoheulge.commu.service.CommuService;
 import com.example.neoheulge.dto.CommuDTO;
+import com.example.neoheulge.dto.CustomMemberDetails;
 import com.example.neoheulge.dto.NoticeDTO;
+import com.example.neoheulge.member.service.MemberDAO;
 import com.example.neoheulge.notice.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +35,9 @@ public class ProductController {
 
 		@Autowired
 		CommuService commuService;
+		
+	    @Autowired
+	    private MemberDAO memberDAO;
 
 		@Autowired
 		private NoticeService noticeService;
@@ -68,8 +75,15 @@ public class ProductController {
 		    public List<NeSavProdDTO> winner(HttpServletRequest req) {
 		        List<NeSavProdDTO> winnerList = productService.winnerList();
 		       
+		        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		        String username = authentication.getName();
+		        CustomMemberDetails profile = memberDAO.findById(username);
+		        
+		        
+		        
 		        HttpSession session = req.getSession();
 		        session.setAttribute("winnerList", winnerList);
+		        session.setAttribute("profile", profile);
 
 		        return winnerList; // JSON 형태로 반환
 		    }

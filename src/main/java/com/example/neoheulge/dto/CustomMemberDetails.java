@@ -12,6 +12,7 @@ public class CustomMemberDetails implements UserDetails{
 	private String memberID;
 	private String password;
 	private String name;
+	private String profile;
 	private String authority;
 	private boolean enabled;
 	
@@ -40,6 +41,7 @@ public class CustomMemberDetails implements UserDetails{
 	public String getUsername() {
 		return memberID;
 	}
+	
 	
 	@Override
 	public boolean isAccountNonExpired() {
@@ -71,5 +73,13 @@ public class CustomMemberDetails implements UserDetails{
 	public void setAuthority(String authority) {
         this.authority = authority;
     }
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 
 }

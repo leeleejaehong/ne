@@ -113,7 +113,8 @@
 	        (SELECT nps.subscription_amount
 	         FROM nepreSavProd nps
 	         WHERE nps.member_id = #{member_id}
-	         AND nps.product_code = np.product_code)
+	         AND nps.product_code = np.product_code
+	         AND nps.status = '활성')
 	         * (np.early_fee / 100)
 	    )
 	    WHERE np.product_code = #{product_code}

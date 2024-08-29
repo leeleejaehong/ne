@@ -36,7 +36,6 @@ body {
 
 .form-container td {
     padding: 10px;
-    text-align: center;
 }
 
 .form-container input[type="text"],
@@ -72,14 +71,14 @@ body {
 }
 
 .form-container label {
-    position: absolute;
+   
     width: 100%;
     top: 50%;
     transform: translateY(-50%);
     color: #333;
     font-weight: bold;
     font-size: 1.2em;
-    text-align: center;
+   
     z-index: 1;
 }
 
@@ -93,4 +92,46 @@ body {
     .form-wrapper {
         width: 100%;
     }
+}
+
+/* 프로필 사진 업로드 관련 새로운 스타일 */
+.form-container .profile-upload {
+  
+   
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 5px auto;
+    font-size: 14px;
+    background-color: #fff;
+    text-align: left;
+}
+
+.form-container .profile-upload label {
+    display: inline-block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+}
+
+.form-container .profile-upload input[type="file"] {
+    display: block;
+    width: 100%;
+    padding: 5px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* 파일 선택 버튼 커스텀 스타일 (선택사항) */
+.form-container .profile-upload input[type="file"]::-webkit-file-upload-button {
+    background-color: #004D99;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.form-container .profile-upload input[type="file"]::-webkit-file-upload-button:hover {
+    background-color: #003a7d;
 }

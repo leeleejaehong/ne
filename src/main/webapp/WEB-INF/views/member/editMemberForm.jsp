@@ -43,7 +43,7 @@
 
 
 
-<form name="f" action="/admin/editMemberPro.do" method="POST" enctype="multipart/form-data">
+<form name="f" action="/member/editMemberPro.do" method="POST" enctype="multipart/form-data">
     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <table>
         <tr>
@@ -57,7 +57,9 @@
         <tr>
             <td><label for="profile">Profile : </label>
                 <img src="${pageContext.request.contextPath}/img/${member.profile}" alt="Profile Picture" id="currentProfilePic"/>
-                <input type="file" name="file" id="profile" /></td>
+                <input type="file" name="file" id="profile"  />
+                <input type="hidden" id="previousImg" name="previousImg" value="${member.profile}">
+            </td>
         </tr>
         <tr>
             <td><label for="nickname">NickName :</label>

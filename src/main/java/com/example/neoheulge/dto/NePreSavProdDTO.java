@@ -15,7 +15,7 @@ public class NePreSavProdDTO {
     private BigDecimal early_refund;
     private BigDecimal total_payment;
     private String auto_enabled;
-    private BigDecimal auto_amount;
+    private int auto_amount;
     private String auto_cycle;
     private String auto_account;
     private String auto_date;
@@ -86,10 +86,10 @@ public class NePreSavProdDTO {
 	public void setAuto_enabled(String auto_enabled) {
 		this.auto_enabled = auto_enabled;
 	}
-	public BigDecimal getAuto_amount() {
+	public int getAuto_amount() {
 		return auto_amount;
 	}
-	public void setAuto_amount(BigDecimal auto_amount) {
+	public void setAuto_amount(int auto_amount) {
 		this.auto_amount = auto_amount;
 	}
 	public String getAuto_cycle() {

@@ -58,17 +58,18 @@
         <table class="profile-table">
             <tr>
                 <td width="50%" class="profile-image-cell">
-                    <img src="${pageContext.request.contextPath}/img/fast.jpg" alt="프로필 이미지" class="profile-img"/>
+                    <img src="${pageContext.request.contextPath}/img/${profile.profile}" alt="프로필 이미지" class="profile-img"/>
                 </td>
                 <td class="profile-info-cell">
                     <div class="profile-info">
                         <strong class="itemfont col" id="nickNameArea">
-                            <sec:authentication property="principal.username"/>
+                            환영합니다<br>
+                            <sec:authentication property="principal.username"/>님
                         </strong>
                         <br>
                         <div class="links">
                             <a href="${pageContext.request.contextPath}/member/myPage.do?user=<sec:authentication property="principal.username"/>" class="link-btn">마이페이지</a>
-                            <a href="/admin/editMemberForm.do?memberID=<sec:authentication property='principal.username'/>" class="link-btn">내 정보 수정</a>
+                            <a href="/member/editMemberForm.do?memberID=<sec:authentication property='principal.username'/>" class="link-btn">내 정보 수정</a>
                         </div>
                     </div>
                 </td>
@@ -170,15 +171,18 @@
                                         <p><strong>가입 금액:</strong>
                                                 ${product.SUBSCRIPTION_AMOUNT}
                                         </p>
-                                        <p><strong>가입 금액:</strong>
+                                        <p><strong>주기:</strong>
                                                 ${product.AUTO_CYCLE}
                                         </p>
-                                        <p><strong>가입 금액:</strong>
+                                        <p><strong>자동 결제 금액:</strong>
                                                 ${product.AUTO_AMOUNT}
                                         </p>
 
                                         <div class="product-actions">
-                                        <button type="submit" class="btn btn-primary">자동 결제 설정</button>
+	                                        <form action="<c:url value='/proProduct/autoInput.do' />" method="post">
+	                                            <input type="hidden" name="product_code" value="${product.PRODUCT_CODE}">
+	                                        	<button type="submit" class="btn btn-primary">자동 결제 설정</button>
+	                                        </form>
                                             <form action="<c:url value='/proProduct/cancel' />" method="post">
                                                 <sec:authentication var="username" property="principal.username"/>
                                                 <input type="hidden" name="user" value="${username}"/>

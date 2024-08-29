@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableScheduling
 @ServletComponentScan
+@EnableJpaAuditing
 @MapperScan("com.example.neoheulge.admin.service")
 public class NeoheulgeApplication {
 

@@ -1,5 +1,8 @@
 package com.example.neoheulge.member.web;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,13 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.neoheulge.acount.service.AcountService;
+import com.example.neoheulge.admin.service.AdminService;
 import com.example.neoheulge.dto.MemberDTO;
 import com.example.neoheulge.dto.NeAcountDTO;
 import com.example.neoheulge.dto.NePreSavProdDTO;
@@ -23,6 +31,7 @@ import com.example.neoheulge.member.service.MemberService;
 import com.example.neoheulge.purproduct.service.PurproductService;
 import com.example.neoheulge.util.SmsUtil;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -41,8 +50,15 @@ public class MemberController {
 	@Autowired
 	AcountService acountService;
 	
+	@Autowired 
+	private AdminService adminservice;
+	
+	@Autowired
+	ServletContext servletcontext;
+	
 	@GetMapping("/login.do")
 	public String login() {
+        System.out.println("memberservice = " + memberservice);
 		return "member/login";
 	}
 	
@@ -52,7 +68,19 @@ public class MemberController {
 	}
 	
 	@PostMapping("/signupPro.do")
-	public String signupPro(MemberDTO member) {
+	public String signupPro(MemberDTO member,@RequestParam(name = "file", required = false)MultipartFile mf) {
+		try {
+	 String filename = mf.getOriginalFilename();
+   	 String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+   	 String uniqueFilename = timeStamp + "_" + filename;
+
+   	 String path = servletcontext.getRealPath("/img");
+     File file = new File(path, uniqueFilename);
+     mf.transferTo(file);
+     member.setProfile(uniqueFilename);
+		}catch (Exception e) {
+            e.printStackTrace();
+           }
 		memberservice.signupPro(member);
 		return "redirect:/";
 	}
@@ -168,6 +196,54 @@ public class MemberController {
             return new ResponseEntity<>("failure", HttpStatus.OK); // 인증 실패
         }
         
+    }
+    
+    @GetMapping("/editMemberForm.do")
+    public String editUpdateForm(@RequestParam("memberID") String memberID, Model model) {
+    	
+    	MemberDTO mdto = adminservice.findMemberById(memberID);
+    	model.addAttribute("member", mdto);
+    	System.out.println("memberID: "+ mdto.getMemberID());
+    	//   System.out.println("memberDATE:"+mdto.getSignup_date());
+    	
+    	return "member/editMemberForm"; // JSP 페이지 이름
+    }
+    
+    @PostMapping("/editMemberPro.do")
+    public String editMemberPro(@RequestParam(name = "file", required = false) MultipartFile mf,
+    		@RequestParam("previousImg") String previousImg,@ModelAttribute MemberDTO dto, BindingResult result,  Model model) {
+    	try { 
+    		if (mf != null && !mf.isEmpty()) {
+    			 String filename = mf.getOriginalFilename();
+            	 String timeStamp = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+            	 String uniqueFilename = timeStamp + "_" + filename;
+     
+            	 String path = servletcontext.getRealPath("/img");
+    	            File file = new File(path, uniqueFilename);
+    	            mf.transferTo(file);
+    				dto.setProfile(uniqueFilename); // 새 파일 이름으로 업데이트
+    			} else {
+    				// 새로운 이미지가 업로드되지 않은 경우 기존 이미지 파일명을 그대로 사용
+               	 dto.setProfile(previousImg); 
+    			}		
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	if (result.hasErrors()) {
+    		System.out.println("BindingResult 오류");
+    	}
+    	
+    	int res = adminservice.updateMember(dto);
+    	if (res > 0) {
+    		model.addAttribute("msg", "업데이트 완료");
+    		model.addAttribute("url", "/member/editMemberForm.do?memberID=" + dto.getMemberID());//"/admin/updateMemberForm.do?memberID=" + dto.getMemberID());
+    	} else {
+    		System.out.println("업데이트 실패: res = " + res);
+    		model.addAttribute("msg", "업데이트 실패");
+    		model.addAttribute("url", "/member/editMemberForm.do?memberID=" + dto.getMemberID());//"/admin/updateMemberForm.do?memberID=" + dto.getMemberID());
+    	}
+    	return "message";
+    	
     }
     
 }

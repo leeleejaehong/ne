@@ -77,8 +77,8 @@ public class PurproductService {
     }
 
     // 자동결제 수정
-    public void updateAutoPayment(Map<String, Object> params) {
-        sqlSession.update("updateAutoPayment", params);
+    public void updateAutoPayment(NePreSavProdDTO dto) {
+        sqlSession.update("updateAutoPayment", dto);
     }
 
     // 자동결제 삭제

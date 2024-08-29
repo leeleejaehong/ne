@@ -10,7 +10,7 @@
 		#{email},#{phone},sysdate)
 	</insert>
 	<select id="findById" parameterType="String" resultType="CustomMemberDetails">
-		select memberid, grade as authority, password, name from nemember where memberID = #{memberID}
+		select memberid, grade as authority, password, name, profile from nemember where memberID = #{memberID}
 	</select>
 	<select id="findByName" parameterType="String" resultType="MemberDTO">
 		select * from nemember where name = #{name}

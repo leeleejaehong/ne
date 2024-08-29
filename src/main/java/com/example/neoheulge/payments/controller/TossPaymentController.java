@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,7 +63,10 @@ public class TossPaymentController {
     
     @PostMapping("/confirm")
     public ResponseEntity<JSONObject> confirmPayment(@RequestBody Payments request,NeAcountDTO dto,HttpServletRequest req) {
-        JSONObject result = paymentService.confirmPayment(
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    	String username = authentication.getName();
+    	
+    	JSONObject result = paymentService.confirmPayment(
                 request.getPaymentKey(),
                 request.getOrderId(),
                 request.getAmount()
@@ -76,21 +80,16 @@ public class TossPaymentController {
         dto.setAcount_id(acountId);
         dto.setMoney(request.getAmount());
         acountService.updateMoney(dto);
+        result.put("username", username);
+        
+        
         System.out.println("dto = "+dto.getAcount_id()+"/22/"+dto.getMoney());
         System.out.println("result1 = " + result.toJSONString());
+        
+        
         return ResponseEntity.ok(result);
     }
-    
-//    @GetMapping("/toss/success")
-//    public ResponseEntity tossPaymentSuccess(
-//            @RequestParam String paymentKey,
-//            @RequestParam String orderId,
-//            @RequestParam Long amount
-//    ) {
-//        System.out.println("paymentService = " + paymentService.tossPaymentSuccess(paymentKey, orderId, amount));
-//        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(paymentService.tossPaymentSuccess(paymentKey, orderId, amount));
-//    }
-    
+
     @PostMapping("/toss/fail")
     public ResponseEntity tossPaymentFail(
             @RequestParam String code,
@@ -106,17 +105,4 @@ public class TossPaymentController {
                         .build()
         );
     }
-//    @PostMapping("/approve/{paymentKey}")
-//    public ResponseEntity<PaymentResponseDTO> approvePayment(@PathVariable String paymentKey,
-//                                                             @RequestParam String orderId,
-//                                                             @RequestParam Long amount) {
-//        PaymentResponseDTO response = paymentService.approvePayment(paymentKey, orderId, amount);
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    @GetMapping("/{orderId}")
-//    public ResponseEntity<PaymentResponseDTO> getPayment(@PathVariable SuccessDTO successDTO) {
-//        PaymentResponseDTO response = paymentService.getPayment(successDTO);
-//        return ResponseEntity.ok(response);
-//    }
 }
