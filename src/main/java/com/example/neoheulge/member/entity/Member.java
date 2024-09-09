@@ -44,7 +44,7 @@ public class Member {
     @Column(name = "signup_date")
     private LocalDate signupDate;
 
-    protected Member() {}
+    public Member() {}
 
 
 }

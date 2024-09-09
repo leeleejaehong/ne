@@ -13,7 +13,7 @@
 	<form action="findid.do" method="post" name="frm">
 		<input type="text" name="name" placeholder="이름을 입력해주세요" id="name">
 		<input type="text" name="phone" id="phone" placeholder="전화번호를 입력해주세요" style="width: 60%;">
-		<button type="button" onclick="subCertifi()" style="width: 30%; margin-left: 10px; padding: 7px;" disabled>인증번호발송</button>
+		<button type="button" onclick="subCertifi()" style="width: 30%; margin-left: 10px; padding: 7px;">인증번호발송</button>
 		<input type="text" name="certi" id="certi" placeholder="인증번호를 입력해주세요" style="width: 60%;">
 		<button type="button" onclick="check()" style="width: 30%; margin-left: 10px; padding: 7px;">인증번호확인</button>
 		<button type="button" onclick="sub()">찾기</button>
@@ -22,9 +22,9 @@
 <script type="text/javascript">
 	let ck = true;
 	let serverCheck = '';
-	function subCertifi(){
-		var csrfToken = $("meta[name='_csrf']").attr("content");
-		var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+	ㄷ function subCertifi(){
+		const csrfToken = $("meta[name='_csrf']").attr("content");
+		const csrfHeader = $("meta[name='_csrf_header']").attr("content");
 		const phone = document.getElementById("phone").value;
 		const name = document.getElementById("name").value;
 		if(name == ""){
@@ -35,9 +35,9 @@
 				type : 'POST',
 				contentType: 'application/x-www-form-urlencoded',
 		        data: { "phone": phone },
-				/* beforeSend : function(xhr) {
+				 beforeSend : function(xhr) {
 					xhr.setRequestHeader(csrfHeader, csrfToken);
-				}, */
+				},
 				success : function(response) {
 					console.log(response);
 					serverCheck = response.check;

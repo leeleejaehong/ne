@@ -8,18 +8,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import com.example.neoheulge.member.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.neoheulge.acount.service.AcountService;
@@ -70,9 +66,51 @@ public class MemberController {
         System.out.println("memberservice = " + memberservice);
 		return "member/login";
 	}
-	
+	@GetMapping("/signup_auth.do")
+	public String signup_auth() {
+		return "member/signup_auth";
+	}
+
+	@PostMapping("/validateMember")
+	public ResponseEntity<Map<String, String>> validateNumber(@RequestBody Map<String,String> req){
+		String phone = req.get("phone");
+		System.out.println("Received phone number: " + phone);
+		try {
+			System.out.println("Received phone number: " + phone);
+			boolean isExisting = memberservice.isPhoneNumberRegistered(phone);
+			Map<String, String> response = new HashMap<>();
+
+			if (isExisting) {
+				response.put("status", "existing");
+				response.put("message", "이미 가입되어 있는 계정입니다.");
+			} else {
+				response.put("status", "new");
+				response.put("message", "신규 가입이 가능합니다.");
+			}
+
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(Map.of("error", "서버 오류가 발생했습니다."));
+		}
+
+	}
+
+
+
+//	public String validateNumber(@RequestParam("phone") String number, Model model) {
+//		Member validateNum = memberservice.findByPhone(number);
+//		if (validateNum != null) {
+//			model.addAttribute("msg", "이미 가입되어 있는 계정입니다.");
+//			return "member/login";
+//		}
+//
+//		return number;
+//	}
+
 	@GetMapping("/signup.do")
 	public String signup() {
+
 		return "member/signup";
 	}
 	

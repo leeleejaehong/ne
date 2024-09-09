@@ -31,6 +31,17 @@ public class MemberService {
 		member.setPassword(bcryptPasswordEncoder.encode(member.getPassword()));
 		return memberDAO.signupPro(member);
 	}
+
+
+
+	public boolean isPhoneNumberRegistered(String phone) {
+		return memberRepository.findByPhone(phone).isPresent();
+	}
+
+	private boolean isValidPhoneNumber(String phone) {
+		return phone.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$");
+	}
+
 	public Member findMember(String email) {
 		return memberRepository.findByEmail(email)
 				.orElseThrow(() -> new RuntimeException("없는 계정입니다."));

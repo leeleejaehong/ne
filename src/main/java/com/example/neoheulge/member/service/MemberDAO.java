@@ -22,7 +22,9 @@ public class MemberDAO {
 	 public MemberDTO findByName(String name) {
 		 return sqlSession.selectOne("member.findByName", name);	 
 	 }
-	 
+	 public MemberDTO findByPhone(String phone) {
+		 return sqlSession.selectOne("member.findByPhone", phone);
+	 }
 	 public MemberDTO findByIdName(MemberDTO member) {
 		 return sqlSession.selectOne("member.findByIdName", member);
 	 }
